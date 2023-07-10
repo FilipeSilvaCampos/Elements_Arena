@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &42800343116336987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8061275105825238237, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: primaryAbility
+      value: 
+      objectReference: {fileID: 1795856021}
+    - target: {fileID: -8061275105825238237, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: secundaryAbility
+      value: 
+      objectReference: {fileID: 4117282399891342681}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943460, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_Name
+      value: FireBender
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010151269336943462, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f1b0fea076fb0574d868f6e3d9523f52, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+--- !u!4 &7776816742819948517 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7743028272977488062, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+  m_PrefabInstance: {fileID: 42800343116336987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8048434515431900223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8010151269336943460, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+  m_PrefabInstance: {fileID: 42800343116336987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1795856021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8048434515431900223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8f02ba155ce49478ff4a5e52cd8130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 0.5
+  cooldownTime: 0.8
+  called: 0
+  projectiles:
+  - {fileID: 11400000, guid: af04e1c3c8d547b489b3244ee5222a29, type: 2}
+  - {fileID: 11400000, guid: af04e1c3c8d547b489b3244ee5222a29, type: 2}
+  - {fileID: 11400000, guid: af04e1c3c8d547b489b3244ee5222a29, type: 2}
+  launchTransform: {fileID: 7776816742819948517}
+  timeWithoutReaction: 1.8
+--- !u!114 &4117282399891342681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8048434515431900223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8775c66bc6ba82e47ad43c817c34033c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 2
+  cooldownTime: 0.5
+  called: 0
+  maxFlySpeed: 5
+  flyAcceleration: 20
+  flyHeight: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
