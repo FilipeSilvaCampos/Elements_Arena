@@ -7,6 +7,8 @@ namespace ElementsArena.Combat
         [SerializeField] GameObject rock;
         [SerializeField] Transform launchTransform;
         [SerializeField] LayerMask groundLayer;
+        [SerializeField] LayerMask rockLayer;
+        [SerializeField] float domainDistance = 2;
         [SerializeField] float moveRockSpeed = 2;
         [SerializeField] float rotateRockSpeed = 10;
 
@@ -15,10 +17,17 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
+                if(GetRockOnForward())
+                {
+                    FinishState();
+                    return;
+                }
+
                 InvokeNewRock();
                 FinishState();
             }
         }
+
         protected override void OnActive()
         {
             if (!OnTarget()) 
@@ -46,6 +55,21 @@ namespace ElementsArena.Combat
             currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, launchTransform.position, moveRockSpeed * Time.deltaTime);
 
             currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, rotateRockSpeed * Time.deltaTime);
+        }
+
+        private bool GetRockOnForward()
+        {
+            RaycastHit hit;
+
+            Ray ray = new Ray(transform.position, Vector3.forward);
+            Physics.Raycast(ray, out hit, domainDistance, rockLayer);
+
+            if (hit.collider != null)
+            {
+                currentRock = hit.collider.gameObject;
+                return true;
+            }
+            else return false;
         }
 
         private bool OnTarget()

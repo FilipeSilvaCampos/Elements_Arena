@@ -118,6 +118,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  rockLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  domainDistance: 2
   moveRockSpeed: 2
   rotateRockSpeed: 10
 --- !u!4 &6169334020008614126 stripped

@@ -11,6 +11,8 @@ namespace ElementsArena.Combat
         [SerializeField] float flyAcceleration = 15;
         [SerializeField] float flyHeight = 3;
         [SerializeField] LayerMask groundLayer;
+        [SerializeField] GameObject throwEffect;
+        [SerializeField] Transform footTransform;
 
         Rigidbody characterRb;
         CharacterMovement characterMovement;
@@ -30,6 +32,7 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
+                Destroy(Instantiate(throwEffect, footTransform), activeTime);
                 characterRb.useGravity = false;
                 FinishState();
             }

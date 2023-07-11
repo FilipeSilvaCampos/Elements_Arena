@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708277100755240994}
   - component: {fileID: 8477613294139273566}
+  - component: {fileID: 2983901275500299775}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -47,10 +48,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 5
+  lifeTime: 3
+  impactEffect: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
   destroyOnHit:
   - {fileID: 4712561468838949780}
   lifeAfterImpact: 0.2
+--- !u!65 &2983901275500299775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708277100755240993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7281114, y: 0.8945677, z: 0.8460979}
+  m_Center: {x: 0.016162932, y: 0.013169512, z: -0.07695106}
 --- !u!1 &4712561468838949780
 GameObject:
   m_ObjectHideFlags: 0

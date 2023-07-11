@@ -11,8 +11,8 @@ namespace ElementsArena.Combat
 
     public abstract class Ability : MonoBehaviour
     {
-        [SerializeField] float activeTime = 1;
-        [SerializeField] float cooldownTime = 1.5f;
+        [SerializeField] protected float activeTime = 1;
+        [SerializeField] protected float cooldownTime = 1.5f;
 
         float timeSinceLastChangeState;
         protected AbilityStates currentState;

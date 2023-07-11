@@ -5,8 +5,9 @@ namespace ElementsArena.Combat
     public class ProjectileBehaviour : MonoBehaviour
     {
         [SerializeField] float speed = 1.8f;
-        [SerializeField] float damage = 5;
+        //[SerializeField] float damage = 5;
         [SerializeField] float lifeTime = 3;
+        [SerializeField] GameObject impactEffect;
         [SerializeField] GameObject[] destroyOnHit;
         [SerializeField] float lifeAfterImpact = 0.2f;
 
@@ -27,6 +28,7 @@ namespace ElementsArena.Combat
             {
                 Destroy(toDestroy);
             }
+            Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject, lifeAfterImpact);
         }
     }
