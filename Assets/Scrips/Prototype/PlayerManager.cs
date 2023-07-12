@@ -3,12 +3,14 @@ using ElementsArena.Movement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using ElementsArena.Damage;
 
 namespace ElementsArena.Prototype
 {
     public class PlayerManager : MonoBehaviour
     {
         [SerializeField] GameObject startMenu;
+        [SerializeField] GameObject attributesMenu;
         [SerializeField] LayerMask[] playerLayers;
 
         PlayerInput playerInput;
@@ -23,6 +25,8 @@ namespace ElementsArena.Prototype
             playerController = GetComponent<PlayerController>();
             playerInput = GetComponent<PlayerInput>();
 
+            startMenu.SetActive(true);
+            attributesMenu.SetActive(false);
             ConfigCamera();
         }
 
@@ -33,13 +37,15 @@ namespace ElementsArena.Prototype
             SetSpawn();
             SetCameraTarget(currentBender.transform.Find("CameraTarget"));
             playerController.SetUpController(currentBender.GetComponent<CharacterMovement>(), currentBender.GetComponent<AbilityWrapper>());
+
+            attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(currentBender.GetComponent<IDamageable>());
         }
 
         private void ConfigCamera()
         {
             GetComponentInChildren<Canvas>().worldCamera = gameManager.GetCamera(playerInput.playerIndex);
             GameObject camera = transform.Find("VCam").gameObject;
-            camera.layer = playerLayers[playerInput.playerIndex].value;
+            camera.layer = (int)Mathf.Log(playerLayers[playerInput.playerIndex].value, 2);
         }
 
         private void SetCameraTarget(Transform cameraTarget)
@@ -70,6 +76,7 @@ namespace ElementsArena.Prototype
             if (currentBender != null) Destroy(currentBender);
             SetUpNewBender();
             startMenu.SetActive(false);
+            attributesMenu.SetActive(true);
         }
     }
 }

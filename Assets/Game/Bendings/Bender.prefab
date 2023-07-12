@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1720374533751177507}
   - component: {fileID: -8061275105825238237}
   - component: {fileID: -3150037842507811945}
+  - component: {fileID: 2304275137203063263}
   m_Layer: 0
   m_Name: Bender
   m_TagString: Untagged
@@ -185,6 +186,7 @@ MonoBehaviour:
   primaryAbility: {fileID: 0}
   secundaryAbility: {fileID: 0}
   evadeAbility: {fileID: -3150037842507811945}
+  selectionInput: {x: 0, y: 0}
 --- !u!114 &-3150037842507811945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +203,19 @@ MonoBehaviour:
   cooldownTime: 0.1
   called: 0
   speed: 10
+--- !u!114 &2304275137203063263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8010151269336943460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b21948fd959fb34cb5d8b2e30fad82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLife: 100
 --- !u!1 &8192148334884966157
 GameObject:
   m_ObjectHideFlags: 0

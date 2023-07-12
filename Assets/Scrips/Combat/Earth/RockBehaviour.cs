@@ -5,6 +5,7 @@ namespace ElementsArena.Combat
     public class RockBehaviour : MonoBehaviour
     {
         [SerializeField] float launchSpeed = 2;
+        [SerializeField] GameObject destroyEffect;
 
         float speed = 0;
         private void Update()
