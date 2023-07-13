@@ -41,7 +41,6 @@ namespace ElementsArena.Combat
 
         protected override void OnActive()
         {
-            print(AboveGround());
             if (!AboveGround())
             {
                 ElevateRock();
@@ -105,8 +104,9 @@ namespace ElementsArena.Combat
         private float GroundHeight()
         {
             RaycastHit hit;
+            Vector3 position = transform.position + Vector3.forward * invokeDistance;
 
-            Ray ray = new Ray(transform.position, Vector3.down);
+            Ray ray = new Ray(position, Vector3.down);
             Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
 
             return hit.point.y;

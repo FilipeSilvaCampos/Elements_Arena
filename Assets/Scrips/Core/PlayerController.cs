@@ -13,7 +13,7 @@ namespace ElementsArena.Prototype
         Ability secundaryAbility;
         Ability evadeAbility;
 
-        public bool alive { get; private set; }
+        public bool alive { get; set; }
 
         public void SetUpController(CharacterMovement characterMovement, AbilityWrapper abilityWrapper)
         {

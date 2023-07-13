@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using ElementsArena.Damage;
+using UnityEngine;
 
 namespace ElementsArena.Combat
 {
     public class ProjectileBehaviour : MonoBehaviour
     {
         [SerializeField] float speed = 1.8f;
-        //[SerializeField] float damage = 5;
+        [SerializeField] float damage = 5;
         [SerializeField] float lifeTime = 3;
         [SerializeField] GameObject impactEffect;
         [SerializeField] GameObject[] destroyOnHit;
@@ -13,7 +14,8 @@ namespace ElementsArena.Combat
 
         private void Start()
         {
-            Destroy(gameObject, lifeTime);    
+            GetComponent<TriggerDamage>().Damage = damage;
+            Destroy(gameObject, lifeTime);
         }
 
         private void Update()
@@ -23,7 +25,6 @@ namespace ElementsArena.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            //TODO damage
             foreach(GameObject toDestroy in destroyOnHit)
             {
                 Destroy(toDestroy);

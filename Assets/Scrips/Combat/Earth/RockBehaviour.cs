@@ -1,21 +1,35 @@
-﻿using UnityEngine;
+﻿using ElementsArena.Damage;
+using UnityEngine;
 
 namespace ElementsArena.Combat
 {
     public class RockBehaviour : MonoBehaviour
     {
         [SerializeField] float launchSpeed = 2;
+        [SerializeField] float damage = 10;
         [SerializeField] GameObject destroyEffect;
 
-        float speed = 0;
+        bool launched = false;
         private void Update()
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            if (!launched) return;
+
+            transform.Translate(Vector3.forward * launchSpeed * Time.deltaTime);
         }
 
         public void Launch()
         {
-            speed = launchSpeed;
+            GetComponent<TriggerDamage>().Damage = damage;
+            launched = true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (launched)
+            {
+                Instantiate(destroyEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
         }
     }
 }

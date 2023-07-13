@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3150349938897557543}
   - component: {fileID: 3039409600452083367}
   - component: {fileID: 8133126965276765566}
+  - component: {fileID: 6071434012664812230}
   m_Layer: 6
   m_Name: Boulder
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5021047334075602154}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.088684, y: 1.5429869, z: -4.969679}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.35332, y: 1.411708, z: 1.1768}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -93,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5021047334075602154}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -111,3 +112,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchSpeed: 5
+  damage: 20
+  destroyEffect: {fileID: 3772065794701908778, guid: fb795bc404ccba948b8b6880c807b2a5, type: 3}
+--- !u!114 &6071434012664812230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5021047334075602154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52b1fb00913bc7429009dcf1045b489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0

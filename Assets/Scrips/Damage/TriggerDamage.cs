@@ -4,7 +4,9 @@ namespace ElementsArena.Damage
 {
     public class TriggerDamage : MonoBehaviour
     {
-        int damage;
+        [SerializeField] float damage;
+
+        public float Damage { get { return damage; } set { damage = value; } }
 
         private void OnTriggerEnter(Collider other)
         {

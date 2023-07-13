@@ -11,6 +11,7 @@ namespace ElementsArena.Prototype
     {
         [SerializeField] GameObject startMenu;
         [SerializeField] GameObject attributesMenu;
+        [SerializeField] GameObject gameOverMenu;
         [SerializeField] LayerMask[] playerLayers;
 
         PlayerInput playerInput;
@@ -27,18 +28,22 @@ namespace ElementsArena.Prototype
 
             startMenu.SetActive(true);
             attributesMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
             ConfigCamera();
         }
 
         private void SetUpNewBender()
         {
             currentBender = Instantiate(selectedBender, transform);
-            
+            IDamageable benderDamageable = currentBender.GetComponent<IDamageable>();
+
+
             SetSpawn();
             SetCameraTarget(currentBender.transform.Find("CameraTarget"));
             playerController.SetUpController(currentBender.GetComponent<CharacterMovement>(), currentBender.GetComponent<AbilityWrapper>());
 
-            attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(currentBender.GetComponent<IDamageable>());
+            attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(benderDamageable);
+            benderDamageable.DeathEvent += OnBenderDeath;
         }
 
         private void ConfigCamera()
@@ -46,6 +51,7 @@ namespace ElementsArena.Prototype
             GetComponentInChildren<Canvas>().worldCamera = gameManager.GetCamera(playerInput.playerIndex);
             GameObject camera = transform.Find("VCam").gameObject;
             camera.layer = (int)Mathf.Log(playerLayers[playerInput.playerIndex].value, 2);
+            GetComponentInChildren<Canvas>().planeDistance = 1;
         }
 
         private void SetCameraTarget(Transform cameraTarget)
@@ -64,6 +70,13 @@ namespace ElementsArena.Prototype
             transform.rotation = gameManager.GetSpawn(playerIndex).rotation;
         }
 
+        private void OnBenderDeath()
+        {
+            playerController.alive = false;
+            attributesMenu.SetActive(false);
+            gameOverMenu.SetActive(true);
+        }
+
         public void SelectBender(GameObject benderPrefab)
         {
             selectedBender = benderPrefab;
@@ -74,8 +87,10 @@ namespace ElementsArena.Prototype
             if (selectedBender == null) return;
 
             if (currentBender != null) Destroy(currentBender);
+
             SetUpNewBender();
             startMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
             attributesMenu.SetActive(true);
         }
     }
