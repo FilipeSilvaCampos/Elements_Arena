@@ -11,7 +11,6 @@ namespace ElementsArena.Prototype
     {
         [SerializeField] GameObject startMenu;
         [SerializeField] GameObject attributesMenu;
-        [SerializeField] GameObject gameOverMenu;
         [SerializeField] LayerMask[] playerLayers;
 
         PlayerInput playerInput;
@@ -28,7 +27,6 @@ namespace ElementsArena.Prototype
 
             startMenu.SetActive(true);
             attributesMenu.SetActive(false);
-            gameOverMenu.SetActive(false);
             ConfigCamera();
         }
 
@@ -74,7 +72,7 @@ namespace ElementsArena.Prototype
         {
             playerController.alive = false;
             attributesMenu.SetActive(false);
-            gameOverMenu.SetActive(true);
+            startMenu.SetActive(true);
         }
 
         public void SelectBender(GameObject benderPrefab)
@@ -90,7 +88,6 @@ namespace ElementsArena.Prototype
 
             SetUpNewBender();
             startMenu.SetActive(false);
-            gameOverMenu.SetActive(false);
             attributesMenu.SetActive(true);
         }
     }

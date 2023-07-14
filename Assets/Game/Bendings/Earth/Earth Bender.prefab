@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: secundaryAbility
       value: 
       objectReference: {fileID: -6848170535935463659}
+    - target: {fileID: 6268354390044926130, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d805d830c4023774cb6259aca09f431e, type: 2}
     - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
       propertyPath: m_RootOrder
       value: 0
