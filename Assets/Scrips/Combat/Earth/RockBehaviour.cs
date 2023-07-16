@@ -21,6 +21,7 @@ namespace ElementsArena.Combat
         {
             GetComponent<TriggerDamage>().Damage = damage;
             launched = true;
+            Destroy(gameObject, 20);
         }
 
         private void OnTriggerEnter(Collider other)

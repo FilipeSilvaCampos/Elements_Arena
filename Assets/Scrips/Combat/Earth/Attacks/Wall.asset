@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Wall
   m_EditorClassIdentifier: 
   prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
-  elevateSpeed: 2
+  elevateSpeed: 10

@@ -9,8 +9,10 @@ namespace ElementsArena.Prototype
 {
     public class PlayerManager : MonoBehaviour
     {
+        [Header("HUD")]
         [SerializeField] GameObject startMenu;
         [SerializeField] GameObject attributesMenu;
+
         [SerializeField] LayerMask[] playerLayers;
 
         PlayerInput playerInput;
@@ -18,7 +20,6 @@ namespace ElementsArena.Prototype
         PlayerController playerController;
         GameObject currentBender;
         GameObject selectedBender;
-
         private void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
@@ -34,7 +35,6 @@ namespace ElementsArena.Prototype
         {
             currentBender = Instantiate(selectedBender, transform);
             IDamageable benderDamageable = currentBender.GetComponent<IDamageable>();
-
 
             SetSpawn();
             SetCameraTarget(currentBender.transform.Find("CameraTarget"));

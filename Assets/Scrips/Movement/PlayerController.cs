@@ -31,7 +31,7 @@ namespace ElementsArena.Prototype
             if (alive == false) return;
 
             Vector2 input = context.ReadValue<Vector2>();
-            characterMovement.SetDirection(new Vector3(input.x, 0, input.y));    
+            characterMovement.SetInput(input); 
         }
 
         public void MoveCamera(InputAction.CallbackContext context)

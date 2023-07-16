@@ -21,7 +21,8 @@ namespace ElementsArena.Combat
             if (called)
             {
                 characterMovement.SetLimiter(false);
-                characterRb.velocity = Vector3.right * characterMovement.GetDirection().normalized.x * speed;
+                characterRb.velocity = characterMovement.GetDirection().normalized.x * speed * transform.right;
+
                 FinishState();
             }
         }

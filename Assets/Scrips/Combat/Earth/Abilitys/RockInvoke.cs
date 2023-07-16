@@ -30,12 +30,15 @@ namespace ElementsArena.Combat
         {
             if(called)
             {
+                AvailableToMove(false);
                 if(execute)
                 {
                     ChangeRock();
                     InvokeNewRock();
                     FinishState();
+                    return;
                 }
+                AvailableToMove(true);
             }
         }
 
@@ -46,7 +49,7 @@ namespace ElementsArena.Combat
                 ElevateRock();
                 return;
             }
-
+            AvailableToMove(true);
             FinishState();
         }
 

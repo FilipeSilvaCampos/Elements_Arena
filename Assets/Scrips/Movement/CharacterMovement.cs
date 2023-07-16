@@ -7,19 +7,20 @@ namespace ElementsArena.Movement
         [SerializeField] float maxSpeed = 2;
         [SerializeField] float acceleration = 15;
 
-        [Header("Camera Movement")]
+        [Header("Rotation Movement")]
         [SerializeField] Transform cameraTarget;
-        [SerializeField] float cameraSpeed = 0.5f;
+        [SerializeField] float cameraSpeed = 5;
 
         [Header("Ground Check")]
         [SerializeField] float playerHeith;
         [SerializeField] LayerMask whatIsGround;
 
-        bool limiteSpeed;
+        bool available = true;
+        bool limiteSpeed = true;
         protected Rigidbody characterRb;
 
         protected Vector2 cameraInput;
-        protected Vector3 direction;
+        protected Vector3 moveInput;
         public bool grounded { get; protected set; }
 
         protected virtual void Awake()
@@ -40,9 +41,11 @@ namespace ElementsArena.Movement
 
         private void GroundMovement()
         {
+            if (!available) return;
+
             if (grounded)
             {
-                characterRb.AddRelativeForce(direction * acceleration, ForceMode.Force);
+                characterRb.AddRelativeForce(moveInput * acceleration, ForceMode.Force);
 
                 Vector3 limitedSpeed;
                 if (limiteSpeed && characterRb.velocity.magnitude > maxSpeed)
@@ -64,9 +67,14 @@ namespace ElementsArena.Movement
             limiteSpeed = value;
         }
 
-        public void SetDirection(Vector3 direction)
+        public void SetAvailable(bool value)
         {
-            this.direction = direction;
+            available = value;
+        }
+
+        public void SetInput(Vector2 input)
+        {
+            moveInput = new Vector3(input.x, 0, input.y);
         }
 
         public void SetCameraInput(Vector2 input)
@@ -76,7 +84,7 @@ namespace ElementsArena.Movement
 
         public Vector3 GetDirection()
         {
-            return direction;
+            return moveInput;
         }
 
         public void BreakMovement()

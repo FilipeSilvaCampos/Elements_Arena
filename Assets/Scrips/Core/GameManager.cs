@@ -45,5 +45,10 @@ namespace ElementsArena.Prototype
                 else cameras[i].rect = new Rect(0, -0.5f, 1, 1);
             }
         }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }

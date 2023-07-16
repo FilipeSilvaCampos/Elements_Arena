@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Boulder
   m_EditorClassIdentifier: 
   prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
-  elevateSpeed: 2
+  elevateSpeed: 6

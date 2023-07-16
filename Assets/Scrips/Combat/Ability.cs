@@ -1,3 +1,4 @@
+using ElementsArena.Movement;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -13,6 +14,7 @@ namespace ElementsArena.Combat
     {
         [SerializeField] protected float activeTime = 1;
         [SerializeField] protected float cooldownTime = 1.5f;
+        [SerializeField] protected AnimatorOverrideController animatorOV = null; 
 
         float timeSinceLastChangeState;
         protected AbilityStates currentState;
@@ -70,6 +72,16 @@ namespace ElementsArena.Combat
                     else return false;
             }
             return false;
+        }
+
+        protected void AvailableToMove(bool value)
+        {
+            GetComponent<CharacterMovement>().SetAvailable(value);
+        }
+
+        public AnimatorOverrideController GetAnimatotOV()
+        {
+            return animatorOV;
         }
     }
 }

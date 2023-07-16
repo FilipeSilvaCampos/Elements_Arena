@@ -152,11 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8775c66bc6ba82e47ad43c817c34033c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTime: 2
+  activeTime: 6
   cooldownTime: 0.5
   called: 0
-  maxFlySpeed: 5
-  flyAcceleration: 20
+  maxFlySpeed: 10
+  flyAcceleration: 45
   flyHeight: 5
   groundLayer:
     serializedVersion: 2

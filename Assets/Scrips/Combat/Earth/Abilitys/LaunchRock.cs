@@ -17,6 +17,7 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
+                AvailableToMove(false);
                 if(GetRockOnForward())
                 {
                     FinishState();
@@ -37,6 +38,7 @@ namespace ElementsArena.Combat
             };
 
             currentRock.GetComponent<RockBehaviour>().Launch();
+            AvailableToMove(true);
             FinishState();
         }
 
