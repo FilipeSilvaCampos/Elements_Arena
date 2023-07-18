@@ -1,4 +1,6 @@
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace ElementsArena.Combat
 {
@@ -7,10 +9,10 @@ namespace ElementsArena.Combat
         [SerializeField] FireScrtiptableProjectile[] projectiles;
         [SerializeField] Transform launchTransform;
         [SerializeField] float timeWithoutReaction = 1.8f;
+        [SerializeField] Rig shootRig = null;
 
         float timeSinceLastLaunch = 0;
         int counter = 0;
-
         protected override void Update()
         {
             base.Update();
@@ -21,7 +23,8 @@ namespace ElementsArena.Combat
         {
             if(called)
             {
-                LaunchAttack();
+                shootRig.weight = 1;
+                LaunchProjectile();
                 FinishState();
             }
         }
@@ -31,16 +34,14 @@ namespace ElementsArena.Combat
             if (counter >= projectiles.Length || timeSinceLastLaunch > timeWithoutReaction) 
             {
                 counter = 0;
+                shootRig.weight = 0;
                 FinishState();
                 return;
             }
 
-            if(called)
+            if(called && timeSinceLastLaunch > projectiles[counter].launchTime)
             {
-                if(timeSinceLastLaunch > projectiles[counter].launchTime)
-                {
-                    LaunchAttack();
-                }
+                LaunchProjectile();
             }
         }
 
@@ -49,8 +50,13 @@ namespace ElementsArena.Combat
             if (TimeToChangeState()) FinishState();
         }
 
-        private void LaunchAttack()
+        private void LaunchProjectile()
         {
+            if (shootRig)
+            {
+                DOVirtual.Float(0, 1, .1f, (x) => shootRig.weight = x).OnComplete(() => DOVirtual.Float(1, 0, .3f, (x) => shootRig.weight = x));
+            }
+
             Instantiate(projectiles[counter].prefab, launchTransform.position, launchTransform.rotation);
             timeSinceLastLaunch = 0;
             counter++;

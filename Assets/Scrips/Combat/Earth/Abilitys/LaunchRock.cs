@@ -1,3 +1,4 @@
+using ElementsArena.Core;
 using UnityEngine;
 
 namespace ElementsArena.Combat 
@@ -12,7 +13,18 @@ namespace ElementsArena.Combat
         [SerializeField] float moveRockSpeed = 2;
         [SerializeField] float rotateRockSpeed = 10;
 
+        AnimationEventTravler eventTravler;
         GameObject currentRock;
+        Animator animator;
+
+        private void Awake()
+        {
+            animator = GetComponentInChildren<Animator>();
+            eventTravler = GetComponentInChildren<AnimationEventTravler>();
+
+            eventTravler.OnHitEvent += Launch;
+        }
+
         protected override void OnReady()
         {
             if (called)
@@ -31,15 +43,15 @@ namespace ElementsArena.Combat
 
         protected override void OnActive()
         {
-            if (!OnTarget()) 
+            if (OnTarget())
             {
-                MoveToTarget();
+                animator.SetTrigger(AnimationKeys.LaunchTrigger);
+                AvailableToMove(true);
+                FinishState();
                 return;
             };
-
-            currentRock.GetComponent<RockBehaviour>().Launch();
-            AvailableToMove(true);
-            FinishState();
+            
+            MoveToTarget();
         }
 
         protected override void OnCooldown()
@@ -74,6 +86,14 @@ namespace ElementsArena.Combat
             else return false;
         }
 
+        private Vector3 GetInvokePosition()
+        {
+            Vector3 invokePosition = launchTransform.position;
+            invokePosition.y = GroundHeight() - rock.transform.localScale.y / 2;
+
+            return invokePosition;
+        }
+
         private bool OnTarget()
         {
             bool onPosition = currentRock.transform.position == launchTransform.position ? true : false;
@@ -82,13 +102,13 @@ namespace ElementsArena.Combat
             return onPosition && onRotation;
         }
 
-        private Vector3 GetInvokePosition()
+        //Animation Event
+        private void Launch()
         {
-            Vector3 invokePosition = launchTransform.position;
-            invokePosition.y = GroundHeight() - rock.transform.localScale.y / 2;
-
-            return invokePosition;
+            currentRock.GetComponent<RockBehaviour>().Launch();
         }
+
+        
 
         private float GroundHeight()
         {

@@ -12,13 +12,15 @@ namespace ElementsArena.Combat
         [SerializeField] GameObject throwEffect;
         [SerializeField] Transform footTransform;
 
+        Animator animator;
         Rigidbody characterRb;
         CharacterMovement characterMovement;
 
-        private void Start()
+        private void Awake()
         {
             characterRb = GetComponent<Rigidbody>();
             characterMovement = GetComponent<CharacterMovement>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         private void FixedUpdate()
@@ -30,6 +32,7 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
+                animator.SetBool(AnimationKeys.FlyBool, true);
                 Destroy(Instantiate(throwEffect, footTransform), activeTime);
                 characterRb.useGravity = false;
                 FinishState();
@@ -44,6 +47,7 @@ namespace ElementsArena.Combat
             if (TimeToChangeState()) 
             {
                 characterRb.useGravity = true;
+                animator.SetBool(AnimationKeys.FlyBool, false);
                 FinishState();
             }
         }

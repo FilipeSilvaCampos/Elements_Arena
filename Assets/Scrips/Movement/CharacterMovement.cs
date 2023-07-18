@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public static class AnimationKeys
+{
+    public const string HorizontalFloat = "hSpeed";
+    public const string VerticalFloat = "vSpeed";
+    public const string FlyBool = "FlyBool";
+    public const string LaunchTrigger = "LaunchTrigger";
+}
+
 namespace ElementsArena.Movement
 {
     public class CharacterMovement : MonoBehaviour
@@ -17,20 +25,23 @@ namespace ElementsArena.Movement
 
         bool available = true;
         bool limiteSpeed = true;
-        protected Rigidbody characterRb;
-
-        protected Vector2 cameraInput;
+        Animator animator;
         protected Vector3 moveInput;
+        protected Vector2 cameraInput;
+        protected Rigidbody characterRb;
         public bool grounded { get; protected set; }
 
         protected virtual void Awake()
         {
             characterRb = GetComponent<Rigidbody>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         protected virtual void Update()
         {
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeith * 0.5f + 0.2f, whatIsGround);
+            animator.SetFloat(AnimationKeys.VerticalFloat, moveInput.z);
+            animator.SetFloat(AnimationKeys.HorizontalFloat, moveInput.x);
         }
 
         protected virtual void FixedUpdate()

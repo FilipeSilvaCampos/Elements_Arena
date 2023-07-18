@@ -791,7 +791,7 @@ MonoBehaviour:
   - {fileID: 1666921653}
   cameras:
   - {fileID: 963194227}
-  - {fileID: 0}
+  - {fileID: 1499635412}
 --- !u!4 &1194131717
 Transform:
   m_ObjectHideFlags: 0
@@ -865,12 +865,12 @@ GameObject:
   - component: {fileID: 1499635411}
   - component: {fileID: 1499635410}
   m_Layer: 0
-  m_Name: P1 Main Camera (1)
+  m_Name: P2 Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1499635409
 Transform:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 255
+    m_Bits: 383
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

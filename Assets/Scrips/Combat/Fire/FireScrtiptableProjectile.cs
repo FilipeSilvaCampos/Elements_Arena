@@ -6,6 +6,6 @@ namespace ElementsArena.Combat
     public class FireScrtiptableProjectile : ScriptableObject
     {
         public GameObject prefab;
-        public float launchTime;
+        public float launchTime = 0.5f;
     }
 }
