@@ -233,7 +233,7 @@ MonoBehaviour:
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 3
-    m_UpAxis: 1
+    m_UpAxis: 2
     m_WorldUpType: 0
     m_WorldUpObject: {fileID: 0}
     m_WorldUpAxis: 2
@@ -342,7 +342,7 @@ MonoBehaviour:
   maxSpeed: 4.403
   acceleration: 20
   cameraTarget: {fileID: 1663433095795321285}
-  cameraSpeed: 2
+  cameraSpeed: 100
   playerHeith: 2
   whatIsGround:
     serializedVersion: 2

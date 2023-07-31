@@ -13,14 +13,14 @@ namespace ElementsArena.Combat
         [SerializeField] float moveRockSpeed = 2;
         [SerializeField] float rotateRockSpeed = 10;
 
-        AnimationEventTravler eventTravler;
+        AnimationEventsTravler eventTravler;
         GameObject currentRock;
         Animator animator;
 
         private void Awake()
         {
             animator = GetComponentInChildren<Animator>();
-            eventTravler = GetComponentInChildren<AnimationEventTravler>();
+            eventTravler = GetComponentInChildren<AnimationEventsTravler>();
 
             eventTravler.OnHitEvent += Launch;
         }

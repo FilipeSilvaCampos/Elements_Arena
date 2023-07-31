@@ -6,6 +6,7 @@ public static class AnimationKeys
     public const string VerticalFloat = "vSpeed";
     public const string FlyBool = "FlyBool";
     public const string LaunchTrigger = "LaunchTrigger";
+    public const string RollTrigger = "RollTrigger";
 }
 
 namespace ElementsArena.Movement
@@ -69,8 +70,8 @@ namespace ElementsArena.Movement
 
         private void CameraMovement()
         {
-            transform.eulerAngles += Vector3.up * cameraInput.x * cameraSpeed;
-            cameraTarget.eulerAngles += Vector3.right * cameraInput.y * cameraSpeed;
+            transform.eulerAngles += Vector3.up * cameraInput.x * cameraSpeed * Time.deltaTime;
+            cameraTarget.eulerAngles += Vector3.right * cameraInput.y * cameraSpeed * Time.deltaTime;
         }
 
         public void SetLimiter(bool value)
@@ -85,6 +86,9 @@ namespace ElementsArena.Movement
 
         public void SetInput(Vector2 input)
         {
+            moveInput = Vector3.zero;
+
+            if (!available) return;
             moveInput = new Vector3(input.x, 0, input.y);
         }
 

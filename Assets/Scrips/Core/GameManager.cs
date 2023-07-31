@@ -7,12 +7,18 @@ namespace ElementsArena.Prototype
     {
         [SerializeField] Transform[] spawns;
         [SerializeField] Camera[] cameras;
+        [SerializeField] GameObject startMenu;
+        [SerializeField] GameObject selectCharacterMenu;
 
         PlayerInputManager playerInputManager;
+        private void Awake()
+        {
+            playerInputManager = FindObjectOfType<PlayerInputManager>();
+        }
 
         private void Start()
         {
-            playerInputManager = FindObjectOfType<PlayerInputManager>();
+            playerInputManager.DisableJoining();
         }
 
         public Transform GetSpawn(int playerIndex)

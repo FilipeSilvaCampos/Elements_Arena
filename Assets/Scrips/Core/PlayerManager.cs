@@ -15,11 +15,11 @@ namespace ElementsArena.Prototype
 
         [SerializeField] LayerMask[] playerLayers;
 
+        GameObject currentBender;
+        GameObject selectedBender;
         PlayerInput playerInput;
         GameManager gameManager;
         PlayerController playerController;
-        GameObject currentBender;
-        GameObject selectedBender;
         private void Start()
         {
             gameManager = FindObjectOfType<GameManager>();

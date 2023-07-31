@@ -23,7 +23,6 @@ namespace ElementsArena.Combat
         {
             if(called)
             {
-                shootRig.weight = 1;
                 LaunchProjectile();
                 FinishState();
             }
@@ -34,7 +33,6 @@ namespace ElementsArena.Combat
             if (counter >= projectiles.Length || timeSinceLastLaunch > timeWithoutReaction) 
             {
                 counter = 0;
-                shootRig.weight = 0;
                 FinishState();
                 return;
             }

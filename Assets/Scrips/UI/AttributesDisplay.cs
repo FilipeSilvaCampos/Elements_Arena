@@ -19,7 +19,6 @@ public class AttributesDisplay : MonoBehaviour
     public void SetUpAttributes(IDamageable damageable)
     {
         alive = true;
-
         this.damageable = damageable;
     }
 }

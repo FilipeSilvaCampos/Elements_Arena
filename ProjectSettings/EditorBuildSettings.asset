@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StartGameScene.unity
+    guid: fbbf311bcc36658499315e27efe51564
+  - enabled: 1
+    path: Assets/Scenes/LavaArena/LavaArena.unity
+    guid: fff9f6342dfbd5b4c8926d0e8f1e0d06
   m_configObjects: {}

@@ -9,9 +9,11 @@ namespace ElementsArena.Combat
 
         CharacterMovement characterMovement;
         Rigidbody characterRb;
+        Animator animator;
 
-        private void Start()
+        private void Awake()
         {
+            animator = GetComponentInChildren<Animator>();
             characterMovement = GetComponent<CharacterMovement>();
             characterRb = GetComponent<Rigidbody>();
         }
@@ -22,6 +24,7 @@ namespace ElementsArena.Combat
             {
                 characterMovement.SetLimiter(false);
                 characterRb.velocity = characterMovement.GetDirection().normalized.x * speed * transform.right;
+                animator.SetTrigger(AnimationKeys.RollTrigger);
 
                 FinishState();
             }
