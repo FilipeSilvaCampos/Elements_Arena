@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using ElementsArena.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 public class CursorController : MonoBehaviour
 {
     GameObject cursor;
-    NewPlayerManager playerManager;
+    PlayerManager playerManager;
     PlayerInput playerInput;
     Selectable currentSelectable;
     Selectable nextSelectButton;
@@ -15,19 +14,14 @@ public class CursorController : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        playerManager = GetComponent<NewPlayerManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
-    public GameObject Cursor
-    { 
-        get { return cursor; } 
-
-        set 
-        { 
-            cursor = value;
-            currentSelectable = FindObjectOfType<Selectable>();
-            cursor.transform.position = currentSelectable.transform.position;
-        }
+    public void SetCursor(GameObject cursor)
+    {
+        this.cursor = cursor;
+        currentSelectable = FindObjectOfType<Selectable>();
+        this.cursor.transform.position = currentSelectable.transform.position;
     }
 
     public void MoveCursor(InputAction.CallbackContext context)

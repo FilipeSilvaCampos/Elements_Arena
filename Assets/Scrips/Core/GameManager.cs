@@ -1,60 +1,107 @@
+using ElementsArena.SceneManagement;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-namespace ElementsArena.Prototype
+namespace ElementsArena.Core
 {
+    public class Player
+    {
+        public Player(GameObject player)
+        {
+            gameObject = player;
+            playerInput = player.GetComponent<PlayerInput>();
+            playerManager = player.GetComponent<PlayerManager>();
+        }
+
+        public PlayerInput playerInput;
+        public PlayerManager playerManager;
+        public GameObject gameObject;
+    }
+
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] Transform[] spawns;
-        [SerializeField] Camera[] cameras;
-        [SerializeField] GameObject startMenu;
-        [SerializeField] GameObject selectCharacterMenu;
+        [SerializeField] GameObject startScreen;
+        [SerializeField] GameObject selectCharacterScreen;
+        [SerializeField] GameObject[] cursors;
+        [SerializeField] LayerMask[] playersLayers;
+        [SerializeField] Scene level = null;
 
+        public event Action onSelectScreen;
+        bool gameStarted = false;
         PlayerInputManager playerInputManager;
+        Dictionary<int, Player> players = new Dictionary<int, Player>();
+
         private void Awake()
         {
-            playerInputManager = FindObjectOfType<PlayerInputManager>();
+            playerInputManager = GetComponent<PlayerInputManager>();
         }
 
         private void Start()
         {
+            playerInputManager.onPlayerJoined += RegisterNewPlayer;
+        }
+
+        private void RegisterNewPlayer(PlayerInput playerInput)
+        {
+            GameObject player = playerInput.gameObject;
+
+            Player newPlayer = new Player(player);
+            players.Add(playerInput.playerIndex, newPlayer);
+            DontDestroyOnLoad(player);
+        }
+
+        private IEnumerator LoadLevel(Scene level)
+        {
+            DontDestroyOnLoad(gameObject);
+            yield return SceneManager.LoadSceneAsync(level.id);
+
+            if (players.Count == 2)
+            {
+                FindObjectOfType<LevelManager>().SetSplitScreen();
+            }
+
+            SetPlayers(level);
+        }
+
+        private void SetPlayers(Scene level)
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].playerManager.SetUpPlayer(playersLayers[i]);
+                players[i].gameObject.transform.position = level.spawns[i].position;
+                players[i].gameObject.transform.rotation = level.spawns[i].rotation;
+            }
+        }
+
+        public GameObject GetCursor(int playerIndex)
+        {
+            cursors[playerIndex].SetActive(true);
+            return cursors[playerIndex];
+        }
+
+        public void ShowSelectionScreen()
+        {
+            startScreen.SetActive(false);
+            selectCharacterScreen.SetActive(true);
             playerInputManager.DisableJoining();
+            onSelectScreen.Invoke();
         }
 
-        public Transform GetSpawn(int playerIndex)
+        public void StartGame()
         {
-            if (playerIndex < spawns.Length) return spawns[playerIndex];
-            else return spawns[0];
-        }
+            if (gameStarted) return;
 
-        public Camera GetCamera(int playerIndex)
-        {
-            if (playerIndex < cameras.Length)
+            for (int i = 0; i < players.Count; i++)
             {
-                cameras[playerIndex].gameObject.SetActive(true);
-                return cameras[playerIndex];
+                if (!players[i].playerManager.ready) return;
             }
-            else
-            {
-                cameras[0].gameObject.SetActive(true);
-                return cameras[0];
-            }
-        }
 
-        public void SetSplitScreen()
-        {
-            if (playerInputManager.playerCount < 2) return;
-
-            for (int i = 0; i < cameras.Length; i++)
-            {
-                if (i == 0) cameras[i].rect = new Rect(0, 0.5f, 1, 1);
-                else cameras[i].rect = new Rect(0, -0.5f, 1, 1);
-            }
-        }
-
-        public void QuitGame()
-        {
-            Application.Quit();
+            gameStarted = true;
+            StartCoroutine(LoadLevel(level));
         }
     }
 }

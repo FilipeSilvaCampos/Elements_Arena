@@ -280,13 +280,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: AimRig
       objectReference: {fileID: 0}
-    - target: {fileID: 7743028272977488062, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743028272977488062, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.3
+    - target: {fileID: 7797099564538920922, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7984619310514361642, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
       propertyPath: m_RigLayers.Array.size

@@ -8,6 +8,7 @@ namespace ElementsArena.Prototype
     public class PlayerController : MonoBehaviour
     {
         CharacterMovement characterMovement;
+        CameraController cameraController;
         AbilityWrapper abilityWrapper;
         Ability primaryAbility;
         Ability secundaryAbility;
@@ -15,11 +16,12 @@ namespace ElementsArena.Prototype
 
         public bool alive { get; set; }
 
-        public void SetUpController(CharacterMovement characterMovement, AbilityWrapper abilityWrapper)
+        public void SetUpController(CharacterMovement characterMovement, AbilityWrapper abilityWrapper, CameraController cameraController)
         {
             alive = true;
 
             this.characterMovement = characterMovement;
+            this.cameraController = cameraController;
             this.abilityWrapper = abilityWrapper;
             primaryAbility = abilityWrapper.primaryAbility;
             secundaryAbility = abilityWrapper.secundaryAbility;
@@ -31,14 +33,18 @@ namespace ElementsArena.Prototype
             if (alive == false) return;
 
             Vector2 input = context.ReadValue<Vector2>();
-            characterMovement.SetInput(input); 
+            characterMovement.SetInput(new CharacterMovementInput()
+            {
+                MoveInput = input,
+            });
         }
 
         public void MoveCamera(InputAction.CallbackContext context)
         {
             if (alive == false) return;
 
-            characterMovement.SetCameraInput(context.ReadValue<Vector2>());
+            Vector2 input = context.ReadValue<Vector2>();
+            cameraController.IncrementCameraRotation(new Vector2(-input.y, input.x));
         }
 
         public void SetSelectionInput(InputAction.CallbackContext context)

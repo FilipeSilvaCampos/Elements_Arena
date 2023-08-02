@@ -1,94 +1,84 @@
+﻿using Cinemachine;
 using ElementsArena.Combat;
+using ElementsArena.Damage;
 using ElementsArena.Movement;
+using ElementsArena.Prototype;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
-using ElementsArena.Damage;
 
-namespace ElementsArena.Prototype
+namespace ElementsArena.Core
 {
     public class PlayerManager : MonoBehaviour
     {
-        [Header("HUD")]
-        [SerializeField] GameObject startMenu;
-        [SerializeField] GameObject attributesMenu;
-
-        [SerializeField] LayerMask[] playerLayers;
-
-        GameObject currentBender;
-        GameObject selectedBender;
-        PlayerInput playerInput;
         GameManager gameManager;
+        PlayerInput playerInput;
+        CursorController cursorController;
         PlayerController playerController;
-        private void Start()
+
+        Character selectedCharacter = null;
+        public bool ready;
+        private void Awake()
         {
+            cursorController = GetComponent<CursorController>();
+            playerInput = GetComponent<PlayerInput>();
             gameManager = FindObjectOfType<GameManager>();
             playerController = GetComponent<PlayerController>();
-            playerInput = GetComponent<PlayerInput>();
-
-            startMenu.SetActive(true);
-            attributesMenu.SetActive(false);
-            ConfigCamera();
         }
 
-        private void SetUpNewBender()
+        private void Start()
         {
-            currentBender = Instantiate(selectedBender, transform);
-            IDamageable benderDamageable = currentBender.GetComponent<IDamageable>();
-
-            SetSpawn();
-            SetCameraTarget(currentBender.transform.Find("CameraTarget"));
-            playerController.SetUpController(currentBender.GetComponent<CharacterMovement>(), currentBender.GetComponent<AbilityWrapper>());
-
-            attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(benderDamageable);
-            benderDamageable.DeathEvent += OnBenderDeath;
+            gameManager.onSelectScreen += SetCursor;
         }
 
-        private void ConfigCamera()
+        private void SetCursor()
         {
-            GetComponentInChildren<Canvas>().worldCamera = gameManager.GetCamera(playerInput.playerIndex);
-            GameObject camera = transform.Find("VCam").gameObject;
-            camera.layer = (int)Mathf.Log(playerLayers[playerInput.playerIndex].value, 2);
-            GetComponentInChildren<Canvas>().planeDistance = 1;
+            cursorController.SetCursor(gameManager.GetCursor(playerInput.playerIndex));
         }
 
-        private void SetCameraTarget(Transform cameraTarget)
+        private void SetCamera(GameObject bender, LayerMask playerLayer)
         {
-            CinemachineVirtualCamera vcam = GetComponentInChildren<CinemachineVirtualCamera>();
+            Transform cameraTarget = bender.GetComponentInChildren<CameraController>().GetCameraTarget();
+            CinemachineVirtualCamera vcam = bender.GetComponentInChildren<CinemachineVirtualCamera>();
+            GameObject cameraObject = vcam.gameObject;
 
             vcam.Follow = cameraTarget;
             vcam.LookAt = cameraTarget;
+            cameraObject.layer = (int)Mathf.Log(playerLayer.value, 2);
         }
 
-        private void SetSpawn()
+        private void SetSpawn(Spawn spawn)
         {
-            int playerIndex = playerInput.playerIndex;
-
-            transform.position = gameManager.GetSpawn(playerIndex).position;
-            transform.rotation = gameManager.GetSpawn(playerIndex).rotation;
+            transform.position = spawn.position;
+            transform.rotation = spawn.rotation;
         }
 
-        private void OnBenderDeath()
+        public void SetUpPlayer(LayerMask playerLayer)
         {
-            playerController.alive = false;
-            attributesMenu.SetActive(false);
-            startMenu.SetActive(true);
+            GameObject bender = Instantiate(selectedCharacter.prefab, transform);
+            IDamageable benderDamageable = bender.GetComponent<IDamageable>();
+
+            SetCamera(bender, playerLayer);
+
+            playerController.SetUpController
+            (
+            bender.GetComponent<CharacterMovement>(),
+            bender.GetComponent<AbilityWrapper>(),
+            bender.GetComponentInChildren<CameraController>()
+            );
+            //attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(benderDamageable);
+            //benderDamageable.DeathEvent += OnBenderDeath;
         }
 
-        public void SelectBender(GameObject benderPrefab)
+        public void SetCharacter(Character character)
         {
-            selectedBender = benderPrefab;
+            selectedCharacter = character;
+            ready = true;
+            gameManager.StartGame();
         }
 
-        public void StartGame()
+        public Character GetCharacter()
         {
-            if (selectedBender == null) return;
-
-            if (currentBender != null) Destroy(currentBender);
-
-            SetUpNewBender();
-            startMenu.SetActive(false);
-            attributesMenu.SetActive(true);
+            return selectedCharacter;
         }
     }
 }

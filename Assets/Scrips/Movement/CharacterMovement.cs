@@ -11,14 +11,15 @@ public static class AnimationKeys
 
 namespace ElementsArena.Movement
 {
+    public struct CharacterMovementInput
+    {
+        public Vector2 MoveInput;
+    }
+
     public class CharacterMovement : MonoBehaviour
     {
         [SerializeField] float maxSpeed = 2;
         [SerializeField] float acceleration = 15;
-
-        [Header("Rotation Movement")]
-        [SerializeField] Transform cameraTarget;
-        [SerializeField] float cameraSpeed = 5;
 
         [Header("Ground Check")]
         [SerializeField] float playerHeith;
@@ -28,7 +29,6 @@ namespace ElementsArena.Movement
         bool limiteSpeed = true;
         Animator animator;
         protected Vector3 moveInput;
-        protected Vector2 cameraInput;
         protected Rigidbody characterRb;
         public bool grounded { get; protected set; }
 
@@ -47,8 +47,14 @@ namespace ElementsArena.Movement
 
         protected virtual void FixedUpdate()
         {
-            CameraMovement();
             GroundMovement();
+        }
+
+        public void SetInput(CharacterMovementInput input)
+        {
+            if (!available) return;
+
+            moveInput = new Vector3(input.MoveInput.x, 0, input.MoveInput.y).normalized;
         }
 
         private void GroundMovement()
@@ -68,12 +74,6 @@ namespace ElementsArena.Movement
             }
         }
 
-        private void CameraMovement()
-        {
-            transform.eulerAngles += Vector3.up * cameraInput.x * cameraSpeed * Time.deltaTime;
-            cameraTarget.eulerAngles += Vector3.right * cameraInput.y * cameraSpeed * Time.deltaTime;
-        }
-
         public void SetLimiter(bool value)
         {
             limiteSpeed = value;
@@ -82,19 +82,6 @@ namespace ElementsArena.Movement
         public void SetAvailable(bool value)
         {
             available = value;
-        }
-
-        public void SetInput(Vector2 input)
-        {
-            moveInput = Vector3.zero;
-
-            if (!available) return;
-            moveInput = new Vector3(input.x, 0, input.y);
-        }
-
-        public void SetCameraInput(Vector2 input)
-        {
-            cameraInput = input;
         }
 
         public Vector3 GetDirection()
