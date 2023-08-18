@@ -5,7 +5,7 @@ namespace ElementsArena.Damage
     public interface IDamageable
     {
         float life { get; }
-        event Action DeathEvent;
+        event Action OnDeath;
         void TakeDamage(float damage);
     }
 }

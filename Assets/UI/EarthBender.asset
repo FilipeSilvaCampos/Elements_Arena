@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01df91cab1f84cf4a82298b5639799ea, type: 3}
   m_Name: EarthBender
   m_EditorClassIdentifier: 
+  characterSprite: {fileID: 21300000, guid: 2139ee1c7b52d0c4d84050522c2f5105, type: 3}
   prefab: {fileID: 5890960691958954804, guid: afa3513578fccc342aea4c11ec259838, type: 3}

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using ElementsArena.Movement;
+using UnityEngine;
 
-namespace ElementsArena.Movement
+namespace ElementsArena.Control
 {
     [ExecuteAlways]
     public class CameraController : MonoBehaviour
@@ -18,12 +19,6 @@ namespace ElementsArena.Movement
         {
             cameraTarget.position = characterMovement.transform.position + Vector3.up * targetHeight;
             cameraTarget.rotation = Quaternion.Euler(targetLook.x, targetLook.y, 0);
-
-            //Rotate character
-            Quaternion targetRotation = cameraTarget.rotation;
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            characterMovement.transform.rotation = targetRotation;
         }
 
         public Transform GetCameraTarget()

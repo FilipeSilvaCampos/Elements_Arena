@@ -8,7 +8,7 @@ namespace ElementsArena.Damage
         [SerializeField] float maxLife;
         public float life { get; private set; }
 
-        public event Action DeathEvent;
+        public event Action OnDeath;
 
         private void Start()
         {
@@ -26,12 +26,11 @@ namespace ElementsArena.Damage
         public void TakeDamage(float damage)
         {
             life -= damage;
-            if (life > 0)
-            {
-                return;
-            }
 
-            DeathEvent.Invoke();
+            if (life <= 0)
+            {
+                OnDeath.Invoke();
+            }
         }
     }
 }

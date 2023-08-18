@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace ElementsArena.Core
 {
     public class AnimationEventsTravler : MonoBehaviour
     {
-        public event Action OnHitEvent;
+        [SerializeField] UnityEvent OnHitEvent;
 
         //Animation Event
         private void Hit()

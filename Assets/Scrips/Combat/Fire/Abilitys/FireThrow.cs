@@ -5,7 +5,7 @@ namespace ElementsArena.Combat
 {
     public class FireThrow : Ability
     {
-        [SerializeField] float maxFlySpeed = 5;
+        [SerializeField] float flyMaxSpeed = 5;
         [SerializeField] float flyAcceleration = 15;
         [SerializeField] float flyHeight = 3;
         [SerializeField] LayerMask groundLayer;
@@ -18,12 +18,12 @@ namespace ElementsArena.Combat
 
         private void Awake()
         {
-            characterRb = GetComponent<Rigidbody>();
-            characterMovement = GetComponent<CharacterMovement>();
+            characterRb = GetComponentInChildren<Rigidbody>();
+            characterMovement = GetComponentInChildren<CharacterMovement>();
             animator = GetComponentInChildren<Animator>();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             if (currentState == AbilityStates.active) FlyMovement();
         }
@@ -42,9 +42,8 @@ namespace ElementsArena.Combat
         protected override void OnActive()
         {
             ControlHeight();
-            FlyMovement();
 
-            if (TimeToChangeState()) 
+            if (TimeToChangeState())
             {
                 characterRb.useGravity = true;
                 animator.SetBool(AnimationKeys.FlyBool, false);
@@ -68,26 +67,21 @@ namespace ElementsArena.Combat
 
         private void FlyMovement()
         {
-            characterRb.AddRelativeForce(characterMovement.GetDirection() * flyAcceleration, ForceMode.Force);
-
-            Vector3 limitedSpeed;
-            if (characterRb.velocity.magnitude > maxFlySpeed)
-            {
-                limitedSpeed = characterRb.velocity.normalized * maxFlySpeed;
-                characterRb.velocity = new Vector3(limitedSpeed.x, characterRb.velocity.y, limitedSpeed.z);
-            }
+            Vector3 currentVelocity = characterRb.velocity;
+            Vector3 targetSpeed = characterMovement.GetDirection() * flyMaxSpeed;
+            characterRb.velocity = Vector3.MoveTowards(currentVelocity, targetSpeed, flyAcceleration * Time.deltaTime);
         }
 
         private void ControlHeight()
         {
             if(transform.position.y - GroundHeight() < flyHeight)
             {
-                transform.position += Vector3.up * maxFlySpeed * Time.deltaTime;
+                transform.position += Vector3.up * flyMaxSpeed * Time.deltaTime;
             }
 
             if(transform.position.y - GroundHeight() > flyHeight)
             {
-                transform.position += Vector3.down * maxFlySpeed * Time.deltaTime;
+                transform.position += Vector3.down * flyMaxSpeed * Time.deltaTime;
             }
         }
     }

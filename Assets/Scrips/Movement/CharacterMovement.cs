@@ -14,69 +14,71 @@ namespace ElementsArena.Movement
     public struct CharacterMovementInput
     {
         public Vector2 MoveInput;
+        public Quaternion LookRotation;
     }
 
     public class CharacterMovement : MonoBehaviour
     {
+        [Header("Ground Movement")]
         [SerializeField] float maxSpeed = 2;
         [SerializeField] float acceleration = 15;
+        [SerializeField] float rotationSpeed = 10;
 
         [Header("Ground Check")]
         [SerializeField] float playerHeith;
         [SerializeField] LayerMask whatIsGround;
 
-        bool available = true;
-        bool limiteSpeed = true;
+        public bool available = true;
         Animator animator;
-        protected Vector3 moveInput;
-        protected Rigidbody characterRb;
-        public bool grounded { get; protected set; }
+        Vector3 moveInput;
+        Rigidbody characterRb;
+        public bool grounded { get; private set; }
 
-        protected virtual void Awake()
+        private void Awake()
         {
             characterRb = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
         }
 
-        protected virtual void Update()
+        private void Update()
         {
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeith * 0.5f + 0.2f, whatIsGround);
             animator.SetFloat(AnimationKeys.VerticalFloat, moveInput.z);
             animator.SetFloat(AnimationKeys.HorizontalFloat, moveInput.x);
         }
 
-        protected virtual void FixedUpdate()
+        private void LateUpdate()
         {
-            GroundMovement();
+            if (!available) return;
+
+            UpdateRotation(Quaternion.LookRotation(moveInput));
+            if (grounded)
+            {
+                GroundMovement();
+            }
         }
 
         public void SetInput(CharacterMovementInput input)
         {
             if (!available) return;
 
-            moveInput = new Vector3(input.MoveInput.x, 0, input.MoveInput.y).normalized;
+            moveInput = new Vector3(input.MoveInput.x, 0, input.MoveInput.y);
+
+            moveInput = input.LookRotation * moveInput;
+            moveInput.y = 0;
+            moveInput.Normalize();
         }
 
         private void GroundMovement()
         {
-            if (!available) return;
-
-            if (grounded)
-            {
-                characterRb.AddRelativeForce(moveInput * acceleration, ForceMode.Force);
-
-                Vector3 limitedSpeed;
-                if (limiteSpeed && characterRb.velocity.magnitude > maxSpeed)
-                {
-                    limitedSpeed = characterRb.velocity.normalized * maxSpeed;
-                    characterRb.velocity = new Vector3(limitedSpeed.x, characterRb.velocity.y, limitedSpeed.z);
-                }
-            }
+            Vector3 currentVelocity = characterRb.velocity;
+            Vector3 targetSpeed = moveInput * maxSpeed;
+            characterRb.velocity = Vector3.MoveTowards(currentVelocity, targetSpeed, acceleration * Time.deltaTime);
         }
 
-        public void SetLimiter(bool value)
+        void UpdateRotation(Quaternion targetRotation)
         {
-            limiteSpeed = value;
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         public void SetAvailable(bool value)

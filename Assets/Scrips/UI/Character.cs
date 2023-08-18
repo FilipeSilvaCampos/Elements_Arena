@@ -1,7 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Bender", menuName = "Make New Bender", order = 0)]
+[CreateAssetMenu(fileName = "New Character", menuName = "Make New Character", order = 0)]
 public class Character : ScriptableObject
 {
+    public Sprite characterSprite;
     public GameObject prefab;
 }

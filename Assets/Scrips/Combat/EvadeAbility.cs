@@ -22,7 +22,6 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
-                characterMovement.SetLimiter(false);
                 characterRb.velocity = characterMovement.GetDirection().normalized.x * speed * transform.right;
                 animator.SetTrigger(AnimationKeys.RollTrigger);
 
@@ -34,7 +33,6 @@ namespace ElementsArena.Combat
         {
             if(TimeToChangeState())
             {
-                characterMovement.SetLimiter(true);
                 FinishState();
             }
         }

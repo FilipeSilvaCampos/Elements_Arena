@@ -1,7 +1,6 @@
-using ElementsArena.Core;
 using UnityEngine;
 
-namespace ElementsArena.Combat 
+namespace ElementsArena.Combat
 {
     public class LaunchRock : Ability
     {
@@ -13,16 +12,12 @@ namespace ElementsArena.Combat
         [SerializeField] float moveRockSpeed = 2;
         [SerializeField] float rotateRockSpeed = 10;
 
-        AnimationEventsTravler eventTravler;
         GameObject currentRock;
         Animator animator;
 
         private void Awake()
         {
             animator = GetComponentInChildren<Animator>();
-            eventTravler = GetComponentInChildren<AnimationEventsTravler>();
-
-            eventTravler.OnHitEvent += Launch;
         }
 
         protected override void OnReady()
@@ -103,12 +98,10 @@ namespace ElementsArena.Combat
         }
 
         //Animation Event
-        private void Launch()
+        public void Launch()
         {
             currentRock.GetComponent<RockBehaviour>().Launch();
         }
-
-        
 
         private float GroundHeight()
         {

@@ -1,12 +1,11 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ElementsArena.SceneManagement
 {
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] Transform[] spawns = null;
-        [SerializeField] Camera[] cameras = null;
+        public Transform[] spawns = null;
+        public Camera[] cameras = null;
 
         public void SetSplitScreen()
         {

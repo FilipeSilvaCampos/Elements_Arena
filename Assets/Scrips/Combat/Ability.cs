@@ -75,7 +75,7 @@ namespace ElementsArena.Combat
 
         protected void AvailableToMove(bool value)
         {
-            GetComponent<CharacterMovement>().SetAvailable(value);
+            //GetComponent<CharacterMovement>().SetAvailable(value);
         }
     }
 }
