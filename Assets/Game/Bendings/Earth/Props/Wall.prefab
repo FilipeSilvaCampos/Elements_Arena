@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchSpeed: 7
-  damage: 16
+  damage: 25
   destroyEffect: {fileID: 3772065794701908778, guid: fb795bc404ccba948b8b6880c807b2a5, type: 3}
 --- !u!114 &-5213195499345195855
 MonoBehaviour:

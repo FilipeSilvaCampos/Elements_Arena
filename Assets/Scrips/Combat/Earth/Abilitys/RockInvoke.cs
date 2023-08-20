@@ -7,14 +7,16 @@ namespace ElementsArena.Combat
         [SerializeField] EarthScriptableAttack[] attacks;
         [SerializeField] float invokeDistance = 2;
         [SerializeField] LayerMask groundLayer;
+        [SerializeField] Transform launchTransform;
 
         EarthScriptableAttack selectedAttack;
-        GameObject currentRock;
-        bool execute = false;
         AbilityWrapper abilityWrapper;
         Vector2 selectionInput;
 
-        private void Start()
+        GameObject currentRock;
+        bool execute = false;
+
+        private void Awake()
         {
             abilityWrapper = GetComponent<AbilityWrapper>();    
         }
@@ -30,15 +32,13 @@ namespace ElementsArena.Combat
         {
             if(called)
             {
-                AvailableToMove(false);
                 if(execute)
                 {
-                    ChangeRock();
+                    SelectAttack();
                     InvokeNewRock();
                     FinishState();
                     return;
                 }
-                AvailableToMove(true);
             }
         }
 
@@ -49,7 +49,7 @@ namespace ElementsArena.Combat
                 ElevateRock();
                 return;
             }
-            AvailableToMove(true);
+
             FinishState();
         }
 
@@ -58,14 +58,9 @@ namespace ElementsArena.Combat
             if (TimeToChangeState()) FinishState();
         }
 
-        private void InvokeNewRock()
+        void SelectAttack()
         {
-            currentRock = Instantiate(selectedAttack.prefab, GetInvokePosition(), transform.rotation);
-        }
-
-        private void ChangeRock()
-        {
-            switch(selectionInput.x, selectionInput.y)
+            switch (selectionInput.x, selectionInput.y)
             {
                 case (0, 1):
                     selectedAttack = attacks[0];
@@ -82,20 +77,25 @@ namespace ElementsArena.Combat
             }
         }
 
-        private Vector3 GetInvokePosition()
+        void InvokeNewRock()
         {
-            Vector3 invokePosition = transform.position + transform.forward * (invokeDistance + selectedAttack.GetPrefabScale().y / 2);
+            currentRock = Instantiate(selectedAttack.prefab, GetInvokePosition(), launchTransform.rotation);
+        }
+
+        Vector3 GetInvokePosition()
+        {
+            Vector3 invokePosition = transform.position + launchTransform.forward * (invokeDistance + selectedAttack.GetPrefabScale().y / 2);
             invokePosition.y = GroundHeight() - selectedAttack.GetPrefabScale().y / 2;
 
             return invokePosition;
         }
 
-        private void ElevateRock()
+        void ElevateRock()
         {
             currentRock.transform.position += Vector3.up * selectedAttack.elevateSpeed * Time.deltaTime;
         }
 
-        private bool AboveGround()
+        bool AboveGround()
         {
             Vector3 rockPosition = currentRock.transform.position;
 
@@ -103,7 +103,7 @@ namespace ElementsArena.Combat
             else return false;
         }
 
-        private float GroundHeight()
+        float GroundHeight()
         {
             RaycastHit hit;
             Vector3 position = transform.position + Vector3.forward * invokeDistance;

@@ -169,6 +169,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  launchTransform: {fileID: 6169334020008614126}
 --- !u!114 &3360694761925634628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +185,7 @@ MonoBehaviour:
   activeTime: 1
   cooldownTime: 1.5
   called: 0
-  rock: {fileID: 5204155215663811294, guid: 7fcd2645ebc5ce348b71a0def2c5bcfd, type: 3}
+  deffaultAttack: {fileID: 5204155215663811294, guid: 7fcd2645ebc5ce348b71a0def2c5bcfd, type: 3}
   launchTransform: {fileID: 6169334020008614126}
   groundLayer:
     serializedVersion: 2

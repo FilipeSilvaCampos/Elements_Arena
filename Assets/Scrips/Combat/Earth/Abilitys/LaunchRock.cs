@@ -4,11 +4,11 @@ namespace ElementsArena.Combat
 {
     public class LaunchRock : Ability
     {
-        [SerializeField] GameObject rock;
+        [SerializeField] GameObject deffaultAttack;
         [SerializeField] Transform launchTransform;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] LayerMask rockLayer;
-        [SerializeField] float domainDistance = 2;
+        [SerializeField] float domainDistance = 3;
         [SerializeField] float moveRockSpeed = 2;
         [SerializeField] float rotateRockSpeed = 10;
 
@@ -24,7 +24,6 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
-                AvailableToMove(false);
                 if(GetRockOnForward())
                 {
                     FinishState();
@@ -54,24 +53,12 @@ namespace ElementsArena.Combat
             if (TimeToChangeState()) FinishState();
         }
 
-        private void InvokeNewRock()
-        {
-            currentRock = Instantiate(rock, GetInvokePosition(), launchTransform.rotation);
-        }
-
-        private void MoveToTarget()
-        {
-            currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, launchTransform.position, moveRockSpeed * Time.deltaTime);
-
-            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, rotateRockSpeed * Time.deltaTime);
-        }
-
-        private bool GetRockOnForward()
+        bool GetRockOnForward()
         {
             RaycastHit hit;
 
-            Ray ray = new Ray(transform.position, Vector3.forward);
-            Physics.Raycast(ray, out hit, domainDistance, rockLayer);
+            Ray ray = new Ray(transform.position, transform.forward);
+            Physics.SphereCast(ray, 1, out hit, domainDistance, rockLayer);
 
             if (hit.collider != null)
             {
@@ -81,29 +68,43 @@ namespace ElementsArena.Combat
             else return false;
         }
 
-        private Vector3 GetInvokePosition()
+        void InvokeNewRock()
         {
-            Vector3 invokePosition = launchTransform.position;
-            invokePosition.y = GroundHeight() - rock.transform.localScale.y / 2;
-
-            return invokePosition;
+            currentRock = Instantiate(deffaultAttack, GetInvokePosition(), launchTransform.rotation);
         }
 
-        private bool OnTarget()
+        bool OnTarget()
         {
-            bool onPosition = currentRock.transform.position == launchTransform.position ? true : false;
+            bool onPosition = currentRock.transform.position == GetTargetPosition() ? true : false;
             bool onRotation = currentRock.transform.rotation == launchTransform.rotation ? true : false;
 
             return onPosition && onRotation;
         }
 
-        //Animation Event
-        public void Launch()
+        void MoveToTarget()
         {
-            currentRock.GetComponent<RockBehaviour>().Launch();
+            currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), moveRockSpeed * Time.deltaTime);
+
+            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, rotateRockSpeed * Time.deltaTime);
         }
 
-        private float GroundHeight()
+        Vector3 GetTargetPosition()
+        {
+            Vector3 targetPosition = launchTransform.position;
+            targetPosition.y = GroundHeight() + 1.8f; //Height character
+
+            return targetPosition;
+        }
+
+        Vector3 GetInvokePosition()
+        {
+            Vector3 invokePosition = launchTransform.position;
+            invokePosition.y = GroundHeight() - deffaultAttack.transform.localScale.y / 2;
+
+            return invokePosition;
+        }
+
+        float GroundHeight()
         {
             RaycastHit hit;
 
@@ -111,6 +112,12 @@ namespace ElementsArena.Combat
             Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
 
             return hit.point.y;
+        }
+
+        //Animation Event
+        public void Launch()
+        {
+            currentRock.GetComponent<RockBehaviour>().Launch();
         }
     }
 }

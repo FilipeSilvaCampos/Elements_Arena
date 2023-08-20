@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 0
-  cooldownTime: 2
+  cooldownTime: 2.5
   called: 0
   projectiles:
   - {fileID: 11400000, guid: af04e1c3c8d547b489b3244ee5222a29, type: 2}
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 6
-  cooldownTime: 0.5
+  cooldownTime: 3
   called: 0
   flyMaxSpeed: 15
   flyAcceleration: 30

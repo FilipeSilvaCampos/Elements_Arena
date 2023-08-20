@@ -253,6 +253,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5004262391350203329, guid: d6938ed004686544b88dd81b29624a31, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004262391350203329, guid: d6938ed004686544b88dd81b29624a31, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004262391350203329, guid: d6938ed004686544b88dd81b29624a31, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434058192250624657, guid: d6938ed004686544b88dd81b29624a31, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6938ed004686544b88dd81b29624a31, type: 3}
 --- !u!224 &1960934925908180671 stripped

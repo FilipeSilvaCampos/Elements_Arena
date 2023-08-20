@@ -25,6 +25,7 @@ namespace ElementsArena.Damage
 
         public void TakeDamage(float damage)
         {
+            Debug.Log(gameObject.name  + " " + damage);
             life = Mathf.Max(life - damage, 0);
 
             if (life == 0)
