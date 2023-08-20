@@ -13,25 +13,38 @@ namespace ElementsArena.Core
         GameManager gameManager;
         Character character;
         PlayerInput playerInput;
-        CursorController cursorController;
         PlayerController playerController;
 
         private void Awake()
         {
-            cursorController = GetComponent<CursorController>();
             playerInput = GetComponent<PlayerInput>();
             gameManager = FindObjectOfType<GameManager>();
             playerController = GetComponent<PlayerController>();
         }
 
-        private void Start()
+        private void OnLoose()
         {
-            gameManager.OnSelectScreen += SetCursor;
+            gameManager.GameOver(gameObject);
         }
 
-        private void SetCursor()
+        public GameObject SetUpPlayer(Transform spawnPosition, LayerMask layer, Camera camera)
         {
-            cursorController.SetCursor(FindObjectOfType<MenuManager>().GetCursor(playerInput.playerIndex));
+            GameObject fighter = Instantiate(character.prefab, transform);
+            IDamageable benderDamageable = fighter.GetComponent<IDamageable>();
+
+            benderDamageable.OnDeath += OnLoose;
+            SetCamera(fighter, layer);
+            SetPosition(spawnPosition);
+            SetHUD(camera, fighter);
+
+            playerController.SetUpController
+            (
+            fighter.GetComponentInChildren<CharacterMovement>(),
+            fighter.GetComponent<AbilityWrapper>(),
+            fighter.GetComponentInChildren<CameraController>()
+            );
+
+            return fighter;
         }
 
         private void SetCamera(GameObject fighter, LayerMask playerLayer)
@@ -51,30 +64,11 @@ namespace ElementsArena.Core
             transform.rotation = spawn.rotation;
         }
 
-        private void OnLoose()
+        private static void SetHUD(Camera camera, GameObject fighter)
         {
-            gameManager.GameOver(gameObject);
-        }
-
-        public GameObject SetUpPlayer()
-        {
-            GameObject fighter = Instantiate(character.prefab, transform);
-            IDamageable benderDamageable = fighter.GetComponent<IDamageable>();
-
-            benderDamageable.OnDeath += OnLoose;
-            SetCamera(fighter, gameManager.GetPlayerLayer(playerInput.playerIndex));
-            SetPosition(gameManager.GetPlayerSpawn(playerInput.playerIndex));
-
-            playerController.SetUpController
-            (
-            fighter.GetComponentInChildren<CharacterMovement>(),
-            fighter.GetComponent<AbilityWrapper>(),
-            fighter.GetComponentInChildren<CameraController>()
-            );
-
-            return fighter;
-            //attributesMenu.GetComponent<AttributesDisplay>().SetUpAttributes(benderDamageable);
-            //benderDamageable.DeathEvent += OnBenderDeath;
+            Canvas fighterCanvas = fighter.GetComponentInChildren<Canvas>();
+            fighterCanvas.worldCamera = camera;
+            fighterCanvas.planeDistance = 1;
         }
 
         public void UndoReady()

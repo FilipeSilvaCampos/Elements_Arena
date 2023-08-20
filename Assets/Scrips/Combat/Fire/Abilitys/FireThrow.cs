@@ -1,4 +1,6 @@
 using ElementsArena.Movement;
+using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -18,8 +20,8 @@ namespace ElementsArena.Combat
 
         private void Awake()
         {
-            characterRb = GetComponentInChildren<Rigidbody>();
-            characterMovement = GetComponentInChildren<CharacterMovement>();
+            characterRb = GetComponent<Rigidbody>();
+            characterMovement = GetComponent<CharacterMovement>();
             animator = GetComponentInChildren<Animator>();
         }
 
@@ -61,7 +63,6 @@ namespace ElementsArena.Combat
             RaycastHit hit;
             Ray ray = new Ray(transform.position, Vector3.down);
             Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
-
             return hit.point.y;
         }
 
@@ -74,15 +75,11 @@ namespace ElementsArena.Combat
 
         private void ControlHeight()
         {
-            if(transform.position.y - GroundHeight() < flyHeight)
-            {
-                transform.position += Vector3.up * flyMaxSpeed * Time.deltaTime;
-            }
-
-            if(transform.position.y - GroundHeight() > flyHeight)
-            {
-                transform.position += Vector3.down * flyMaxSpeed * Time.deltaTime;
-            }
+            Vector3 currentPosition = transform.position;
+            Vector3 targetPosition = transform.position;
+            targetPosition.y = GroundHeight() + flyHeight;
+            
+            characterMovement.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, flyAcceleration * Time.deltaTime);
         }
     }
 }

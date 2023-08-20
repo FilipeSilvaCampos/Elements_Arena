@@ -2,7 +2,6 @@ using ElementsArena.Combat;
 using ElementsArena.Control;
 using ElementsArena.Movement;
 using ElementsArena.SceneManagement;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -25,12 +24,6 @@ namespace ElementsArena.Core
         public bool ready = false;
     }
 
-    public enum GameState
-    {
-        OnSelectGameMode,
-        OnsSelectCharacter
-    }
-
     public class GameManager : MonoBehaviour
     {
         [SerializeField] int startSceneId = 0;
@@ -38,14 +31,12 @@ namespace ElementsArena.Core
         [SerializeField] int levelId;
         [SerializeField] GameObject gameOverScreen;
 
-        public event Action OnSelectScreen;
         LevelManager currentLevel = null;
         //Only for update on Itch.io
         GameObject[] fightersInGame = new GameObject[2];
         bool hasWinner = false;
-        ///
-
-        public GameState gameState { get; set; }
+        //
+ 
         bool gameStarted = false;
         PlayerInputManager playerInputManager;
         Dictionary<int, Player> players = new Dictionary<int, Player>();
@@ -85,10 +76,11 @@ namespace ElementsArena.Core
             InitializeFighters();
         }
 
-        private GameObject SetAI(Transform spawn)
+        private GameObject SetAI(Transform spawn, Camera camera)
         {
             GameObject ai = Instantiate(characterAI.prefab, spawn.position, spawn.rotation);
             ai.GetComponent<AIController>().enabled = true;
+            ai.GetComponentInChildren<Canvas>().worldCamera = camera;
             return ai;
         }
 
@@ -113,14 +105,19 @@ namespace ElementsArena.Core
             {
                 if (players.ContainsKey(i))
                 {
-                    fightersInGame[i] = players[i].playerManager.SetUpPlayer();
+                    fightersInGame[i] = players[i].playerManager.SetUpPlayer(
+                        currentLevel.spawns[i],
+                        playersLayers[i],
+                        currentLevel.cameras[i]
+                        );
                 }
                 else
                 {
-                    fightersInGame[i] = SetAI(currentLevel.spawns[i]);
+                    fightersInGame[i] = SetAI(currentLevel.spawns[i], currentLevel.cameras[i]);
                 }
             }
         }
+
         public void UnreadyPlayer(int playerIndex)
         {
             players[playerIndex].ready = false;
@@ -132,8 +129,9 @@ namespace ElementsArena.Core
 
             foreach(GameObject fighter in fightersInGame)
             {
-                fighter.GetComponentInChildren<CharacterMovement>().available = false;
-                fighter.GetComponentInChildren<AbilityWrapper>().available = false;
+                fighter.GetComponentInChildren<CharacterMovement>().enabled = false;
+                fighter.GetComponentInChildren<AbilityWrapper>().enabled = false;
+                fighter.GetComponentInChildren<CameraController>().enabled = false;
             }
 
             for(int i = 0; i < fightersInGame.Length; i++)
@@ -141,7 +139,7 @@ namespace ElementsArena.Core
                 if (loserObject == fightersInGame[i])
                 {
                     gameOverScreen.SetActive(true);
-                    gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText("Player " + i + " Win");
+                    gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText(string.Format("Player {0} Win", i == 0? 2:1));
                     hasWinner = true;
                     break;
                 }
@@ -180,12 +178,11 @@ namespace ElementsArena.Core
             hasWinner = false;
             gameStarted = false;
             gameOverScreen.SetActive(false);
-            gameState = GameState.OnSelectGameMode;
 
             for(int i = 0; i < players.Count; i++)
             {
                 players[i].ready = false;
-                players[i].gameObject.GetComponent<PlayerController>().alive = false;
+                players[i].gameObject.GetComponent<PlayerController>().enabled = false;
             }
             characterAI = null;
 
@@ -209,12 +206,6 @@ namespace ElementsArena.Core
             if (!players.ContainsKey(index)) return null;
 
             return players[index];
-        }
-
-        public void SetLocalMode()
-        {
-            gameState = GameState.OnsSelectCharacter;
-            OnSelectScreen.Invoke();
         }
     }
 }

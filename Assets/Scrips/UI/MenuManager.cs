@@ -1,9 +1,9 @@
 ﻿using ElementsArena.Control;
 using ElementsArena.Core;
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [Serializable]
 struct PlayerPreview
@@ -12,31 +12,34 @@ struct PlayerPreview
     public PreviewCharacter previewRect;
 }
 
+public enum MenuState
+{
+    SelectingGameMode,
+    SelectingCharacter
+}
+
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject selectModeMenu;
-    [SerializeField] GameObject quitGameWarning;
+    [SerializeField] GameObject gameQuitWarning;
 
     [Header("Character Selection Screen")]
     [SerializeField] GameObject selectCharacterScreen;
     [SerializeField] PlayerPreview[] previews;
-    [SerializeField] TextMeshProUGUI player2Message;
+    [SerializeField] GameObject player2Warning;
     [SerializeField] GameObject[] cursors;
 
     GameManager gameManager;
     PlayerInputManager playerInputManager;
-    GameState currentState;
+    MenuState currentState = MenuState.SelectingGameMode;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         playerInputManager = FindObjectOfType<PlayerInputManager>();
-        playerInputManager.onPlayerJoined += SetPlayerCursor;
+        playerInputManager.onPlayerJoined += SetSelectSreen;
 
-        foreach (PlayerPreview preview in previews)
-        {
-            preview.previewRect.SetFollowCursor(cursors[(int)preview.player]);
-        }    
+        SwitchMode(currentState);
     }
 
     private void Update()
@@ -45,41 +48,54 @@ public class MenuManager : MonoBehaviour
         {
             switch (currentState)
             {
-                case GameState.OnSelectGameMode:
-                    quitGameWarning.SetActive(true);
+                case MenuState.SelectingGameMode:
+                    gameQuitWarning.SetActive(true);
                     break;
-                case GameState.OnsSelectCharacter:
-                    gameManager.gameState = GameState.OnSelectGameMode;
+                case MenuState.SelectingCharacter:
+                    SwitchMode(MenuState.SelectingGameMode);
                     break;
             } 
         }
 
-        player2Message.gameObject.SetActive(playerInputManager.playerCount == 1);
+        player2Warning.SetActive(playerInputManager.playerCount == 1);
 
-        if(gameManager.gameState != currentState) SwitchMode(gameManager.gameState);
-
-        if(currentState == GameState.OnsSelectCharacter)
+        if(currentState == MenuState.SelectingCharacter)
         {
             UpdateCharacterSceen();
-        }
-        
+        }     
     }
 
-    void SwitchMode(GameState gameState)
+    void SetPreviewsCursors()
     {
-        switch(gameState)
+        foreach (PlayerPreview preview in previews)
         {
-            case GameState.OnSelectGameMode:
+            preview.previewRect.SetFollowCursor(cursors[(int)preview.player]);
+        }
+    }
+
+    void SwitchMode(MenuState state)
+    {
+        switch(state)
+        {
+            case MenuState.SelectingGameMode:
                 selectModeMenu.SetActive(true);
                 selectCharacterScreen.SetActive(false);
                 break;
 
-            case GameState.OnsSelectCharacter:
+            case MenuState.SelectingCharacter:
                 selectModeMenu.SetActive(false);
                 selectCharacterScreen.SetActive(true);
+                SetSelectSreen(null);
+
+                Vector3 cursorDeffaultPositon = FindObjectOfType<Selectable>().transform.position + Vector3.forward * -10;
+                foreach (GameObject cursor in cursors)
+                {
+                    cursor.transform.position = cursorDeffaultPositon;
+                }
+
                 break;
         }
-        currentState = gameState;
+        currentState = state;
     }
 
     void UpdateCharacterSceen()
@@ -109,18 +125,19 @@ public class MenuManager : MonoBehaviour
         menuToHide.SetActive(false);
     }
 
-    void SetPlayerCursor(PlayerInput player)
-    {
-        player.gameObject.GetComponent<CursorController>().SetCursor(cursors[player.playerIndex]);
+    void SetSelectSreen(PlayerInput player)
+    {//The parameter is just for subscribe on OnPlyerJoined event
+        for(int i = 0; i < playerInputManager.playerCount; i++)
+        {
+            GameObject currentPlayer = gameManager.GetPlayer(i).gameObject;
+            currentPlayer.GetComponent<CursorController>().SetCursor(cursors[i]);
+        }
+
+        SetPreviewsCursors();
     }
 
     public void SetGameLocalMode()
     {
-        gameManager.SetLocalMode();
-    }
-
-    public GameObject GetCursor(int playerIndex)
-    {
-        return cursors[playerIndex];
+        SwitchMode(MenuState.SelectingCharacter);
     }
 }

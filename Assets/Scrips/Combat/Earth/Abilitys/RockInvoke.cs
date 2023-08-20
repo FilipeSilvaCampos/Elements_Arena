@@ -84,8 +84,7 @@ namespace ElementsArena.Combat
 
         private Vector3 GetInvokePosition()
         {
-            Vector3 invokePosition = transform.position;
-            invokePosition += transform.forward * (invokeDistance + selectedAttack.GetPrefabScale().y /2);
+            Vector3 invokePosition = transform.position + transform.forward * (invokeDistance + selectedAttack.GetPrefabScale().y / 2);
             invokePosition.y = GroundHeight() - selectedAttack.GetPrefabScale().y / 2;
 
             return invokePosition;

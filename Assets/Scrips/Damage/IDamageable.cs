@@ -7,5 +7,7 @@ namespace ElementsArena.Damage
         float life { get; }
         event Action OnDeath;
         void TakeDamage(float damage);
+
+        float GetFraction();
     }
 }

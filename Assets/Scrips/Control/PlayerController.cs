@@ -10,29 +10,27 @@ namespace ElementsArena.Control
         CharacterMovement characterMovement;
         CameraController cameraController;
         AbilityWrapper abilityWrapper;
-        Ability primaryAbility;
-        Ability secundaryAbility;
-        Ability evadeAbility;
 
         Vector2 moveInput = Vector2.zero;
         Vector2 cameraInput = Vector2.zero;
-        public bool alive { get; set; }
+
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         public void SetUpController(CharacterMovement characterMovement, AbilityWrapper abilityWrapper, CameraController cameraController)
         {
-            alive = true;
+            enabled = true;
 
             this.characterMovement = characterMovement;
             this.cameraController = cameraController;
             this.abilityWrapper = abilityWrapper;
-            primaryAbility = abilityWrapper.primaryAbility;
-            secundaryAbility = abilityWrapper.secundaryAbility;
-            evadeAbility = abilityWrapper.evadeAbility;
         }
 
         private void Update()
         {
-            if (!alive) return;
+            if (!enabled) return;
 
             //Update move and camera inputs
             cameraController.IncrementCameraRotation(new Vector2(cameraInput.y, cameraInput.x));
@@ -45,44 +43,38 @@ namespace ElementsArena.Control
 
         public void MovePlayer(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            moveInput = context.ReadValue<Vector2>();
+            if (enabled)
+                moveInput = context.ReadValue<Vector2>();
         }
 
         public void MoveCamera(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            cameraInput = context.ReadValue<Vector2>();
+            if (enabled)
+                cameraInput = context.ReadValue<Vector2>();
         }
 
         public void SetSelectionInput(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            abilityWrapper.selectionInput = context.ReadValue<Vector2>();
+            if (enabled)
+                abilityWrapper.selectionInput = context.ReadValue<Vector2>();
         }
 
         public void CallPrimaryAbility(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            abilityWrapper.CallPrimaryAbility(context.ReadValueAsButton());
+            if (enabled)
+                abilityWrapper.CallPrimaryAbility(context.ReadValueAsButton());
         }
 
         public void CallSecundaryAbility(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            abilityWrapper.CallSecundaryAbility(context.ReadValueAsButton());
+            if (enabled)
+                abilityWrapper.CallSecundaryAbility(context.ReadValueAsButton());
         }
 
         public void CallEvadeAbility(InputAction.CallbackContext context)
         {
-            if (alive == false) return;
-
-            abilityWrapper.CallEvadeAbility(context.ReadValueAsButton());
+            if (enabled)
+                abilityWrapper.CallEvadeAbility(context.ReadValueAsButton());
         }
     }
 }

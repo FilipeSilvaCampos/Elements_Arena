@@ -28,7 +28,6 @@ namespace ElementsArena.Movement
         [SerializeField] float playerHeith;
         [SerializeField] LayerMask whatIsGround;
 
-        public bool available = true;
         Animator animator;
         Vector3 moveInput;
         Rigidbody characterRb;
@@ -43,15 +42,13 @@ namespace ElementsArena.Movement
         private void Update()
         {
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeith * 0.5f + 0.2f, whatIsGround);
-            animator.SetFloat(AnimationKeys.VerticalFloat, moveInput.z);
-            animator.SetFloat(AnimationKeys.HorizontalFloat, moveInput.x);
+            animator.SetFloat(AnimationKeys.VerticalFloat, characterRb.velocity.z);
+            animator.SetFloat(AnimationKeys.HorizontalFloat, characterRb.velocity.x);
         }
 
         private void LateUpdate()
         {
-            if (!available) return;
-
-            UpdateRotation(Quaternion.LookRotation(moveInput));
+            UpdateRotation();
             if (grounded)
             {
                 GroundMovement();
@@ -60,8 +57,6 @@ namespace ElementsArena.Movement
 
         public void SetInput(CharacterMovementInput input)
         {
-            if (!available) return;
-
             moveInput = new Vector3(input.MoveInput.x, 0, input.MoveInput.y);
 
             moveInput = input.LookRotation * moveInput;
@@ -76,14 +71,12 @@ namespace ElementsArena.Movement
             characterRb.velocity = Vector3.MoveTowards(currentVelocity, targetSpeed, acceleration * Time.deltaTime);
         }
 
-        void UpdateRotation(Quaternion targetRotation)
+        void UpdateRotation()
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+            if (moveInput == Vector3.zero) return;
 
-        public void SetAvailable(bool value)
-        {
-            available = value;
+            Quaternion targetRotation = Quaternion.LookRotation(moveInput);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         public Vector3 GetDirection()

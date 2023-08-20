@@ -1,4 +1,3 @@
-using ElementsArena.Movement;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -15,6 +14,7 @@ namespace ElementsArena.Combat
         [SerializeField] protected float activeTime = 1;
         [SerializeField] protected float cooldownTime = 1.5f;
 
+        public float CooldownTime { get { return cooldownTime; } }
         float timeSinceLastChangeState;
         protected AbilityStates currentState;
         public bool called;
@@ -71,6 +71,13 @@ namespace ElementsArena.Combat
                     else return false;
             }
             return false;
+        }
+
+        public float GetCooldownTimer()
+        {
+            if (currentState != AbilityStates.cooldown) return cooldownTime;
+
+            return cooldownTime - timeSinceLastChangeState;
         }
 
         protected void AvailableToMove(bool value)

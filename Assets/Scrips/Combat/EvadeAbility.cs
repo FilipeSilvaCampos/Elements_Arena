@@ -9,21 +9,18 @@ namespace ElementsArena.Combat
 
         CharacterMovement characterMovement;
         Rigidbody characterRb;
-        Animator animator;
 
         private void Awake()
         {
-            animator = GetComponentInChildren<Animator>();
-            characterMovement = GetComponent<CharacterMovement>();
-            characterRb = GetComponent<Rigidbody>();
+            characterMovement = GetComponentInChildren<CharacterMovement>();
+            characterRb = GetComponentInChildren<Rigidbody>();
         }
 
         protected override void OnReady()
         {
             if (called)
             {
-                characterRb.velocity = characterMovement.GetDirection().normalized.x * speed * transform.right;
-                animator.SetTrigger(AnimationKeys.RollTrigger);
+                characterRb.velocity = characterMovement.GetDirection().normalized * speed;
 
                 FinishState();
             }

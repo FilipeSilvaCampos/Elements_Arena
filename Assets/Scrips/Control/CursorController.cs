@@ -17,7 +17,6 @@ namespace ElementsArena.Control
             cursor.SetActive(true);
             this.cursor = cursor;
             currentSelectable = FindObjectOfType<Selectable>();
-            //this.cursor.transform.position = currentSelectable.transform.position;
         }
 
         public void MoveCursor(InputAction.CallbackContext context)

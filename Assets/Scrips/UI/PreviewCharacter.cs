@@ -1,9 +1,12 @@
+using DG.Tweening;
 using ElementsArena.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PreviewCharacter : MonoBehaviour
 {
+    [SerializeField] float punchDuration = .3f;
+
     Image image;
     GameObject followCursor;
     Player player;
@@ -30,11 +33,17 @@ public class PreviewCharacter : MonoBehaviour
         if(Physics.Raycast(followCursor.transform.position, Vector3.forward, out hit))
         {
             Image character = hit.collider.GetComponent<Image>();
-            if(character != null)
+            if(character.sprite != image.sprite)
             {
-                image.sprite = character.sprite;
+                ChangePreviewImage(character.sprite);
             }
         }
+    }
+
+    void ChangePreviewImage(Sprite sprite)
+    {
+        transform.DOPunchPosition(Vector3.down, punchDuration, 20);
+        image.sprite = sprite;
     }
 
     public void SetPlayer(Player player)

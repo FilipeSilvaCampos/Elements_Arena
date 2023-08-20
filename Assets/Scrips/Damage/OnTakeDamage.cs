@@ -25,12 +25,17 @@ namespace ElementsArena.Damage
 
         public void TakeDamage(float damage)
         {
-            life -= damage;
+            life = Mathf.Max(life - damage, 0);
 
-            if (life <= 0)
+            if (life == 0)
             {
                 OnDeath.Invoke();
             }
+        }
+
+        public float GetFraction()
+        {
+            return life / maxLife;
         }
     }
 }

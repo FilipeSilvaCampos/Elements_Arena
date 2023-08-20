@@ -10,7 +10,7 @@ namespace ElementsArena.Damage
 
         private void OnTriggerEnter(Collider other)
         {
-            IDamageable damageable = other.GetComponent<IDamageable>();
+            IDamageable damageable = other.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
                 damageable.TakeDamage(damage);
