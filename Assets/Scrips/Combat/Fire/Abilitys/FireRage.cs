@@ -11,8 +11,16 @@ namespace ElementsArena.Combat
         [SerializeField] float timeWithoutReaction = 1.8f;
         [SerializeField] Rig shootRig = null;
 
+        FireBreath breath;
         float timeSinceLastLaunch = 0;
         int counter = 0;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            breath = GetComponent<FireBreath>();
+        }
+
         protected override void Update()
         {
             base.Update();
@@ -21,7 +29,7 @@ namespace ElementsArena.Combat
 
         protected override void OnReady()
         {
-            if(called)
+            if(called && breath.TakeBreath(projectiles[counter].breathCost))
             {
                 LaunchProjectile();
                 FinishState();
@@ -37,7 +45,7 @@ namespace ElementsArena.Combat
                 return;
             }
 
-            if(called && timeSinceLastLaunch > projectiles[counter].launchTime)
+            if(called && timeSinceLastLaunch > projectiles[counter].launchTime && breath.TakeBreath(projectiles[counter].breathCost))
             {
                 LaunchProjectile();
             }

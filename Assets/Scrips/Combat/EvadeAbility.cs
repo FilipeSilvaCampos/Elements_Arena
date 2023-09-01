@@ -10,8 +10,9 @@ namespace ElementsArena.Combat
         CharacterMovement characterMovement;
         Rigidbody characterRb;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             characterMovement = GetComponentInChildren<CharacterMovement>();
             characterRb = GetComponentInChildren<Rigidbody>();
         }

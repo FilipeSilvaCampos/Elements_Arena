@@ -26,17 +26,19 @@ namespace ElementsArena.Core
 
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] int startSceneId = 0;
+        [SerializeField] int mainSceneId = 0;
         [SerializeField] LayerMask[] playersLayers;
-        [SerializeField] int levelId;
+        [SerializeField] int levelToLoadId = 1;
         [SerializeField] GameObject gameOverScreen;
+        [SerializeField] Fader fader;
+        [SerializeField] float fadeInTime = 2;
 
+        //Level vars
         LevelManager currentLevel = null;
-        //Only for update on Itch.io
         GameObject[] fightersInGame = new GameObject[2];
         bool hasWinner = false;
         //
- 
+
         bool gameStarted = false;
         PlayerInputManager playerInputManager;
         Dictionary<int, Player> players = new Dictionary<int, Player>();
@@ -63,6 +65,7 @@ namespace ElementsArena.Core
 
         private IEnumerator LoadLevel(int levelId)
         {
+            fader.FaderOutImmediate();
             DontDestroyOnLoad(gameObject);
             yield return SceneManager.LoadSceneAsync(levelId);
 
@@ -74,6 +77,9 @@ namespace ElementsArena.Core
             }
 
             InitializeFighters();
+            AbleAllFightersControls(false);
+            yield return fader.FadeIn(fadeInTime);
+            AbleAllFightersControls(true);
         }
 
         private GameObject SetAI(Transform spawn, Camera camera)
@@ -117,32 +123,31 @@ namespace ElementsArena.Core
                 }
             }
         }
-
-        public void UnreadyPlayer(int playerIndex)
-        {
-            players[playerIndex].ready = false;
-        }
         
         public void GameOver(GameObject loserObject)
         {
             if (hasWinner) return;
+            AbleAllFightersControls(false);
 
-            foreach(GameObject fighter in fightersInGame)
-            {
-                fighter.GetComponentInChildren<CharacterMovement>().enabled = false;
-                fighter.GetComponentInChildren<AbilityWrapper>().enabled = false;
-                fighter.GetComponentInChildren<CameraController>().enabled = false;
-            }
-
-            for(int i = 0; i < fightersInGame.Length; i++)
+            for (int i = 0; i < fightersInGame.Length; i++)
             {
                 if (loserObject == fightersInGame[i])
                 {
                     gameOverScreen.SetActive(true);
-                    gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText(string.Format("Player {0} Win", i == 0? 2:1));
+                    gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText(string.Format("Player {0} Win", i == 0 ? 2 : 1));
                     hasWinner = true;
                     break;
                 }
+            }
+        }
+
+        private void AbleAllFightersControls(bool value)
+        {
+            foreach (GameObject fighter in fightersInGame)
+            {
+                fighter.GetComponentInChildren<CharacterMovement>().enabled = value;
+                fighter.GetComponentInChildren<AbilityHolder>().enabled = value;
+                fighter.GetComponentInChildren<CameraController>().enabled = value;
             }
         }
 
@@ -157,27 +162,22 @@ namespace ElementsArena.Core
             }
 
             gameStarted = true;
-            StartCoroutine(LoadLevel(levelId));
+            StartCoroutine(LoadLevel(levelToLoadId));
         }
 
         public void RestartGame()
         {
-            hasWinner = false;
-            gameOverScreen.SetActive(false);
+            ResetLevel();
 
-            foreach(GameObject fighter in fightersInGame)
-            {
-                Destroy(fighter);
-            }
-
+            fader.FaderOutImmediate();
             InitializeFighters();
+            fader.FadeIn(fadeInTime);
         }
 
         public void BackToStartScene()
         {
-            hasWinner = false;
+            ResetLevel();
             gameStarted = false;
-            gameOverScreen.SetActive(false);
 
             for(int i = 0; i < players.Count; i++)
             {
@@ -186,19 +186,23 @@ namespace ElementsArena.Core
             }
             characterAI = null;
 
-            foreach(GameObject fighter in fightersInGame) Destroy(fighter);
-
-            SceneManager.LoadScene(startSceneId);
-        }
-        
-        public LayerMask GetPlayerLayer(int playerIndex)
-        {
-            return playersLayers[playerIndex];
+            SceneManager.LoadScene(mainSceneId);
         }
 
-        public Transform GetPlayerSpawn(int playerIndex)
+        private void ResetLevel()
         {
-            return currentLevel.spawns[playerIndex];
+            hasWinner = false;
+            gameOverScreen.SetActive(false);
+
+            foreach (GameObject fighter in fightersInGame)
+            {
+                Destroy(fighter);
+            }
+        }
+
+        public void UnreadyPlayer(int playerIndex)
+        {
+            players[playerIndex].ready = false;
         }
 
         public Player GetPlayer(int index)

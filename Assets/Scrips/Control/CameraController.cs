@@ -21,15 +21,15 @@ namespace ElementsArena.Control
             cameraTarget.rotation = Quaternion.Euler(targetLook.x, targetLook.y, 0);
         }
 
-        public Transform GetCameraTarget()
-        {
-            return cameraTarget;
-        }
-
         public void IncrementCameraRotation(Vector2 deltaLook)
         {
             targetLook += deltaLook;
             targetLook.x = Mathf.Clamp(targetLook.x, XCameraRange.x, XCameraRange.y);
+        }
+
+        public Transform GetCameraTarget()
+        {
+            return cameraTarget;
         }
     }
 }

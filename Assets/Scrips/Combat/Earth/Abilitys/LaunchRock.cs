@@ -15,8 +15,9 @@ namespace ElementsArena.Combat
         GameObject currentRock;
         Animator animator;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             animator = GetComponentInChildren<Animator>();
         }
 
@@ -24,6 +25,7 @@ namespace ElementsArena.Combat
         {
             if (called)
             {
+                LockCharacterMovement();
                 if(GetRockOnForward())
                 {
                     FinishState();
@@ -35,22 +37,33 @@ namespace ElementsArena.Combat
             }
         }
 
+        bool isLaunching = false;
         protected override void OnActive()
         {
-            if (OnTarget())
+            if (isLaunching) return;
+
+            if (!OnTarget())
             {
-                animator.SetTrigger(AnimationKeys.LaunchTrigger);
-                AvailableToMove(true);
-                FinishState();
+                MoveToTarget();
                 return;
             };
-            
-            MoveToTarget();
+
+            animator.SetTrigger(AnimationKeys.LaunchTrigger);
+            isLaunching = true;
         }
 
         protected override void OnCooldown()
         {
             if (TimeToChangeState()) FinishState();
+        }
+
+        //Animation Event
+        public void Launch()
+        {
+            currentRock.GetComponent<Rock>().Launch();
+            UnlockCharacterMovement();
+            isLaunching = false;
+            FinishState();
         }
 
         bool GetRockOnForward()
@@ -85,7 +98,7 @@ namespace ElementsArena.Combat
         {
             currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), moveRockSpeed * Time.deltaTime);
 
-            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, rotateRockSpeed * Time.deltaTime);
+            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, 10);
         }
 
         Vector3 GetTargetPosition()
@@ -112,12 +125,6 @@ namespace ElementsArena.Combat
             Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
 
             return hit.point.y;
-        }
-
-        //Animation Event
-        public void Launch()
-        {
-            currentRock.GetComponent<RockBehaviour>().Launch();
         }
     }
 }

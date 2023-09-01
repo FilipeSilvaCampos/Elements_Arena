@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayCooldowns : MonoBehaviour
 {
-    [SerializeField] AbilityWrapper abilityWrapper;
+    [SerializeField] AbilityHolder abilityHolder;
     [Header("Abilitys Display")]
     [SerializeField] GameObject primary;
     [SerializeField] GameObject secundary;
@@ -12,16 +12,16 @@ public class DisplayCooldowns : MonoBehaviour
 
     private void Update()
     {
-        if (abilityWrapper == null) return;
+        if (abilityHolder == null) return;
 
-        UpdateCooldownText(primary, abilityWrapper.primaryAbility);
-        UpdateCooldownText(secundary, abilityWrapper.secundaryAbility);
-        UpdateCooldownText(evade, abilityWrapper.evadeAbility);
+        UpdateCooldownText(primary, abilityHolder.firstAbility);
+        UpdateCooldownText(secundary, abilityHolder.secondAbility);
+        UpdateCooldownText(evade, abilityHolder.evadeAbility);
     }
 
     void UpdateCooldownText(GameObject display, Ability ability)
     {
-        if (ability.GetCooldownTimer() == 0 || ability.GetCooldownTimer() == ability.CooldownTime)
+        if (Mathf.Approximately(ability.GetCooldownTimer(), 0f) || Mathf.Approximately(ability.GetCooldownTimer(), ability.CooldownTime))
         {
             display.SetActive(false);
             return;

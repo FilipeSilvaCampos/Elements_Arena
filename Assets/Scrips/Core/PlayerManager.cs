@@ -40,7 +40,7 @@ namespace ElementsArena.Core
             playerController.SetUpController
             (
             fighter.GetComponentInChildren<CharacterMovement>(),
-            fighter.GetComponent<AbilityWrapper>(),
+            fighter.GetComponent<AbilityHolder>(),
             fighter.GetComponentInChildren<CameraController>()
             );
 

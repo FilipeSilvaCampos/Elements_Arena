@@ -64,8 +64,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2010017281520047486}
-        m_TargetAssemblyTypeName: ElementsArena.Prototype.PlayerController, Assembly-CSharp
-        m_MethodName: MovePlayer
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
+        m_MethodName: SetMoveInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -80,8 +80,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2010017281520047486}
-        m_TargetAssemblyTypeName: ElementsArena.Prototype.PlayerController, Assembly-CSharp
-        m_MethodName: MoveCamera
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
+        m_MethodName: SetCameraInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -96,8 +96,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2010017281520047486}
-        m_TargetAssemblyTypeName: ElementsArena.Prototype.PlayerController, Assembly-CSharp
-        m_MethodName: CallPrimaryAbility
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
+        m_MethodName: CallFirstAbility
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -188,8 +188,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2010017281520047486}
-        m_TargetAssemblyTypeName: ElementsArena.Prototype.PlayerController, Assembly-CSharp
-        m_MethodName: CallSecundaryAbility
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
+        m_MethodName: CallSecondAbility
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -204,7 +204,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2010017281520047486}
-        m_TargetAssemblyTypeName: ElementsArena.Prototype.PlayerController, Assembly-CSharp
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
         m_MethodName: CallEvadeAbility
         m_Mode: 0
         m_Arguments:

@@ -6,15 +6,14 @@ namespace ElementsArena.Combat
     public class ProjectileBehaviour : MonoBehaviour
     {
         [SerializeField] float speed = 1.8f;
-        [SerializeField] float damage = 5;
         [SerializeField] float lifeTime = 3;
         [SerializeField] GameObject impactEffect;
         [SerializeField] GameObject[] destroyOnHit;
         [SerializeField] float lifeAfterImpact = 0.2f;
+        [SerializeField] bool destroyOnCollide = false;
 
         private void Start()
         {
-            GetComponent<TriggerDamage>().Damage = damage;
             Destroy(gameObject, lifeTime);
         }
 
@@ -23,7 +22,14 @@ namespace ElementsArena.Combat
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision collision) 
+        {
+            Debug.Log("Collide");
+            if(destroyOnCollide)
+                Destroy(gameObject);
+        }
+
+        private void OnDestroy()
         {
             foreach(GameObject toDestroy in destroyOnHit)
             {

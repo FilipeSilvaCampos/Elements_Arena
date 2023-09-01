@@ -2,29 +2,32 @@ using UnityEngine;
 
 namespace ElementsArena.Combat
 {
+    [System.Serializable]
+    class RockToInvoke
+    {
+        public GameObject prefab;
+        public float elevateSpeed = 10;
+
+        public Vector3 GetPrefabScale() => prefab.transform.localScale;
+    }
+
     public class RockInvoke : Ability
     {
-        [SerializeField] EarthScriptableAttack[] attacks;
+        [SerializeField] RockToInvoke[] rocksToInvoke;
         [SerializeField] float invokeDistance = 2;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] Transform launchTransform;
 
-        EarthScriptableAttack selectedAttack;
-        AbilityWrapper abilityWrapper;
+        RockToInvoke selectedRock;
         Vector2 selectionInput;
 
         GameObject currentRock;
         bool execute = false;
 
-        private void Awake()
-        {
-            abilityWrapper = GetComponent<AbilityWrapper>();    
-        }
-
         protected override void Update()
         {
             base.Update();
-            selectionInput = abilityWrapper.selectionInput;
+            selectionInput = abilityHolder.selectionInput;
             execute = selectionInput != Vector2.zero ? true : false;
         }
 
@@ -44,9 +47,9 @@ namespace ElementsArena.Combat
 
         protected override void OnActive()
         {
-            if (!AboveGround())
+            if (!OnTargetPosition())
             {
-                ElevateRock();
+                MoveToTarget();
                 return;
             }
 
@@ -63,44 +66,49 @@ namespace ElementsArena.Combat
             switch (selectionInput.x, selectionInput.y)
             {
                 case (0, 1):
-                    selectedAttack = attacks[0];
+                    selectedRock = rocksToInvoke[0];
                     break;
                 case (1, 0):
-                    selectedAttack = attacks[1];
+                    selectedRock = rocksToInvoke[1];
                     break;
                 case (0, -1):
-                    selectedAttack = attacks[2];
+                    selectedRock = rocksToInvoke[2];
                     break;
                 case (-1, 0):
-                    selectedAttack = attacks[3];
+                    selectedRock = rocksToInvoke[3];
                     break;
             }
         }
 
         void InvokeNewRock()
         {
-            currentRock = Instantiate(selectedAttack.prefab, GetInvokePosition(), launchTransform.rotation);
+            currentRock = Instantiate(selectedRock.prefab, GetInvokePosition(), launchTransform.rotation);
         }
 
         Vector3 GetInvokePosition()
         {
-            Vector3 invokePosition = transform.position + launchTransform.forward * (invokeDistance + selectedAttack.GetPrefabScale().y / 2);
-            invokePosition.y = GroundHeight() - selectedAttack.GetPrefabScale().y / 2;
+            Vector3 invokePosition = transform.position + launchTransform.forward * (invokeDistance + selectedRock.GetPrefabScale().y / 2);
+            invokePosition.y = GroundHeight() - selectedRock.GetPrefabScale().y / 2;
 
             return invokePosition;
         }
 
-        void ElevateRock()
+        void MoveToTarget()
         {
-            currentRock.transform.position += Vector3.up * selectedAttack.elevateSpeed * Time.deltaTime;
+            currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), selectedRock.elevateSpeed * Time.deltaTime);
         }
 
-        bool AboveGround()
+        Vector3 GetTargetPosition()
         {
-            Vector3 rockPosition = currentRock.transform.position;
+            Vector3 targetPosition = currentRock.transform.position;
+            targetPosition.y = GroundHeight() + selectedRock.GetPrefabScale().y / 2;
 
-            if (rockPosition.y - selectedAttack.GetPrefabScale().y / 2 > GroundHeight()) return true;
-            else return false;
+            return targetPosition;
+        }
+
+        bool OnTargetPosition()
+        {
+            return currentRock.transform.position == GetTargetPosition();
         }
 
         float GroundHeight()

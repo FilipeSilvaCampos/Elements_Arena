@@ -9,7 +9,7 @@ namespace ElementsArena.Control
     public class AIController : MonoBehaviour
     {
         CharacterMovement characterMovement;
-        AbilityWrapper abilityWrapper;
+        AbilityHolder abilityWrapper;
 
         private void Start()
         {

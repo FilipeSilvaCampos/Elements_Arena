@@ -1,25 +1,31 @@
 using ElementsArena.Movement;
-using System.Runtime.CompilerServices;
-using UnityEditor;
 using UnityEngine;
 
 namespace ElementsArena.Combat
 {
     public class FireThrow : Ability
     {
+        [Header("Fly Details")]
         [SerializeField] float flyMaxSpeed = 5;
         [SerializeField] float flyAcceleration = 15;
         [SerializeField] float flyHeight = 3;
+        [SerializeField] float initialBreathCost = 10;
+        [SerializeField] float breathCostPerSecond = 1;
+
         [SerializeField] LayerMask groundLayer;
         [SerializeField] GameObject throwEffect;
         [SerializeField] Transform footTransform;
 
+        FireBreath breath;
         Animator animator;
         Rigidbody characterRb;
         CharacterMovement characterMovement;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
+            breath = GetComponent<FireBreath>();
             characterRb = GetComponent<Rigidbody>();
             characterMovement = GetComponent<CharacterMovement>();
             animator = GetComponentInChildren<Animator>();
@@ -32,7 +38,7 @@ namespace ElementsArena.Combat
 
         protected override void OnReady()
         {
-            if (called)
+            if (called && breath.breatAmount > initialBreathCost)
             {
                 animator.SetBool(AnimationKeys.FlyBool, true);
                 Destroy(Instantiate(throwEffect, footTransform), activeTime);
@@ -45,7 +51,7 @@ namespace ElementsArena.Combat
         {
             ControlHeight();
 
-            if (TimeToChangeState())
+            if (TimeToChangeState() || !breath.TakeBreath(breathCostPerSecond * Time.deltaTime))
             {
                 characterRb.useGravity = true;
                 animator.SetBool(AnimationKeys.FlyBool, false);

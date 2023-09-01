@@ -28,10 +28,11 @@ namespace ElementsArena.Movement
         [SerializeField] float playerHeith;
         [SerializeField] LayerMask whatIsGround;
 
+        public bool grounded { get; private set; }
+        bool moveLock = false;
         Animator animator;
         Vector3 moveInput;
         Rigidbody characterRb;
-        public bool grounded { get; private set; }
 
         private void Awake()
         {
@@ -48,6 +49,8 @@ namespace ElementsArena.Movement
 
         private void LateUpdate()
         {
+            if (moveLock) return;
+
             UpdateRotation();
             if (grounded)
             {
@@ -64,7 +67,7 @@ namespace ElementsArena.Movement
             moveInput.Normalize();
         }
 
-        private void GroundMovement()
+        void GroundMovement()
         {
             Vector3 currentVelocity = characterRb.velocity;
             Vector3 targetSpeed = moveInput * maxSpeed;
@@ -86,7 +89,12 @@ namespace ElementsArena.Movement
 
         public void BreakMovement()
         {
-            characterRb.velocity = new Vector3(0, 0, 0);
+            characterRb.velocity = Vector3.zero;
+        }
+
+        public void LockMovement(bool value)
+        {
+            moveLock = value;
         }
     }
 }
