@@ -1,4 +1,5 @@
 using DG.Tweening;
+using ElementsArena.Damage;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -63,7 +64,8 @@ namespace ElementsArena.Combat
                 DOVirtual.Float(0, 1, .1f, (x) => shootRig.weight = x).OnComplete(() => DOVirtual.Float(1, 0, .3f, (x) => shootRig.weight = x));
             }
 
-            Instantiate(projectiles[counter].prefab, launchTransform.position, launchTransform.rotation);
+            //Instantiate(projectiles[counter].prefab, launchTransform.position, launchTransform.rotation);
+            projectiles[counter].Lauch(GetComponent<IDamageable>(), launchTransform);
             timeSinceLastLaunch = 0;
             counter++;
         }

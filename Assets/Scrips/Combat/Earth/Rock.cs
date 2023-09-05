@@ -30,8 +30,9 @@ namespace ElementsArena.Combat
             transform.Translate(Vector3.forward * launchSpeed * Time.deltaTime);
         }
 
-        public void Launch()
+        public void Launch(IDamageable instigator)
         {
+            GetComponentInChildren<TriggerDamage>().SetInstigator(instigator);
             launched = true;
             GetComponentInChildren<TriggerDamage>().Damage = damage;
             Destroy(gameObject, 20 /*Time to dont live eternaly*/);

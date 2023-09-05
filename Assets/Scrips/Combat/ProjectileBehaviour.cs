@@ -12,6 +12,8 @@ namespace ElementsArena.Combat
         [SerializeField] float lifeAfterImpact = 0.2f;
         [SerializeField] bool destroyOnCollide = false;
 
+        IDamageable instigator = null;
+
         private void Start()
         {
             Destroy(gameObject, lifeTime);
@@ -24,9 +26,13 @@ namespace ElementsArena.Combat
 
         private void OnCollisionEnter(Collision collision) 
         {
-            Debug.Log("Collide");
-            if(destroyOnCollide)
-                Destroy(gameObject);
+            if (!destroyOnCollide) return;
+
+            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+
+            if (damageable != null && damageable == instigator) return;
+            
+            Destroy(gameObject);
         }
 
         private void OnDestroy()
@@ -37,6 +43,12 @@ namespace ElementsArena.Combat
             }
             Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject, lifeAfterImpact);
+        }
+
+        public void SetInstigator(IDamageable instigator)
+        {
+            this.instigator = instigator;
+            GetComponentInChildren<TriggerDamage>().SetInstigator(instigator);
         }
     }
 }

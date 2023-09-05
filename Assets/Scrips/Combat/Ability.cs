@@ -57,7 +57,10 @@ namespace ElementsArena.Combat
             {
                 case AbilityStates.ready:
                     currentState = AbilityStates.active;
-                    abilityHolder.usingPrimary = true;
+                    if (isPrimary)
+                    {
+                        abilityHolder.usingPrimary = true;
+                    }
                     break;
                 case AbilityStates.active:
                     currentState = AbilityStates.cooldown;

@@ -1,3 +1,4 @@
+using ElementsArena.Damage;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -10,7 +11,6 @@ namespace ElementsArena.Combat
         [SerializeField] LayerMask rockLayer;
         [SerializeField] float domainDistance = 3;
         [SerializeField] float moveRockSpeed = 2;
-        [SerializeField] float rotateRockSpeed = 10;
 
         GameObject currentRock;
         Animator animator;
@@ -60,7 +60,7 @@ namespace ElementsArena.Combat
         //Animation Event
         public void Launch()
         {
-            currentRock.GetComponent<Rock>().Launch();
+            currentRock.GetComponent<Rock>().Launch(GetComponent<IDamageable>());
             UnlockCharacterMovement();
             isLaunching = false;
             FinishState();
@@ -98,7 +98,7 @@ namespace ElementsArena.Combat
         {
             currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), moveRockSpeed * Time.deltaTime);
 
-            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, 10);
+            currentRock.transform.rotation = Quaternion.RotateTowards(currentRock.transform.rotation, launchTransform.rotation, 10/*rotate immediate*/);
         }
 
         Vector3 GetTargetPosition()
