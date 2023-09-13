@@ -5,4 +5,5 @@ public class Character : ScriptableObject
 {
     public Sprite characterSprite;
     public GameObject prefab;
+    public GameObject uIPrefab;
 }

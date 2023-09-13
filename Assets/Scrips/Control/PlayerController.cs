@@ -1,5 +1,6 @@
 using ElementsArena.Combat;
 using ElementsArena.Movement;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -66,6 +67,7 @@ namespace ElementsArena.Control
             if (!available) return;
             
             abilityHolder.secondAbility.called = context.ReadValueAsButton();
+            abilityHolder.suportButton = context.ReadValueAsButton();
         }
 
         public void CallEvadeAbility(InputAction.CallbackContext context)

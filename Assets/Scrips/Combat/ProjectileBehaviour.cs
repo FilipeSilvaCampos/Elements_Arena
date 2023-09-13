@@ -1,4 +1,5 @@
 ﻿using ElementsArena.Damage;
+using Photon.Pun;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -13,6 +14,11 @@ namespace ElementsArena.Combat
         [SerializeField] bool destroyOnCollide = false;
 
         IDamageable instigator = null;
+        PhotonView pv;
+        private void Awake()
+        {
+            //pv = GetComponent<PhotonView>();
+        }
 
         private void Start()
         {
@@ -31,8 +37,17 @@ namespace ElementsArena.Combat
             IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
             if (damageable != null && damageable == instigator) return;
-            
+
+            //pv.RPC("RPC_Destroy", RpcTarget.All);
             Destroy(gameObject);
+        }
+
+        [PunRPC]
+        void RPC_Destroy()
+        {
+            if (!pv.IsMine) return;
+
+            PhotonNetwork.Destroy(gameObject);
         }
 
         private void OnDestroy()

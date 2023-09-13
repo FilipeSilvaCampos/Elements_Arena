@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -58,7 +59,7 @@ namespace ElementsArena.Combat
 
         protected override void OnCooldown()
         {
-            if (TimeToChangeState()) FinishState();
+            if (IsTimeToChangeState()) FinishState();
         }
 
         void SelectAttack()
@@ -82,6 +83,7 @@ namespace ElementsArena.Combat
 
         void InvokeNewRock()
         {
+            //currentRock = PhotonNetwork.Instantiate(selectedRock.prefab.name, GetInvokePosition(), launchTransform.rotation);
             currentRock = Instantiate(selectedRock.prefab, GetInvokePosition(), launchTransform.rotation);
         }
 

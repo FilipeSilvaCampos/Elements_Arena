@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSprite: {fileID: 21300000, guid: 2139ee1c7b52d0c4d84050522c2f5105, type: 3}
   prefab: {fileID: 5890960691958954804, guid: afa3513578fccc342aea4c11ec259838, type: 3}
+  uIPrefab: {fileID: 4751602379618049188, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}

@@ -336,7 +336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foreground: {fileID: 8746072594882551240}
-  characterDamageable: {fileID: 0}
   lerpSpeed: 3
 --- !u!1 &4751602379618049188
 GameObject:
@@ -350,6 +349,7 @@ GameObject:
   - component: {fileID: 1416094636658850237}
   - component: {fileID: 397656457278110238}
   - component: {fileID: 4784412886781333707}
+  - component: {fileID: 4946806888747419074}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -440,6 +440,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4946806888747419074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751602379618049188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d9193bbb773774dbeca4bbf39af12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 2935733188267901690}
+  displayCooldowns: {fileID: 2841422315534383197}
 --- !u!1 &5535415402884734715
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,10 +714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec152dbb59b17849974096a06e87514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityHolder: {fileID: 0}
   primary: {fileID: 1164186430822232993}
   secundary: {fileID: 8722726636309681869}
   evade: {fileID: 2027873976884965309}
+  abilityHolder: {fileID: 0}
 --- !u!1 &7205217623093625868
 GameObject:
   m_ObjectHideFlags: 0

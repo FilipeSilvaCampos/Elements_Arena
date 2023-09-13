@@ -4,8 +4,9 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] RectTransform foreground = null;
-    [SerializeField] OnTakeDamage characterDamageable;
     [SerializeField] float lerpSpeed = 3;
+
+    public IDamageable characterDamageable;
 
     private void Update()
     {

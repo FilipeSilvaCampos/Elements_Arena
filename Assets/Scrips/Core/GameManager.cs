@@ -2,6 +2,7 @@ using ElementsArena.Combat;
 using ElementsArena.Control;
 using ElementsArena.Movement;
 using ElementsArena.SceneManagement;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -39,11 +40,13 @@ namespace ElementsArena.Core
         bool hasWinner = false;
         //
 
+        [HideInInspector] public bool isOnlineMode = false;
         bool gameStarted = false;
         PlayerInputManager playerInputManager;
         Dictionary<int, Player> players = new Dictionary<int, Player>();
         Character characterAI = null;
 
+        #region MonoBehaviour Callbacks
         private void Awake()
         {
             playerInputManager = GetComponent<PlayerInputManager>();
@@ -53,6 +56,26 @@ namespace ElementsArena.Core
         {
             playerInputManager.onPlayerJoined += RegisterNewPlayer;
         }
+
+        private void OnLevelWasLoaded(int level)
+        {
+            //TODO make a script to store the current players in the room and organize this players in order to them entered in the room
+            //Update that list every time when a player leaves or enter in the room
+            //Use Pun callbacks
+
+            if(gameStarted && isOnlineMode)
+            {
+                currentLevel = FindObjectOfType<LevelManager>();
+                int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+                Debug.Log(actorNumber);
+                fightersInGame[0] = players[0].playerManager.SetUpPlayer(
+                        currentLevel.spawns[actorNumber],
+                        playersLayers[actorNumber],
+                        currentLevel.cameras[actorNumber]
+                        );
+            }
+        }
+        #endregion
 
         private void RegisterNewPlayer(PlayerInput playerInput)
         {
@@ -86,7 +109,6 @@ namespace ElementsArena.Core
         {
             GameObject ai = Instantiate(characterAI.prefab, spawn.position, spawn.rotation);
             ai.GetComponent<AIController>().enabled = true;
-            ai.GetComponentInChildren<Canvas>().worldCamera = camera;
             return ai;
         }
 
@@ -145,7 +167,7 @@ namespace ElementsArena.Core
         {
             foreach (GameObject fighter in fightersInGame)
             {
-                fighter.GetComponentInChildren<CharacterMovement>().enabled = value;
+                fighter.GetComponent<CharacterMovement>().enabled = value;
                 fighter.GetComponentInChildren<AbilityHolder>().enabled = value;
                 fighter.GetComponentInChildren<CameraController>().enabled = value;
             }
@@ -154,6 +176,13 @@ namespace ElementsArena.Core
         public void StartGame()
         {
             if (gameStarted) return;
+            if (isOnlineMode)
+            {
+                gameStarted = true;
+                PhotonNetwork.JoinRandomRoom();
+                return;
+            }
+
             if (players.Count == 1 && characterAI == null) return;
 
             for (int i = 0; i < players.Count; i++)

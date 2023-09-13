@@ -1,4 +1,5 @@
 using ElementsArena.Damage;
+using Photon.Pun;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -54,7 +55,7 @@ namespace ElementsArena.Combat
 
         protected override void OnCooldown()
         {
-            if (TimeToChangeState()) FinishState();
+            if (IsTimeToChangeState()) FinishState();
         }
 
         //Animation Event
@@ -68,14 +69,12 @@ namespace ElementsArena.Combat
 
         bool GetRockOnForward()
         {
-            RaycastHit hit;
+            Vector3 overlapPosition = transform.position + transform.forward * domainDistance;
+            Collider[] hits = Physics.OverlapBox(overlapPosition, new Vector3(domainDistance, domainDistance, domainDistance), transform.rotation, rockLayer);
 
-            Ray ray = new Ray(transform.position, transform.forward);
-            Physics.SphereCast(ray, 1, out hit, domainDistance, rockLayer);
-
-            if (hit.collider != null)
+            if (hits.Length != 0)
             {
-                currentRock = hit.collider.gameObject;
+                currentRock = hits[0].gameObject;
                 return true;
             }
             else return false;
@@ -83,6 +82,7 @@ namespace ElementsArena.Combat
 
         void InvokeNewRock()
         {
+            //currentRock = PhotonNetwork.Instantiate(deffaultAttack.name, GetInvokePosition(), launchTransform.rotation);
             currentRock = Instantiate(deffaultAttack, GetInvokePosition(), launchTransform.rotation);
         }
 
@@ -104,7 +104,7 @@ namespace ElementsArena.Combat
         Vector3 GetTargetPosition()
         {
             Vector3 targetPosition = launchTransform.position;
-            targetPosition.y = GroundHeight() + 1.8f; //Height character
+            targetPosition.y = GroundHeight() + 1.8f; //Height character    
 
             return targetPosition;
         }

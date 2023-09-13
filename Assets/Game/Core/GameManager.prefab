@@ -101,6 +101,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 4140179892644129488}
   fader: {fileID: 3348092250383489446}
   fadeInTime: 2
+  isOnlineMode: 0
 --- !u!1001 &845698731324153146
 PrefabInstance:
   m_ObjectHideFlags: 0

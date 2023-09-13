@@ -10,5 +10,6 @@ namespace ElementsArena.Combat
 
         public Vector2 selectionInput { get; set; }
         public bool usingPrimary { get; set; } = false;
+        public bool suportButton;
     }
 }

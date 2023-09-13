@@ -1,4 +1,6 @@
 using ElementsArena.Damage;
+using Photon.Pun;
+using System.IO;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -12,7 +14,7 @@ namespace ElementsArena.Combat
 
         public void Lauch(IDamageable instigator,  Transform spawnTransform)
         {
-            ProjectileBehaviour projectile = Instantiate(prefab, spawnTransform.position, spawnTransform.rotation).GetComponent<ProjectileBehaviour>();
+            ProjectileBehaviour projectile = PhotonNetwork.Instantiate(prefab.name, spawnTransform.position, spawnTransform.rotation).GetComponent<ProjectileBehaviour>();
 
             projectile.SetInstigator(instigator);
         }

@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foreground: {fileID: 3131468288372757471}
-  breath: {fileID: 0}
   lerpSpeed: 3
+  characterBreath: {fileID: 0}
 --- !u!1 &6808720435126425782
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,10 +295,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire HUD Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4946806888747419074, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
 --- !u!224 &1609835493305952736 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 717996436074478706, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
   m_PrefabInstance: {fileID: 2279275708652328338}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3971133537686296424 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2935733188267901690, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  m_PrefabInstance: {fileID: 2279275708652328338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eab8708bc184d4c9c6b714ea2b7b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4093595747791760847 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2841422315534383197, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  m_PrefabInstance: {fileID: 2279275708652328338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec152dbb59b17849974096a06e87514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6796081500676606262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4751602379618049188, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  m_PrefabInstance: {fileID: 2279275708652328338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6981215588532896296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6796081500676606262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa1045b24f56ef4bb89732d88858a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 3971133537686296424}
+  displayCooldowns: {fileID: 4093595747791760847}
+  breathBar: {fileID: 1408385625889277558}

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,12 @@ namespace ElementsArena.Damage
         public float life { get; private set; }
 
         public event Action OnDeath;
+        PhotonView photonView;
+
+        private void Awake()
+        {
+            photonView = GetComponent<PhotonView>();
+        }
 
         private void Start()
         {
@@ -25,9 +32,11 @@ namespace ElementsArena.Damage
 
         public void TakeDamage(float damage)
         {
+            if (!photonView.IsMine) return;
+
             Debug.Log(gameObject.name  + " " + damage);
             life = Mathf.Max(life - damage, 0);
-
+            Debug.Log(gameObject.name + " life: " + life);
             if (life == 0)
             {
                 OnDeath.Invoke();

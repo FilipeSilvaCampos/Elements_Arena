@@ -5,6 +5,7 @@ using ElementsArena.Control;
 using ElementsArena.Damage;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 namespace ElementsArena.Core
 {
@@ -30,6 +31,7 @@ namespace ElementsArena.Core
         public GameObject SetUpPlayer(Transform spawnPosition, LayerMask layer, Camera camera)
         {
             GameObject fighter = Instantiate(character.prefab, transform);
+            //GameObject fighter = PhotonNetwork.Instantiate(character.prefab.name, transform.position, transform.rotation);
             IDamageable benderDamageable = fighter.GetComponent<IDamageable>();
 
             benderDamageable.OnDeath += OnLoose;
@@ -39,7 +41,7 @@ namespace ElementsArena.Core
 
             playerController.SetUpController
             (
-            fighter.GetComponentInChildren<CharacterMovement>(),
+            fighter.GetComponent<CharacterMovement>(),
             fighter.GetComponent<AbilityHolder>(),
             fighter.GetComponentInChildren<CameraController>()
             );
@@ -64,11 +66,15 @@ namespace ElementsArena.Core
             transform.rotation = spawn.rotation;
         }
 
-        private static void SetHUD(Camera camera, GameObject fighter)
+        private void SetHUD(Camera camera, GameObject fighter)
         {
-            Canvas fighterCanvas = fighter.GetComponentInChildren<Canvas>();
-            fighterCanvas.worldCamera = camera;
-            fighterCanvas.planeDistance = 1;
+            GameObject uI = Instantiate(character.uIPrefab, transform);
+
+            Canvas uICanvas = uI.GetComponentInChildren<Canvas>();
+            uICanvas.worldCamera = camera;
+            uICanvas.planeDistance = 1;
+
+            uI.GetComponent<UIManager>().Initialize(fighter);
         }
 
         public void UndoReady()

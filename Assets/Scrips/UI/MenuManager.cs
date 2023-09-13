@@ -139,5 +139,12 @@ public class MenuManager : MonoBehaviour
     public void SetGameLocalMode()
     {
         SwitchMode(MenuState.SelectingCharacter);
+        gameManager.isOnlineMode = false;
+    }
+
+    public void SetGameOnlineMode()
+    {
+        SwitchMode(MenuState.SelectingCharacter);
+        gameManager.isOnlineMode = true;
     }
 }

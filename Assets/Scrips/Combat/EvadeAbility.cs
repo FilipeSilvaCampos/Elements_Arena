@@ -29,7 +29,7 @@ namespace ElementsArena.Combat
 
         protected override void OnActive()
         {
-            if(TimeToChangeState())
+            if(IsTimeToChangeState())
             {
                 FinishState();
             }
@@ -37,7 +37,7 @@ namespace ElementsArena.Combat
 
         protected override void OnCooldown()
         {
-            if (TimeToChangeState()) FinishState();
+            if (IsTimeToChangeState()) FinishState();
         }
     }
 }

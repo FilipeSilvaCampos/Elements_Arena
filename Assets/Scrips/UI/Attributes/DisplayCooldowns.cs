@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DisplayCooldowns : MonoBehaviour
 {
-    [SerializeField] AbilityHolder abilityHolder;
     [Header("Abilitys Display")]
     [SerializeField] GameObject primary;
     [SerializeField] GameObject secundary;
     [SerializeField] GameObject evade;
+
+
+    [HideInInspector] public AbilityHolder abilityHolder;
 
     private void Update()
     {

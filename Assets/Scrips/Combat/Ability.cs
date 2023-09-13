@@ -73,7 +73,7 @@ namespace ElementsArena.Combat
             }
         }
 
-        protected bool TimeToChangeState()
+        protected bool IsTimeToChangeState()
         {
             switch (currentState)
             {

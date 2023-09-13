@@ -51,7 +51,7 @@ namespace ElementsArena.Combat
         {
             ControlHeight();
 
-            if (TimeToChangeState() || !breath.TakeBreath(breathCostPerSecond * Time.deltaTime))
+            if (IsTimeToChangeState() || !breath.TakeBreath(breathCostPerSecond * Time.deltaTime))
             {
                 characterRb.useGravity = true;
                 animator.SetBool(AnimationKeys.FlyBool, false);
@@ -61,7 +61,7 @@ namespace ElementsArena.Combat
 
         protected override void OnCooldown()
         {
-            if (TimeToChangeState()) FinishState();
+            if (IsTimeToChangeState()) FinishState();
         }
 
         private float GroundHeight()
