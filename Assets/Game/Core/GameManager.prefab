@@ -30,8 +30,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1960934925908180671}
   - {fileID: 8153305846133946475}
+  - {fileID: 1960934925908180671}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 4140179892644129488}
   fader: {fileID: 3348092250383489446}
   fadeInTime: 2
-  isOnlineMode: 0
+  isOnline: 0
 --- !u!1001 &845698731324153146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1191806210164843397, guid: d6938ed004686544b88dd81b29624a31, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1191806210164843397, guid: d6938ed004686544b88dd81b29624a31, type: 3}
       propertyPath: m_AnchorMax.x
@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5448349492717577375, guid: 7230805b2de50f940a7f132d89a8cce9, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5448349492717577375, guid: 7230805b2de50f940a7f132d89a8cce9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -382,6 +382,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5448349492717577375, guid: 7230805b2de50f940a7f132d89a8cce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980636958792240949, guid: 7230805b2de50f940a7f132d89a8cce9, type: 3}
+      propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

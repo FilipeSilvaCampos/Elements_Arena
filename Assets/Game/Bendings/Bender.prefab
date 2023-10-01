@@ -443,8 +443,8 @@ GameObject:
   - component: {fileID: 8010151269336943456}
   - component: {fileID: 679275762335137007}
   - component: {fileID: 3592306905191989820}
-  - component: {fileID: 5944213591898808733}
-  - component: {fileID: 3942613905160593601}
+  - component: {fileID: 6472406740664549408}
+  - component: {fileID: 6320800061054953429}
   - component: {fileID: 8737659875813666002}
   - component: {fileID: 3571914755711416184}
   - component: {fileID: -3150037842507811945}
@@ -504,7 +504,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &5944213591898808733
+--- !u!114 &6472406740664549408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -521,13 +521,13 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 3942613905160593601}
+  - {fileID: 6320800061054953429}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3942613905160593601
+--- !u!114 &6320800061054953429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

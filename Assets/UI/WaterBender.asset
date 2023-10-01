@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01df91cab1f84cf4a82298b5639799ea, type: 3}
   m_Name: WaterBender
   m_EditorClassIdentifier: 
-  characterSprite: {fileID: 21300000, guid: 2139ee1c7b52d0c4d84050522c2f5105, type: 3}
+  characterSprite: {fileID: 21300000, guid: 41d87810059a8a0449e88217117c2617, type: 3}
   prefab: {fileID: 9162239254904775851, guid: 43abe254feda4a841b2687ce4251e537, type: 3}
-  uIPrefab: {fileID: 4751602379618049188, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  uIPrefab: {fileID: 3851390108478324856, guid: 9b6f7fa2fcc8e3147b02735f4bd7fa50, type: 3}
