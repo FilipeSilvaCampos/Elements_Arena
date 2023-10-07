@@ -1,6 +1,6 @@
 using ElementsArena.Control;
 using ElementsArena.SceneManagement;
-using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -22,11 +22,10 @@ namespace ElementsArena.Core
     }
 
 
-    public class GameManager : MonoBehaviourPunCallbacks
+    public class GameManager : MonoBehaviour
     {
         [SerializeField] int mainSceneId = 0;
         [SerializeField] LayerMask[] playersLayers;
-        [SerializeField] int levelToLoadId = 1;
         [SerializeField] GameObject gameOverScreen;
         [SerializeField] Fader fader;
         [SerializeField] float fadeInTime = 2;
@@ -37,12 +36,12 @@ namespace ElementsArena.Core
         bool hasWinner = false;
         //
 
-        public bool isOnline = false;
         bool gameStarted = false;
         PlayerInputManager playerInputManager;
         Dictionary<int, Player> players = new Dictionary<int, Player>();
         Character characterAI = null;
         bool versusAI = false;
+        public bool VersusAI { get { return versusAI; } set { versusAI = value; } }
 
         #region MonoBehaviour Callbacks
         private void Awake()
@@ -54,7 +53,6 @@ namespace ElementsArena.Core
         {
             playerInputManager.onPlayerJoined += RegisterNewPlayer;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += LoadLevel;
         }
         #endregion
 
@@ -66,11 +64,15 @@ namespace ElementsArena.Core
             Player newPlayer = new Player(player);
             players.Add(playerInput.playerIndex, newPlayer);
             DontDestroyOnLoad(player);
+
+            if (players.Count > 1) versusAI = false;
         }
 
-        private void LoadLevel(Scene scene, LoadSceneMode loadMode)
+        private IEnumerator LoadLevel(int levelToLoad)
         {
             fader.FaderOutImmediate();
+            yield return SceneManager.LoadSceneAsync(levelToLoad);
+
             currentLevel = FindObjectOfType<LevelManager>();
 
             if(players.Count > 1)
@@ -80,7 +82,7 @@ namespace ElementsArena.Core
 
             InitializeFighters();
             AbleAllFightersControls(false);
-            fader.FadeIn(1);
+            yield return fader.FadeIn(1);
             AbleAllFightersControls(true);
         }
 
@@ -93,16 +95,6 @@ namespace ElementsArena.Core
 
         private void InitializeFighters()
         {
-            if(isOnline)
-            {
-                players[0].playerManager.SetUpPlayer(
-                    currentLevel.spawns[PlayerRoomIndex()],
-                    playersLayers[0],
-                    currentLevel.cameras[0]);
-
-                return;
-            }
-
             for(int i = 0; i < players.Count; i++)
             {
                 if (players.ContainsKey(i))
@@ -119,15 +111,6 @@ namespace ElementsArena.Core
             {
                 fightersInGame[1] = SetAI(currentLevel.spawns[1], currentLevel.cameras[1]);
             }
-        }
-
-        int PlayerRoomIndex()
-        {
-            for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            {
-                if (PhotonNetwork.PlayerList[i].UserId == PhotonNetwork.LocalPlayer.UserId) return i;
-            }
-            return 0;
         }
 
         public void GameOver(GameObject loserObject)
@@ -162,14 +145,6 @@ namespace ElementsArena.Core
         { 
             if (gameStarted) return;
 
-            if(isOnline)
-            {
-                PhotonNetwork.JoinRandomRoom();
-                gameStarted = true;
-                return;
-            }
-
-
             if (versusAI) characterAI = character;
             if (players.Count == 1 && characterAI == null)
             {
@@ -185,7 +160,7 @@ namespace ElementsArena.Core
             }
 
             gameStarted = true;
-            //StartCoroutine(LoadLevel(levelToLoadId));
+            StartCoroutine(LoadLevel(1)); //Defalut teste arena
         }
 
         public void RestartGame()

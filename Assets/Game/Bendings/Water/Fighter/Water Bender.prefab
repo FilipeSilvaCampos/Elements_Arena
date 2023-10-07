@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6472406740664549408, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472406740664549408, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 1149957408416917008}
     - target: {fileID: 8010151269336943456, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -61,6 +69,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+--- !u!114 &1149957408416917008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2304275137203063263, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
+  m_PrefabInstance: {fileID: 1157168010885345231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162239254904775851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b21948fd959fb34cb5d8b2e30fad82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8897939806829741937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7743028272977488062, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}
@@ -134,8 +153,8 @@ MonoBehaviour:
   isPrimary: 1
   called: 0
   launchTransform: {fileID: 8897939806829741937}
-  wavePrefab: {fileID: 9030602030068590738, guid: 2b3effda24422de42b2873fe5fc9c74e, type: 3}
-  waterNeedPerProjectile: 30
+  wave: {fileID: 11400000, guid: eb117efef663e4047ac201b7dcae7d16, type: 2}
+  waterPerWave: 50
   deliveryPrefab: {fileID: 2029404383717369248, guid: a988bea519cce6a4ca170059a25343cc, type: 3}
   deliverySpeed: 10
 --- !u!114 &8875178435918758551

@@ -179,13 +179,13 @@ MonoBehaviour:
   called: 0
   rocksToInvoke:
   - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
-    elevateSpeed: 20
+    elevateTime: 0.7
   - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
-    elevateSpeed: 20
+    elevateTime: 0.7
   - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
-    elevateSpeed: 7
+    elevateTime: 1.5
   - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
-    elevateSpeed: 7
+    elevateTime: 1.5
   invokeDistance: 2
   groundLayer:
     serializedVersion: 2

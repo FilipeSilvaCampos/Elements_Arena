@@ -1047,7 +1047,6 @@ GameObject:
   m_Component:
   - component: {fileID: 592384026}
   - component: {fileID: 592384025}
-  - component: {fileID: 592384027}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -1083,20 +1082,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &592384027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592384024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669a04b05417450459a7e04d46f660b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuManager: {fileID: 1984146358}
-  connectingPanel: {fileID: 184624362}
 --- !u!1 &714376097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1312,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 592384027}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ElementsArena.Photon.Launcher, Assembly-CSharp
         m_MethodName: Connecet
         m_Mode: 1
@@ -2987,7 +2972,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984146358}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: SetLocalMode
+        m_MethodName: ShowSelectScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3365,7 +3350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c9f7516a1ac44b975dece85fc4bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectModeMenu: {fileID: 301735885}
+  selectMode: {fileID: 301735885}
   gameQuitWarning: {fileID: 2097301996}
   selectCharacterScreen: {fileID: 223806947}
   previews:

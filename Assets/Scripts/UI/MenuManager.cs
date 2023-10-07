@@ -20,7 +20,8 @@ public enum MenuState
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject selectModeMenu;
+    [Header("Menus")]
+    [SerializeField] GameObject selectMode;
     [SerializeField] GameObject gameQuitWarning;
 
     [Header("Character Selection Screen")]
@@ -78,12 +79,12 @@ public class MenuManager : MonoBehaviour
         switch(state)
         {
             case MenuState.SelectingGameMode:
-                selectModeMenu.SetActive(true);
+                selectMode.SetActive(true);
                 selectCharacterScreen.SetActive(false);
                 break;
 
             case MenuState.SelectingCharacter:
-                selectModeMenu.SetActive(false);
+                selectMode.SetActive(false);
                 selectCharacterScreen.SetActive(true);
                 SetSelectSreen(null);
 
@@ -125,8 +126,8 @@ public class MenuManager : MonoBehaviour
         menuToHide.SetActive(false);
     }
 
-    void SetSelectSreen(PlayerInput player)
-    {//The parameter is just for subscribe on OnPlyerJoined event
+    void SetSelectSreen(PlayerInput player) //The parameter is just for subscribe on OnPlyerJoined event
+    {
         for(int i = 0; i < playerInputManager.playerCount; i++)
         {
             GameObject currentPlayer = gameManager.GetPlayer(i).gameObject;
@@ -136,9 +137,9 @@ public class MenuManager : MonoBehaviour
         SetPreviewsCursors();
     }
 
-    public void SetLocalMode()
+    public void ShowSelectScreen()
     {
         SwitchMode(MenuState.SelectingCharacter);
-        gameManager.isOnline = false;
+        gameManager.VersusAI = false;
     }
 }

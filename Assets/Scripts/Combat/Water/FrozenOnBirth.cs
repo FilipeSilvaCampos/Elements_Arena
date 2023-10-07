@@ -7,6 +7,7 @@ namespace ElementsArena.Combat
     {
         [SerializeField] float lifeTime = 2;
         [SerializeField] LayerMask charactersLayer;
+        [SerializeField] GameObject breakEffect;
 
         CharacterMovement[] frozenCharacters;
 
@@ -36,6 +37,7 @@ namespace ElementsArena.Combat
             {
                 character.LockMovement(false);
             }
+            Instantiate(breakEffect, transform.position, transform.rotation);
         }
     }
 }

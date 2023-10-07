@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54fe5af9f6161a44cae5a5f652f1510e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 30
+  durability: 50
   launchSpeed: 7
   damage: 30
   destroyEffect: {fileID: 3772065794701908778, guid: fb795bc404ccba948b8b6880c807b2a5, type: 3}

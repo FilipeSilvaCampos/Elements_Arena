@@ -4,7 +4,6 @@ using ElementsArena.Movement;
 using ElementsArena.Control;
 using ElementsArena.Damage;
 using UnityEngine;
-using Photon.Pun;
 
 namespace ElementsArena.Core
 {
@@ -34,7 +33,7 @@ namespace ElementsArena.Core
 
         public GameObject SetUpPlayer(Transform spawnPosition, LayerMask layer, Camera camera)
         {
-            GameObject fighter = PhotonNetwork.Instantiate(character.prefab.name, transform.position, transform.rotation);
+            GameObject fighter = Instantiate(character.prefab, transform.position, transform.rotation);
             IDamageable benderDamageable = fighter.GetComponent<IDamageable>();
 
             benderDamageable.OnDeath += OnLoose;
@@ -71,7 +70,7 @@ namespace ElementsArena.Core
 
         private void SetHUD(Camera camera, GameObject fighter)
         {
-            GameObject uI = Instantiate(character.uIPrefab, transform);
+            GameObject uI = Instantiate(character.uIPrefab, fighter.transform);
 
             Canvas uICanvas = uI.GetComponentInChildren<Canvas>();
             uICanvas.worldCamera = camera;

@@ -13,7 +13,6 @@ namespace ElementsArena.Combat
         [SerializeField] float timeWithoutReaction = 1.8f;
         [SerializeField] Rig shootRig = null;
 
-        PhotonView photonView;
         FireBreath breath;
         float timeSinceLastLaunch = 0;
         int counter = 0;
@@ -22,7 +21,6 @@ namespace ElementsArena.Combat
         {
             base.Awake();
             breath = GetComponent<FireBreath>();
-            photonView = GetComponent<PhotonView>();
         }
 
         protected override void Update()
@@ -67,16 +65,10 @@ namespace ElementsArena.Combat
                 DOVirtual.Float(0, 1, .1f, (x) => shootRig.weight = x).OnComplete(() => DOVirtual.Float(1, 0, .3f, (x) => shootRig.weight = x));
             }
 
-            photonView.RPC("InstantiateProjectile", RpcTarget.All, counter, launchTransform.position, launchTransform.rotation);
+            projectiles[counter].Lauch(GetComponent<IDamageable>(), launchTransform.position, launchTransform.rotation);
 
             timeSinceLastLaunch = 0;
             counter++;
-        }
-
-        [PunRPC]
-        void InstantiateProjectile(int projectileIndex, Vector3 spawnPosition, Quaternion spawnRotation)
-        {
-            projectiles[projectileIndex].Lauch(GetComponent<IDamageable>(), spawnPosition, spawnRotation);
         }
     }
 }

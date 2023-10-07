@@ -8,6 +8,7 @@ namespace ElementsArena.Combat
         [SerializeField] LayerMask waterLayer;
 
         public WaterSource[] nearSources;
+        public float totalAmount { get; private set; }
 
         protected override void Update()
         {
@@ -18,11 +19,13 @@ namespace ElementsArena.Combat
         void FindWaterOnNear()
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, waterSearchDistance, waterLayer);
+            totalAmount = 0;
 
             nearSources = new WaterSource[hits.Length];
             for(int i = 0; i < hits.Length; i++)
             {
                 nearSources[i] = hits[i].GetComponent<WaterSource>();
+                totalAmount += nearSources[i].amount;
             }
         }
 

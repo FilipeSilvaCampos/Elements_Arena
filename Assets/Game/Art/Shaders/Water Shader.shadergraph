@@ -163,11 +163,7 @@
             "m_Id": "7569ea43a3dc48a7894ed903a7073d83"
         }
     ],
-    "m_GroupDatas": [
-        {
-            "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
-        }
-    ],
+    "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
         {
@@ -946,7 +942,7 @@
     "m_Type": "UnityEditor.ShaderGraph.TilingAndOffsetNode",
     "m_ObjectId": "05ee837d9d054ef1b44e3a94d9696a5f",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Tiling And Offset",
     "m_DrawState": {
@@ -1129,7 +1125,7 @@
     "m_Type": "UnityEditor.ShaderGraph.TimeNode",
     "m_ObjectId": "13ad18327a1446819d63ae84abd591d6",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Time",
     "m_DrawState": {
@@ -1276,7 +1272,7 @@
     "m_Type": "UnityEditor.ShaderGraph.GradientNoiseNode",
     "m_ObjectId": "16e1fe04e3644ec185fde37989b58a63",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Gradient Noise",
     "m_DrawState": {
@@ -1385,7 +1381,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector2Node",
     "m_ObjectId": "227e4efb91194b0c909a183c1534ada4",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Vector 2",
     "m_DrawState": {
@@ -1835,7 +1831,7 @@
     "m_Type": "UnityEditor.ShaderGraph.FresnelNode",
     "m_ObjectId": "35efe42d085c4ef2bb43f0a29a0485ec",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Fresnel Effect",
     "m_DrawState": {
@@ -2037,7 +2033,7 @@
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "3c78ae80f35442bd9b1f4a59be8c54f7",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Property",
     "m_DrawState": {
@@ -2243,7 +2239,7 @@
     "m_CastShadows": false,
     "m_ReceiveShadows": false,
     "m_CustomEditorGUI": "",
-    "m_SupportVFX": false
+    "m_SupportVFX": true
 }
 
 {
@@ -2804,7 +2800,7 @@
     "m_Type": "UnityEditor.ShaderGraph.ScreenPositionNode",
     "m_ObjectId": "732d841dcf524d79972a29c34dd9b7a6",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Screen Position",
     "m_DrawState": {
@@ -3018,7 +3014,7 @@
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "78ffd10398544db5b8d0afe70c9529d8",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Multiply",
     "m_DrawState": {
@@ -3287,14 +3283,14 @@
     "m_Type": "UnityEditor.ShaderGraph.SceneColorNode",
     "m_ObjectId": "8a28b3f4bc9849418f7443f6a023f0ba",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Scene Color",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -739.9999389648438,
+            "x": -738.0,
             "y": 1200.0,
             "width": 138.0,
             "height": 77.0
@@ -3570,7 +3566,7 @@
     "m_Type": "UnityEditor.ShaderGraph.RemapNode",
     "m_ObjectId": "a0fab8bcb9504d0cb01efe7b7a02b73b",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Remap",
     "m_DrawState": {
@@ -4298,7 +4294,7 @@
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "c94e6723897346d09d5fa1588e7c672e",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Multiply",
     "m_DrawState": {
@@ -4495,7 +4491,7 @@
     "m_Type": "UnityEditor.ShaderGraph.AddNode",
     "m_ObjectId": "cd3828704b1e4f73afbb26280c367e8a",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Add",
     "m_DrawState": {
@@ -4584,17 +4580,6 @@
     "m_Value": 5.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.GroupData",
-    "m_ObjectId": "d60268d16cc04caab51353fd4eed9e4d",
-    "m_Title": "Emission",
-    "m_Position": {
-        "x": -3734.0,
-        "y": 828.0000610351563
-    }
 }
 
 {
@@ -5585,7 +5570,7 @@
     "m_Type": "UnityEditor.ShaderGraph.AddNode",
     "m_ObjectId": "fd6f1e853173493195f84cd1686ae904",
     "m_Group": {
-        "m_Id": "d60268d16cc04caab51353fd4eed9e4d"
+        "m_Id": ""
     },
     "m_Name": "Add",
     "m_DrawState": {

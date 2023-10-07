@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBreathAmount: 100
-  recoveryAmount: 0.5
+  recoveryAmount: 1.5
   breatAmount: 0
 --- !u!4 &8824628779460987007 stripped
 Transform:

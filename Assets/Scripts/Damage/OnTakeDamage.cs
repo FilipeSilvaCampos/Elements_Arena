@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ElementsArena.Damage
 {
-    public class OnTakeDamage : MonoBehaviour, IDamageable, IPunObservable
+    public class OnTakeDamage : MonoBehaviour, IDamageable
     {
         [SerializeField] float maxLife;
         [field: SerializeField] public float life { get; private set; } // Just for visualize in editor
@@ -37,20 +37,6 @@ namespace ElementsArena.Damage
         public float GetFraction()
         {
             return life / maxLife;
-        }
-
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            if(stream.IsWriting)
-            {
-                stream.SendNext(life);
-                Debug.Log("Writing: " +  life);
-            }
-            else
-            {
-                life = (float)stream.ReceiveNext();
-                Debug.Log("Reading: " + life);
-            }
         }
     }
 }

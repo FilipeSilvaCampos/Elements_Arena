@@ -5,7 +5,7 @@ namespace ElementsArena.SceneManagement
 {
     public class Fader : MonoBehaviour
     {
-        [SerializeField] CanvasGroup canvasGroup;
+        CanvasGroup canvasGroup;
         Coroutine currentActiveFade = null;
 
         private void Awake()

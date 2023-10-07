@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class WaterUIManager : UIManager
 {
     [SerializeField] Image stateImage;
+    [SerializeField] WaterDisplay waterDisplay;
 
     WaterStateManager waterStateManager;
 
@@ -17,5 +18,6 @@ public class WaterUIManager : UIManager
     {
         base.Initialize(fighter);
         waterStateManager = fighter.GetComponent<WaterStateManager>();
+        waterDisplay.stateManager = waterStateManager;
     }
 }

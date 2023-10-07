@@ -22,7 +22,6 @@ namespace ElementsArena.Photon
         private void Start()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            gameManager = FindObjectOfType<Core.GameManager>();
             connectingPanel.SetActive(false);
         }
 
@@ -38,7 +37,6 @@ namespace ElementsArena.Photon
         {
             Debug.Log("OnConnetedToMaster() was called by Pun");
             menuManager.SwitchMode(MenuState.SelectingCharacter);
-            gameManager.isOnline = true;
             isConnecting = false;
         }
 
@@ -71,7 +69,6 @@ namespace ElementsArena.Photon
             if (PhotonNetwork.IsConnected)
             {
                 menuManager.SwitchMode(MenuState.SelectingCharacter);
-                gameManager.isOnline = true;
                 return;
             }
 

@@ -8,8 +8,9 @@ namespace ElementsArena.Combat
     {
         [Header("Wave Properties")]
         [SerializeField] Transform launchTransform;
-        [SerializeField] GameObject wavePrefab;
-        [SerializeField] float waterNeedPerProjectile = 30;
+        [SerializeField] WaterScriptableProjectile wave;
+        [SerializeField] float waterPerWave = 30;
+
         [Header("Delivery Attributes")]
         [SerializeField] GameObject deliveryPrefab;
         [SerializeField] [Min(7)] float deliverySpeed = 10;
@@ -21,7 +22,7 @@ namespace ElementsArena.Combat
 
         protected override void OnReady()
         {
-            if(called && waterStateManager.TakeWater(waterNeedPerProjectile, out currenteSource))
+            if(called && waterStateManager.TakeWater(waterPerWave, out currenteSource))
             {
                 StartCoroutine(LaunchProjectile(currenteSource.transform.position, launchTransform.position));
                 FinishState();
@@ -69,9 +70,9 @@ namespace ElementsArena.Combat
             {
                 water.transform.position = Vector3.MoveTowards(water.transform.position, targetPosition, Time.deltaTime * deliverySpeed);
                 yield return null;
-            }
+            }        
 
-            currentAttack = Instantiate(wavePrefab, launchTransform.position, launchTransform.rotation).GetComponent<WaterProjectile>();
+            currentAttack = wave.Launch(launchTransform.position, launchTransform.rotation).GetComponent<WaterProjectile>();
             Destroy(water);
         }
     }

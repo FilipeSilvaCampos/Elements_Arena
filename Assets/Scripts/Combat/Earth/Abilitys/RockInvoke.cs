@@ -6,7 +6,7 @@ namespace ElementsArena.Combat
     class RockToInvoke
     {
         public GameObject prefab;
-        public float elevateSpeed = 10;
+        public float elevateTime = 10;
 
         public Vector3 GetPrefabScale() => prefab.transform.localScale;
     }
@@ -22,6 +22,8 @@ namespace ElementsArena.Combat
         Vector2 selectionInput;
 
         GameObject currentRock;
+        float vToElevate;
+
         bool execute = false;
 
         protected override void Update()
@@ -83,6 +85,7 @@ namespace ElementsArena.Combat
         void InvokeNewRock()
         {
             currentRock = Instantiate(selectedRock.prefab, GetInvokePosition(), launchTransform.rotation);
+            vToElevate = (Vector3.Distance(GetTargetPosition(), currentRock.transform.position) / selectedRock.elevateTime) * Time.deltaTime;
         }
 
         Vector3 GetInvokePosition()
@@ -95,7 +98,8 @@ namespace ElementsArena.Combat
 
         void MoveToTarget()
         {
-            currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), selectedRock.elevateSpeed * Time.deltaTime);
+            currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(),vToElevate);
+            //currentRock.transform.position = Vector3.MoveTowards(currentRock.transform.position, GetTargetPosition(), selectedRock.elevateTime * Time.timeScale);
         }
 
         Vector3 GetTargetPosition()
