@@ -6,16 +6,16 @@ namespace ElementsArena.Combat
     class RockToInvoke
     {
         public GameObject prefab;
-        public float elevateTime = 10;
+        public float timeToElevate = 10;
 
         public Vector3 GetPrefabScale() => prefab.transform.localScale;
     }
 
-    public class RockInvoke : Ability
+    public class RockInvoke : EarthAbility
     {
+        [Header("Invoke Attributes")]
         [SerializeField] RockToInvoke[] rocksToInvoke;
         [SerializeField] float invokeDistance = 2;
-        [SerializeField] LayerMask groundLayer;
         [SerializeField] Transform launchTransform;
 
         RockToInvoke selectedRock;
@@ -37,6 +37,8 @@ namespace ElementsArena.Combat
         {
             if(called)
             {
+                if (HaveRockOnForward(out GameObject NA)) return;
+
                 if(execute)
                 {
                     SelectAttack();
@@ -85,7 +87,7 @@ namespace ElementsArena.Combat
         void InvokeNewRock()
         {
             currentRock = Instantiate(selectedRock.prefab, GetInvokePosition(), launchTransform.rotation);
-            vToElevate = (Vector3.Distance(GetTargetPosition(), currentRock.transform.position) / selectedRock.elevateTime) * Time.deltaTime;
+            vToElevate = (Vector3.Distance(GetTargetPosition(), currentRock.transform.position) / selectedRock.timeToElevate) * Time.deltaTime;
         }
 
         Vector3 GetInvokePosition()
@@ -113,17 +115,6 @@ namespace ElementsArena.Combat
         bool OnTargetPosition()
         {
             return currentRock.transform.position == GetTargetPosition();
-        }
-
-        float GroundHeight()
-        {
-            RaycastHit hit;
-            Vector3 position = transform.position + Vector3.forward * invokeDistance;
-
-            Ray ray = new Ray(position, Vector3.down);
-            Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
-
-            return hit.point.y;
         }
     }
 }

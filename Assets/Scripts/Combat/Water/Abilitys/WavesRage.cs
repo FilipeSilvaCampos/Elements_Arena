@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -22,7 +23,7 @@ namespace ElementsArena.Combat
 
         protected override void OnReady()
         {
-            if(called && waterStateManager.TakeWater(waterPerWave, out currenteSource))
+            if (called && waterStateManager.TakeWater(waterPerWave, out currenteSource))
             {
                 StartCoroutine(LaunchProjectile(currenteSource.transform.position, launchTransform.position));
                 FinishState();

@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  parent: {fileID: 1708277100755240993}
 --- !u!1 &1708277100755240993
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +73,6 @@ GameObject:
   - component: {fileID: 2846120180526367843}
   - component: {fileID: 6271918409651695030}
   - component: {fileID: 8477613294139273566}
-  - component: {fileID: -2344586116374722529}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -145,8 +145,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: -2344586116374722529}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -169,22 +168,6 @@ MonoBehaviour:
   - {fileID: 4712561468838949780}
   lifeAfterImpact: 0.2
   destroyOnCollide: 1
---- !u!114 &-2344586116374722529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708277100755240993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &4712561468838949780
 GameObject:
   m_ObjectHideFlags: 0

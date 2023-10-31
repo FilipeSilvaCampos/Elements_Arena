@@ -97,11 +97,9 @@ MonoBehaviour:
     m_Bits: 128
   - serializedVersion: 2
     m_Bits: 256
-  levelToLoadId: 1
   gameOverScreen: {fileID: 4140179892644129488}
   fader: {fileID: 3348092250383489446}
   fadeInTime: 2
-  isOnline: 0
 --- !u!1001 &845698731324153146
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 7
+  parent: {fileID: 7233728523513798510}
 --- !u!1 &7233728523513798510
 GameObject:
   m_ObjectHideFlags: 0

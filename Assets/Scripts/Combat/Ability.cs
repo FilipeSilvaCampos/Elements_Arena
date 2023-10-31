@@ -13,6 +13,7 @@ namespace ElementsArena.Combat
     [RequireComponent(typeof(AbilityHolder))]
     public abstract class Ability : MonoBehaviour
     {
+        [Header("Ability Attributes")]
         [SerializeField] protected float activeTime = 1;
         [SerializeField] protected float cooldownTime = 1.5f;
         [SerializeField] private bool isPrimary = false;
@@ -33,7 +34,7 @@ namespace ElementsArena.Combat
             switch(currentState)
             {
                 case AbilityStates.ready:
-                    if (isPrimary && abilityHolder.usingPrimary) break;
+                    if (isPrimary && abilityHolder.usingPrimary) return;
                     OnReady();
                     break;
                 case AbilityStates.active:
@@ -57,10 +58,6 @@ namespace ElementsArena.Combat
             {
                 case AbilityStates.ready:
                     currentState = AbilityStates.active;
-                    if (isPrimary)
-                    {
-                        abilityHolder.usingPrimary = true;
-                    }
                     break;
                 case AbilityStates.active:
                     currentState = AbilityStates.cooldown;
@@ -77,8 +74,6 @@ namespace ElementsArena.Combat
         {
             switch (currentState)
             {
-                case AbilityStates.ready:
-                    return false;
                 case AbilityStates.active:
                     if (timeSinceLastStateChange > activeTime) return true;
                     else return false;

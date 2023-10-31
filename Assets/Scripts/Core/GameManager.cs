@@ -1,4 +1,5 @@
 using ElementsArena.Control;
+using ElementsArena.Damage;
 using ElementsArena.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,12 +37,13 @@ namespace ElementsArena.Core
         bool hasWinner = false;
         //
 
+        public bool VersusAI { get { return versusAI; } set { versusAI = value; } }
         bool gameStarted = false;
         PlayerInputManager playerInputManager;
         Dictionary<int, Player> players = new Dictionary<int, Player>();
         Character characterAI = null;
         bool versusAI = false;
-        public bool VersusAI { get { return versusAI; } set { versusAI = value; } }
+        bool gamePaused = false;
 
         #region MonoBehaviour Callbacks
         private void Awake()
@@ -53,6 +55,14 @@ namespace ElementsArena.Core
         {
             playerInputManager.onPlayerJoined += RegisterNewPlayer;
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Escape) && gameStarted && !hasWinner)
+            {
+                PauseGame();
+            }
         }
         #endregion
 
@@ -95,6 +105,8 @@ namespace ElementsArena.Core
 
         private void InitializeFighters()
         {
+            AbleAllFightersControls(true);
+            gamePaused = false;
             for(int i = 0; i < players.Count; i++)
             {
                 if (players.ContainsKey(i))
@@ -163,6 +175,15 @@ namespace ElementsArena.Core
             StartCoroutine(LoadLevel(1)); //Defalut teste arena
         }
 
+        private void PauseGame()
+        {
+            gamePaused = !gamePaused;
+
+            gameOverScreen.SetActive(gamePaused);
+            gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().text = "Game Paused";
+            AbleAllFightersControls(!gamePaused);
+        }
+
         public void RestartGame()
         {
             ResetLevel();
@@ -180,7 +201,8 @@ namespace ElementsArena.Core
             for(int i = 0; i < players.Count; i++)
             {
                 players[i].playerManager.SetCharacter(null);
-                players[i].gameObject.GetComponent<PlayerController>().enabled = false;
+                players[i].playerManager.UndoReady();
+                players[i].gameObject.GetComponent<PlayerController>().SetAvailable(false);
             }
             characterAI = null;
 

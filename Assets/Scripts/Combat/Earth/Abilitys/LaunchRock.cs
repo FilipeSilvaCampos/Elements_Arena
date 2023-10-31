@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace ElementsArena.Combat
 {
-    public class LaunchRock : Ability
+    public class LaunchRock : EarthAbility
     {
+        [Header("Launch Attributes")]
         [SerializeField] GameObject deffaultAttack;
         [SerializeField] Transform launchTransform;
-        [SerializeField] LayerMask groundLayer;
-        [SerializeField] LayerMask rockLayer;
-        [SerializeField] float domainDistance = 3;
         [SerializeField] float moveRockSpeed = 2;
 
         GameObject currentRock;
@@ -26,7 +24,8 @@ namespace ElementsArena.Combat
             if (called)
             {
                 LockCharacterMovement();
-                if(GetRockOnForward())
+
+                if(HaveRockOnForward(out currentRock))
                 {
                     FinishState();
                     return;
@@ -66,19 +65,6 @@ namespace ElementsArena.Combat
             FinishState();
         }
 
-        bool GetRockOnForward()
-        {
-            Vector3 overlapPosition = transform.position + transform.forward * domainDistance;
-            Collider[] hits = Physics.OverlapBox(overlapPosition, new Vector3(domainDistance, domainDistance, domainDistance), transform.rotation, rockLayer);
-
-            if (hits.Length != 0)
-            {
-                currentRock = hits[0].gameObject;
-                return true;
-            }
-            else return false;
-        }
-
         void InvokeNewRock()
         {
             currentRock = Instantiate(deffaultAttack, GetInvokePosition(), launchTransform.rotation);
@@ -113,16 +99,6 @@ namespace ElementsArena.Combat
             invokePosition.y = GroundHeight() - deffaultAttack.transform.localScale.y / 2;
 
             return invokePosition;
-        }
-
-        float GroundHeight()
-        {
-            RaycastHit hit;
-
-            Ray ray = new Ray(transform.position, Vector3.down);
-            Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer);
-
-            return hit.point.y;
         }
     }
 }

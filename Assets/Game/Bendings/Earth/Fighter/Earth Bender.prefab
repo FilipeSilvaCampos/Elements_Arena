@@ -177,19 +177,22 @@ MonoBehaviour:
   cooldownTime: 1.5
   isPrimary: 1
   called: 0
-  rocksToInvoke:
-  - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
-    elevateTime: 0.7
-  - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
-    elevateTime: 0.7
-  - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
-    elevateTime: 1.5
-  - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
-    elevateTime: 1.5
-  invokeDistance: 2
+  rockLayer:
+    serializedVersion: 2
+    m_Bits: 64
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  rocksToInvoke:
+  - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
+    timeToElevate: 0.7
+  - prefab: {fileID: 2086370840583703249, guid: 68bcfacc8114cce4cb2b10cf220c601e, type: 3}
+    timeToElevate: 0.7
+  - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
+    timeToElevate: 1.5
+  - prefab: {fileID: 5021047334075602154, guid: 111e0e1a71085ae4b9a20d40edeb078d, type: 3}
+    timeToElevate: 1.5
+  invokeDistance: 2
   launchTransform: {fileID: 6169334020008614126}
 --- !u!114 &3360694761925634628
 MonoBehaviour:
@@ -207,15 +210,14 @@ MonoBehaviour:
   cooldownTime: 1.5
   isPrimary: 1
   called: 0
-  deffaultAttack: {fileID: 5204155215663811294, guid: 7fcd2645ebc5ce348b71a0def2c5bcfd, type: 3}
-  launchTransform: {fileID: 6169334020008614126}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
   rockLayer:
     serializedVersion: 2
     m_Bits: 64
-  domainDistance: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  deffaultAttack: {fileID: 5204155215663811294, guid: 7fcd2645ebc5ce348b71a0def2c5bcfd, type: 3}
+  launchTransform: {fileID: 6169334020008614126}
   moveRockSpeed: 5
 --- !u!4 &6169334020008614126 stripped
 Transform:

@@ -13,15 +13,11 @@ namespace ElementsArena.Combat
         [SerializeField] float projectileWater = 2;
 
         int counter = 0;
-        float timeSinceLastLaunch;
+        float timeSinceLastLaunch = 0;
 
         protected override void OnReady()
         {
-            if(called)
-            {
-                LaunchProjectile(projectilePrefab);
-                FinishState();
-            }
+            if (called) FinishState();
         }
 
         protected override void OnActive()

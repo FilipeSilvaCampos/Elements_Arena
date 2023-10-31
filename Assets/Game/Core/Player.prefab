@@ -233,6 +233,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1180e51a-adf7-46fa-82e1-dc238c5709d3
     m_ActionName: Player/InputSelection[/DualShock4GamepadHID/dpad,/Keyboard/1,/Keyboard/numpad1,/Keyboard/2,/Keyboard/numpad2,/Keyboard/3,/Keyboard/numpad3,/Keyboard/4,/Keyboard/numpad4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2010017281520047486}
+        m_TargetAssemblyTypeName: ElementsArena.Control.PlayerController, Assembly-CSharp
+        m_MethodName: SupportButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ad00a66d-4d15-43ee-a168-e587137c2b6a
+    m_ActionName: Player/SupportButton[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

@@ -1,4 +1,4 @@
-using Photon.Pun;
+using System;
 using UnityEngine;
 
 namespace ElementsArena.Damage
@@ -6,6 +6,7 @@ namespace ElementsArena.Damage
     public class TriggerDamage : MonoBehaviour
     {
         [SerializeField] float damage;
+        [SerializeField][Tooltip("To destory on OnDestroy()")] GameObject parent;
 
         IDamageable instigator;
         public float Damage { get { return damage; } set { damage = value; } }
@@ -15,6 +16,8 @@ namespace ElementsArena.Damage
             this.instigator = instigator;
         }
 
+        public IDamageable GetInstigator() { return instigator; }
+
         private void OnTriggerEnter(Collider other)
         {
             IDamageable damageable = other.GetComponent<IDamageable>();
@@ -23,6 +26,11 @@ namespace ElementsArena.Damage
             {
                 damageable.TakeDamage(damage);
             }
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(parent);
         }
     }
 }

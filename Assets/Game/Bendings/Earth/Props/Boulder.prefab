@@ -192,3 +192,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  parent: {fileID: 5021047334075602154}

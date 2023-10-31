@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace ElementsArena.Combat
+﻿namespace ElementsArena.Combat
 {
     public abstract class WaterAbility : Ability
     {

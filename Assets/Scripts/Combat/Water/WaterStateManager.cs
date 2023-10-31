@@ -57,17 +57,6 @@ namespace ElementsArena.Combat
             sourceToReturn = null;
             return false;
         }
-
-
-        public bool HaveWater(float amount) 
-        {
-            foreach (WaterSource soruce in nearSources)
-            {
-                if (soruce.amount >= amount) return true;
-            }
-
-            return false;
-        }
         #endregion
 
         private void OnDrawGizmos()

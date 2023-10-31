@@ -1,6 +1,5 @@
 using ElementsArena.Combat;
 using ElementsArena.Movement;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,6 +37,9 @@ namespace ElementsArena.Control
             });
         }
 
+        public void SetAvailable(bool value) => available = value;
+
+        #region PlayerInput Callbacks
         public void SetMoveInput(InputAction.CallbackContext context)
         {
             moveInput = context.ReadValue<Vector2>();
@@ -58,16 +60,15 @@ namespace ElementsArena.Control
         public void CallFirstAbility(InputAction.CallbackContext context)
         {
             if (!available) return;
-            
+
             abilityHolder.firstAbility.called = context.ReadValueAsButton();
         }
 
         public void CallSecondAbility(InputAction.CallbackContext context)
         {
             if (!available) return;
-            
+
             abilityHolder.secondAbility.called = context.ReadValueAsButton();
-            abilityHolder.suportButton = context.ReadValueAsButton();
         }
 
         public void CallEvadeAbility(InputAction.CallbackContext context)
@@ -76,5 +77,13 @@ namespace ElementsArena.Control
 
             abilityHolder.evadeAbility.called = context.ReadValueAsButton();
         }
+
+        public void SupportButton(InputAction.CallbackContext context)
+        {
+            if(!available) return;
+
+            abilityHolder.suportButton = context.ReadValueAsButton();
+        }
+        #endregion
     }
 }
