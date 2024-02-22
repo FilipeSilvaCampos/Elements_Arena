@@ -1,230 +1,230 @@
 using ElementsArena.Control;
 using ElementsArena.Damage;
 using ElementsArena.SceneManagement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace ElementsArena.Core
 {
-    public class Player
-    {
-        public Player(GameObject player)
-        {
-            gameObject = player;
-            playerManager = player.GetComponent<PlayerManager>();
-        }
+	public class Player
+	{
+		public Player(GameObject player)
+		{
+			gameObject = player;
+			playerManager = player.GetComponent<PlayerManager>();
+		}
 
-        public PlayerManager playerManager;
-        public GameObject gameObject;
-    }
+		public PlayerManager playerManager;
+		public GameObject gameObject;
+	}
 
 
-    public class GameManager : MonoBehaviour
-    {
-        [SerializeField] int mainSceneId = 0;
-        [SerializeField] LayerMask[] playersLayers;
-        [SerializeField] GameObject gameOverScreen;
-        [SerializeField] Fader fader;
-        [SerializeField] float fadeInTime = 2;
+	public class GameManager : MonoBehaviour
+	{
+		[SerializeField] int mainSceneId = 0;
+		[SerializeField] LayerMask[] playersLayers;
+		[SerializeField] GameObject gameOverScreen;
+		[SerializeField] Fader fader;
+		[SerializeField] float fadeInTime = 2;
 
-        //Level vars
-        LevelManager currentLevel = null;
-        GameObject[] fightersInGame = new GameObject[2];
-        bool hasWinner = false;
-        //
+		public bool isVersusAI = false;
+		public event Action onNewPlayerIsRegistered;
 
-        public bool VersusAI { get { return versusAI; } set { versusAI = value; } }
-        bool gameStarted = false;
-        PlayerInputManager playerInputManager;
-        Dictionary<int, Player> players = new Dictionary<int, Player>();
-        Character characterAI = null;
-        bool versusAI = false;
-        bool gamePaused = false;
+		//Level vars
+		LevelManager currentLevel = null;
+		GameObject[] fightersInGame = new GameObject[2];
+		bool hasWinner = false;
+		//
 
-        #region MonoBehaviour Callbacks
-        private void Awake()
-        {
-            playerInputManager = GetComponent<PlayerInputManager>();
-        }
+		bool isGameStarted = false;
+		List<Player> players = new List<Player>();
+		Character characterAI = null;
+		bool gamePaused = false;
 
-        private void Start()
-        {
-            playerInputManager.onPlayerJoined += RegisterNewPlayer;
-            DontDestroyOnLoad(gameObject);
-        }
 
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.Escape) && gameStarted && !hasWinner)
-            {
-                PauseGame();
-            }
-        }
-        #endregion
+		#region MonoBehaviour Callbacks
 
-        private void RegisterNewPlayer(PlayerInput playerInput)
-        {
-            GameObject player = playerInput.gameObject;
+		private void Start()
+		{
+			GetComponent<PlayerInputManager>().onPlayerJoined += RegisterNewPlayer;
+			DontDestroyOnLoad(gameObject);
+		}
 
-            player.GetComponent<CursorController>().selectedCharacter += StartGame;
-            Player newPlayer = new Player(player);
-            players.Add(playerInput.playerIndex, newPlayer);
-            DontDestroyOnLoad(player);
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape) && isGameStarted && !hasWinner)
+			{
+				PauseGame();
+			}
+		}
+		#endregion
 
-            if (players.Count > 1) versusAI = false;
-        }
+		private void RegisterNewPlayer(PlayerInput playerInput)
+		{
+			GameObject player = playerInput.gameObject;
+			player.GetComponent<CursorController>().selectedCharacter += StartGame;
+			DontDestroyOnLoad(player);
 
-        private IEnumerator LoadLevel(int levelToLoad)
-        {
-            fader.FaderOutImmediate();
-            yield return SceneManager.LoadSceneAsync(levelToLoad);
+			Player newPlayer = new Player(player);
+			players.Add(newPlayer);
 
-            currentLevel = FindObjectOfType<LevelManager>();
+			if (players.Count > 1) isVersusAI = false;
+			onNewPlayerIsRegistered.Invoke();
+		}
 
-            if(players.Count > 1)
-            {
-                currentLevel.SetSplitScreen();
-            }
+		private IEnumerator LoadLevel(int levelToLoad)
+		{
+			fader.FaderOutImmediate();
+			yield return SceneManager.LoadSceneAsync(levelToLoad);
 
-            InitializeFighters();
-            AbleAllFightersControls(false);
-            yield return fader.FadeIn(1);
-            AbleAllFightersControls(true);
-        }
+			currentLevel = FindObjectOfType<LevelManager>();
 
-        private GameObject SetAI(Transform spawn, Camera camera)
-        {
-            GameObject ai = Instantiate(characterAI.prefab, spawn.position, spawn.rotation);
-            ai.GetComponent<AIController>().enabled = true;
-            return ai;
-        }
+			if (players.Count > 1)
+			{
+				currentLevel.SetSplitScreen();
+			}
 
-        private void InitializeFighters()
-        {
-            AbleAllFightersControls(true);
-            gamePaused = false;
-            for(int i = 0; i < players.Count; i++)
-            {
-                if (players.ContainsKey(i))
-                {
-                    fightersInGame[i] = players[i].playerManager.SetUpPlayer(
-                        currentLevel.spawns[i],
-                        playersLayers[i],
-                        currentLevel.cameras[i]
-                        );
-                }
-            }
+			InitializeFighters();
+			AbleAllFightersControls(false);
+			yield return fader.FadeIn(1);
+			AbleAllFightersControls(true);
+		}
 
-            if (characterAI != null)
-            {
-                fightersInGame[1] = SetAI(currentLevel.spawns[1], currentLevel.cameras[1]);
-            }
-        }
+		private GameObject SetAI(Transform spawn, Camera camera)
+		{
+			GameObject ai = Instantiate(characterAI.prefab, spawn.position, spawn.rotation);
+			ai.GetComponent<AIController>().enabled = true;
+			return ai;
+		}
 
-        public void GameOver(GameObject loserObject)
-        {
-            if (hasWinner) return;
-            AbleAllFightersControls(false);
+		private void InitializeFighters()
+		{
+			AbleAllFightersControls(true);
+			gamePaused = false;
+			for (int i = 0; i < players.Count; i++)
+			{
+				if (players[i] != null)
+				{
+					fightersInGame[i] = players[i].playerManager.SetUpPlayer(
+						currentLevel.spawns[i],
+						playersLayers[i],
+						currentLevel.cameras[i]
+						);
+				}
+			}
 
-            for (int i = 0; i < fightersInGame.Length; i++)
-            {
-                if (loserObject == fightersInGame[i])
-                {
-                    gameOverScreen.SetActive(true);
-                    gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText(string.Format("Player {0} Win", i == 0 ? 2 : 1));
-                    hasWinner = true;
-                    break;
-                }
-            }
-        }
+			if (characterAI != null)
+			{
+				fightersInGame[1] = SetAI(currentLevel.spawns[1], currentLevel.cameras[1]);
+			}
+		}
 
-        private void AbleAllFightersControls(bool value)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (value)
-                    players[i].gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap(PlayerActionMapsKeys.InGame);
-                else
-                    players[i].gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap(PlayerActionMapsKeys.UI);
-            }
-        }
+		public void GameOver(GameObject loserObject)
+		{
+			if (hasWinner) return;
+			AbleAllFightersControls(false);
 
-        public void StartGame(Character character)
-        { 
-            if (gameStarted) return;
+			for (int i = 0; i < fightersInGame.Length; i++)
+			{
+				if (loserObject == fightersInGame[i])
+				{
+					gameOverScreen.SetActive(true);
+					gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().SetText(string.Format("Player {0} Win", i == 0 ? 2 : 1));
+					hasWinner = true;
+					break;
+				}
+			}
+		}
 
-            if (versusAI) characterAI = character;
-            if (players.Count == 1 && characterAI == null)
-            {
-                
-                versusAI = true;
-                return;
-            }
-            
+		private void AbleAllFightersControls(bool value)
+		{
+			for (int i = 0; i < players.Count; i++)
+			{
+				if (value)
+					players[i].gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap(PlayerActionMapsKeys.InGame);
+				else
+					players[i].gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap(PlayerActionMapsKeys.UI);
+			}
+		}
 
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (!players[i].playerManager.isReady) return;
-            }
+		public void StartGame(Character character)
+		{
+			if (isGameStarted) return;
 
-            gameStarted = true;
-            StartCoroutine(LoadLevel(1)); //Defalut teste arena
-        }
+			if (isVersusAI) characterAI = character;
+			if (players.Count == 1 && characterAI == null)
+			{
 
-        private void PauseGame()
-        {
-            gamePaused = !gamePaused;
+				isVersusAI = true;
+				return;
+			}
 
-            gameOverScreen.SetActive(gamePaused);
-            gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().text = "Game Paused";
-            AbleAllFightersControls(!gamePaused);
-        }
 
-        public void RestartGame()
-        {
-            ResetLevel();
+			for (int i = 0; i < players.Count; i++)
+			{
+				if (!players[i].playerManager.isReady) return;
+			}
 
-            fader.FaderOutImmediate();
-            InitializeFighters();
-            fader.FadeIn(fadeInTime);
-        }
+			isGameStarted = true;
+			StartCoroutine(LoadLevel(1)); //Defalut teste arena
+		}
 
-        public void BackToStartScene()
-        {
-            ResetLevel();
-            gameStarted = false;
+		private void PauseGame()
+		{
+			gamePaused = !gamePaused;
 
-            for(int i = 0; i < players.Count; i++)
-            {
-                players[i].playerManager.SetCharacter(null);
-                players[i].playerManager.UndoReady();
-                players[i].gameObject.GetComponent<PlayerController>().SetAvailable(false);
-            }
-            characterAI = null;
+			gameOverScreen.SetActive(gamePaused);
+			gameOverScreen.GetComponentInChildren<TextMeshProUGUI>().text = "Game Paused";
+			AbleAllFightersControls(!gamePaused);
+		}
 
-            SceneManager.LoadScene(mainSceneId);
-        }
+		public void RestartGame()
+		{
+			ResetLevel();
 
-        private void ResetLevel()
-        {
-            hasWinner = false;
-            gameOverScreen.SetActive(false);
+			fader.FaderOutImmediate();
+			InitializeFighters();
+			fader.FadeIn(fadeInTime);
+		}
 
-            foreach (GameObject fighter in fightersInGame)
-            {
-                Destroy(fighter);
-            }
-        }
+		public void BackToStartScene()
+		{
+			ResetLevel();
+			isGameStarted = false;
 
-        public Player GetPlayer(int index)
-        {
-            if (!players.ContainsKey(index)) return null;
+			for (int i = 0; i < players.Count; i++)
+			{
+				players[i].playerManager.SetCharacter(null);
+				players[i].playerManager.UndoReady();
+				players[i].gameObject.GetComponent<PlayerController>().SetAvailable(false);
+			}
+			characterAI = null;
 
-            return players[index];
-        }
-    }
+			SceneManager.LoadScene(mainSceneId);
+		}
+
+		private void ResetLevel()
+		{
+			hasWinner = false;
+			gameOverScreen.SetActive(false);
+
+			foreach (GameObject fighter in fightersInGame)
+			{
+				Destroy(fighter);
+			}
+		}
+
+		public Player GetPlayer(int index)
+		{
+			if (index >= players.Count || index < 0) return null;
+
+			return players[index];
+		}
+	}
 }

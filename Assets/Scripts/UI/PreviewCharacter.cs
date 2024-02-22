@@ -25,7 +25,7 @@ public class PreviewCharacter : MonoBehaviour
         }
 
         CastCharacter();
-    }
+	}
 
     void CastCharacter()
     {
