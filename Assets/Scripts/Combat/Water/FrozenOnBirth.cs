@@ -8,12 +8,15 @@ namespace ElementsArena.Combat
         [SerializeField] float lifeTime = 2;
         [SerializeField] LayerMask charactersLayer;
         [SerializeField] GameObject breakEffect;
+        [SerializeField] AudioClip crystalizeSound;
+        [SerializeField] AudioClip destroySound;
 
         CharacterMovement[] frozenCharacters;
 
-        private void Start()
+		private void Start()
         {
             FrozenPlayers();
+            GetComponent<AudioSource>().PlayOneShot(crystalizeSound);
 
             Destroy(gameObject, lifeTime);
         }
@@ -38,6 +41,6 @@ namespace ElementsArena.Combat
                 character.LockMovement(false);
             }
             Instantiate(breakEffect, transform.position, transform.rotation);
-        }
+		}
     }
 }

@@ -177,6 +177,7 @@ MonoBehaviour:
   cooldownTime: 1.5
   isPrimary: 1
   called: 0
+  domainDistance: 3
   rockLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -210,6 +211,7 @@ MonoBehaviour:
   cooldownTime: 1.5
   isPrimary: 1
   called: 0
+  domainDistance: 3
   rockLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -219,6 +221,7 @@ MonoBehaviour:
   deffaultAttack: {fileID: 5204155215663811294, guid: 7fcd2645ebc5ce348b71a0def2c5bcfd, type: 3}
   launchTransform: {fileID: 6169334020008614126}
   moveRockSpeed: 5
+  launchParticle: {fileID: 1110556030845387871, guid: f91edac4d13fc4343ba96bb6a843ad05, type: 3}
 --- !u!4 &6169334020008614126 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7743028272977488062, guid: d54a33e1126da794b82ce3b3f1773460, type: 3}

@@ -1,107 +1,111 @@
+using ElementsArena.Control;
 using ElementsArena.Movement;
 using UnityEngine;
 
 namespace ElementsArena.Combat
 {
-    public enum AbilityStates
-    {
-        ready,
-        active,
-        cooldown
-    }
+	public enum AbilityStates
+	{
+		ready,
+		active,
+		cooldown
+	}
 
-    [RequireComponent(typeof(AbilityHolder))]
-    public abstract class Ability : MonoBehaviour
-    {
-        [Header("Ability Attributes")]
-        [SerializeField] protected float activeTime = 1;
-        [SerializeField] protected float cooldownTime = 1.5f;
-        [SerializeField] private bool isPrimary = false;
+	[RequireComponent(typeof(AbilityHolder))]
+	public abstract class Ability : MonoBehaviour
+	{
+		[Header("Ability Attributes")]
+		[SerializeField] protected float activeTime = 1;
+		[SerializeField] protected float cooldownTime = 1.5f;
+		[SerializeField] private bool isPrimary = false;
 
-        public float CooldownTime { get { return cooldownTime; } }
-        float timeSinceLastStateChange;
-        protected AbilityStates currentState { get; private set; }
-        public bool called;
-        protected AbilityHolder abilityHolder;
+		public float CooldownTime { get { return cooldownTime; } }
+		float timeSinceLastStateChange;
+		protected AbilityStates currentState { get; private set; }
+		public bool called;
+		protected AbilityHolder abilityHolder;
 
-        protected virtual void Awake()
-        {
-            abilityHolder = GetComponent<AbilityHolder>();
-        }
+		protected virtual void Awake()
+		{
+			abilityHolder = GetComponent<AbilityHolder>();
+		}
 
-        protected virtual void Update()
-        {
-            switch(currentState)
-            {
-                case AbilityStates.ready:
-                    if (isPrimary && abilityHolder.usingPrimary) return;
-                    OnReady();
-                    break;
-                case AbilityStates.active:
-                    OnActive();
-                    break;
-                case AbilityStates.cooldown:
-                    OnCooldown();
-                    break;
-            }
-            timeSinceLastStateChange += Time.deltaTime;
-        }
+		protected virtual void Update()
+		{
+			switch (currentState)
+			{
+				case AbilityStates.ready:
+					if (isPrimary && abilityHolder.usingPrimary) return;
+					OnReady();
+					break;
+				case AbilityStates.active:
+					OnActive();
+					break;
+				case AbilityStates.cooldown:
+					OnCooldown();
+					break;
+			}
+			timeSinceLastStateChange += Time.deltaTime;
+		}
 
-        protected abstract void OnReady();
-        protected abstract void OnActive();
-        protected abstract void OnCooldown();
+		protected abstract void OnReady();
+		protected abstract void OnActive();
+		protected abstract void OnCooldown();
 
-        protected void FinishState()
-        {
-            timeSinceLastStateChange = 0;
-            switch (currentState)
-            {
-                case AbilityStates.ready:
-                    currentState = AbilityStates.active;
-                    break;
-                case AbilityStates.active:
-                    currentState = AbilityStates.cooldown;
-                    abilityHolder.usingPrimary = false;
-                    break;
-                case AbilityStates.cooldown:
-                    called = false;
-                    currentState = AbilityStates.ready;
-                    break;
-            }
-        }
+		protected void FinishState()
+		{
+			timeSinceLastStateChange = 0;
+			switch (currentState)
+			{
+				case AbilityStates.ready:
+					currentState = AbilityStates.active;
+					break;
+				case AbilityStates.active:
+					currentState = AbilityStates.cooldown;
+					abilityHolder.usingPrimary = false;
+					break;
+				case AbilityStates.cooldown:
+					called = false;
+					currentState = AbilityStates.ready;
+					break;
+			}
+		}
 
-        protected bool IsTimeToChangeState()
-        {
-            switch (currentState)
-            {
-                case AbilityStates.active:
-                    if (timeSinceLastStateChange > activeTime) return true;
-                    else return false;
-                case AbilityStates.cooldown:
-                    if (timeSinceLastStateChange > cooldownTime) return true;
-                    else return false;
-            }
-            return false;
-        }
+		protected bool IsTimeToChangeState()
+		{
+			switch (currentState)
+			{
+				case AbilityStates.active:
+					if (timeSinceLastStateChange > activeTime) return true;
+					else return false;
+				case AbilityStates.cooldown:
+					if (timeSinceLastStateChange > cooldownTime) return true;
+					else return false;
+			}
+			return false;
+		}
 
-        protected void LockCharacterMovement()
-        {
-            CharacterMovement characterMovement = GetComponent<CharacterMovement>();
-            characterMovement.LockMovement(true);
-            characterMovement.BreakMovement();
-        }
+		protected void LockCharacterMovement(bool onViewDirection)
+		{
+			CharacterMovement characterMovement = GetComponent<CharacterMovement>();
+			characterMovement.LockMovement(true);
+			characterMovement.BreakMovement();
 
-        protected void UnlockCharacterMovement()
-        {
-            CharacterMovement characterMovement = GetComponent<CharacterMovement>();
-            characterMovement.LockMovement(false);
-        }
+			if (onViewDirection)
+				transform.rotation = GetComponentInChildren<CameraController>().LookRotation;
+		}
 
-        public float GetCooldownTimer()
-        {
-            if (currentState != AbilityStates.cooldown) return cooldownTime;
+		protected void UnlockCharacterMovement()
+		{
+			CharacterMovement characterMovement = GetComponent<CharacterMovement>();
+			characterMovement.LockMovement(false);
+		}
 
-            return cooldownTime - timeSinceLastStateChange;
-        }
-    }
+		public float GetCooldownTimer()
+		{
+			if (currentState != AbilityStates.cooldown) return cooldownTime;
+
+			return cooldownTime - timeSinceLastStateChange;
+		}
+	}
 }

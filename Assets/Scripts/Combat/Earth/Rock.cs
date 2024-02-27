@@ -11,8 +11,6 @@ namespace ElementsArena.Combat
         [SerializeField] float damage = 10;
         [SerializeField] GameObject destroyEffect;
 
-        public float showd;
-
         public float life { get; private set; }
         public event Action OnDeath;
         bool launched = false;
@@ -24,7 +22,6 @@ namespace ElementsArena.Combat
 
         private void Update()
         {
-            showd = life;
             if (!launched) return;
 
             transform.Translate(Vector3.forward * launchSpeed * Time.deltaTime);
