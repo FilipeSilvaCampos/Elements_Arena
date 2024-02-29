@@ -2,7 +2,6 @@
 using ElementsArena.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 namespace ElementsArena.Control
@@ -15,7 +14,7 @@ namespace ElementsArena.Control
         Selectable nextSelectButton;
 
         public delegate void SelectedCharacter(Character character);
-        public SelectedCharacter selectedCharacter;
+        public SelectedCharacter onSelecteCharacter;
 
         private void Start()
         {
@@ -78,7 +77,7 @@ namespace ElementsArena.Control
                 if (button != null)
                 {
                     playerManager.SetCharacter(button.character);
-                    selectedCharacter(button.character);
+                    onSelecteCharacter(button.character);
                 }
             }
         }

@@ -15,20 +15,20 @@ namespace ElementsArena.Core
 
     public class PlayerManager : MonoBehaviour
     {
-        GameManager gameManager;
+        LevelManager levelManager;
         Character character;
         PlayerController playerController;
         public bool isReady { get; private set; } = false;
 
         private void Awake()
         {
-            gameManager = FindObjectOfType<GameManager>();
+            levelManager = FindObjectOfType<LevelManager>();
             playerController = GetComponent<PlayerController>();
         }
 
         private void OnLoose()
         {
-            gameManager.GameOver(gameObject);
+            levelManager.GameOver(gameObject);
         }
 
         public GameObject SetUpPlayer(Transform spawnPosition, LayerMask layer, Camera camera)

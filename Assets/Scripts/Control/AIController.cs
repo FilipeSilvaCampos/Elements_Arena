@@ -1,5 +1,4 @@
-﻿using ElementsArena.Combat;
-using ElementsArena.Core;
+﻿using ElementsArena.Core;
 using ElementsArena.Damage;
 using ElementsArena.Movement;
 using UnityEngine;
@@ -28,7 +27,7 @@ namespace ElementsArena.Control
 
         void OnLoose()
         {
-            FindObjectOfType<GameManager>().GameOver(gameObject);
+            FindObjectOfType<LevelManager>().GameOver(gameObject);
         }
     }
 }

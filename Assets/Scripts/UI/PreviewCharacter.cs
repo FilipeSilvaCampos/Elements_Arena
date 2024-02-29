@@ -42,7 +42,7 @@ public class PreviewCharacter : MonoBehaviour
 
     void ChangePreviewImage(Sprite sprite)
     {
-        transform.DOPunchPosition(Vector3.down, punchDuration, 20);
+        transform.DOPunchPosition(Vector3.down, punchDuration, 20, 10);
         image.sprite = sprite;
     }
 

@@ -1,5 +1,4 @@
-﻿using ElementsArena.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ElementsArena.UI
 {

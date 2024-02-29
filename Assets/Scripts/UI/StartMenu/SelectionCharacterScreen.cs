@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace ElementsArena.UI
 {
-	public class SelectionScreen : Menu
+	public class SelectionCharacterScreen : Menu
 	{
 		[SerializeField] PlayerPreview[] previews;
 		[SerializeField] GameObject player2Warning;
@@ -25,6 +25,7 @@ namespace ElementsArena.UI
 		private void Start()
 		{
 			menuManager.gameManager.onNewPlayerIsRegistered += SetSelectSreen;
+			SetSelectSreen();
 		}
 
 		private void Update()
@@ -44,6 +45,8 @@ namespace ElementsArena.UI
 			{
 				previews[(int)PlayerEnum.Player2].previewRect.SetFollowCursor(cursors[0]);
 			}
+
+			if (menuManager.gameManager.isAllPlayersReady) menuManager.ThrowMenu();
 		}
 		#endregion
 
@@ -58,12 +61,6 @@ namespace ElementsArena.UI
 			menuObject.SetActive(true);
 			isShowed = true;
 			menuManager.gameManager.isVersusAI = false;
-
-			Vector3 cursorDeffaultPositon = FindObjectOfType<Selectable>().transform.position + Vector3.forward * -10;
-			foreach (GameObject cursor in cursors)
-			{
-				cursor.transform.position = cursorDeffaultPositon;
-			}
 		}
 
 		void SetSelectSreen()
