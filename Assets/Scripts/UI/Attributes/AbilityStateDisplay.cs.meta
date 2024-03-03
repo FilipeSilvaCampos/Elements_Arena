@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 9697493b665b431468d2c146ffafab8b
+guid: 0414719f7a019b948b5e0f796f6812fc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - uiSprite: {fileID: 21300000, guid: 02800fb9cff14da47a04572790384d8b, type: 3}
-  - circlePrefab: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

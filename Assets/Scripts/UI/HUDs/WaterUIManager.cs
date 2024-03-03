@@ -11,6 +11,7 @@ public class WaterUIManager : UIManager
 
     private void Update()
     {
+        if (waterStateManager == null) return;
         stateImage.sprite = waterStateManager.GetCurrentState().iconState;
     }
 

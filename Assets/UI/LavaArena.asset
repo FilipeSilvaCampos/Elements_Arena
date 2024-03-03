@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   denomination: LavaArena
   buildIndex: 1
-  previewImage: {fileID: 21300000, guid: 01099d84f24920f48842999ee39d759c, type: 3}
+  previewImage: {fileID: 21300000, guid: a2c0fe31bd1da1d4ca3b830eb71dedc4, type: 3}

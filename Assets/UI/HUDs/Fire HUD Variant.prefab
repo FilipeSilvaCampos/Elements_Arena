@@ -207,6 +207,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 320056319075316750, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 717996436074478706, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -295,9 +299,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire HUD Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6996419592118674393, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4946806888747419074, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+--- !u!114 &284325458202452859 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2041183212786939625, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  m_PrefabInstance: {fileID: 2279275708652328338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0414719f7a019b948b5e0f796f6812fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1609835493305952736 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 717996436074478706, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
@@ -312,17 +331,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53eab8708bc184d4c9c6b714ea2b7b2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4093595747791760847 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2841422315534383197, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
-  m_PrefabInstance: {fileID: 2279275708652328338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec152dbb59b17849974096a06e87514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6796081500676606262 stripped
@@ -343,5 +351,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3971133537686296424}
-  displayCooldowns: {fileID: 4093595747791760847}
+  abilityStateDisplay: {fileID: 284325458202452859}
   breathBar: {fileID: 1408385625889277558}

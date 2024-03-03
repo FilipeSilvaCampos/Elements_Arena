@@ -1,16 +1,17 @@
 ﻿using ElementsArena.Combat;
 using ElementsArena.Damage;
+using ElementsArena.UI;
 using UnityEngine;
 
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] HealthBar healthBar;
-    [SerializeField] DisplayCooldowns displayCooldowns;
+    [SerializeField] AbilityStateDisplay abilityStateDisplay;
 
     public virtual void Initialize(GameObject fighter)
     {
         healthBar.characterDamageable = fighter.GetComponent<IDamageable>();
-        displayCooldowns.abilityHolder = fighter.GetComponent<AbilityHolder>();
+        abilityStateDisplay.abilityHolder = fighter.GetComponent<AbilityHolder>();
     }
 }

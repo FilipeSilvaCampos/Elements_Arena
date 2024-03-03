@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   denomination: TestArena
   buildIndex: 2
-  previewImage: {fileID: 21300000, guid: 2139ee1c7b52d0c4d84050522c2f5105, type: 3}
+  previewImage: {fileID: 21300000, guid: 87816c64c172b3a43a63f19e09f9cb08, type: 3}

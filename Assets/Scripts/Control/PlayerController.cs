@@ -7,6 +7,7 @@ namespace ElementsArena.Control
 {
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] float cameraSpeed = 1.5f;
         CharacterMovement characterMovement;
         CameraController cameraController;
         AbilityHolder abilityHolder;
@@ -29,7 +30,7 @@ namespace ElementsArena.Control
             if (!available) return;
 
             //Update move and camera inputs
-            cameraController.IncrementCameraRotation(new Vector2(cameraInput.y, cameraInput.x));
+            cameraController.IncrementCameraRotation(new Vector2(cameraInput.y, cameraInput.x) * cameraSpeed);
             characterMovement.SetInput(new CharacterMovementInput
             {
                 MoveInput = moveInput,

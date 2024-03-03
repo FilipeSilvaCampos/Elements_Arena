@@ -450,6 +450,7 @@ MonoBehaviour:
   activeTime: 0
   cooldownTime: 2.5
   isPrimary: 1
+  uiSprite: {fileID: 0}
   called: 0
   projectiles:
   - {fileID: 11400000, guid: af04e1c3c8d547b489b3244ee5222a29, type: 2}
@@ -473,6 +474,7 @@ MonoBehaviour:
   activeTime: 6
   cooldownTime: 3
   isPrimary: 0
+  uiSprite: {fileID: 0}
   called: 0
   flyMaxSpeed: 15
   flyAcceleration: 30

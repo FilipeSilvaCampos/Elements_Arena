@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ElementsArena.Damage;
+using UnityEngine;
 
 namespace ElementsArena.Combat
 {
@@ -52,7 +53,9 @@ namespace ElementsArena.Combat
 
         void LaunchProjectile(GameObject projectile)
         {
-            Instantiate(projectile, launchTransform.position, launchTransform.rotation);
+            ProjectileBehaviour projBehaviour = Instantiate(projectile, launchTransform.position, launchTransform.rotation).GetComponent<ProjectileBehaviour>();
+
+            projBehaviour.SetInstigator(GetComponent<IDamageable>());
             timeSinceLastLaunch = 0;
             counter++;
         }

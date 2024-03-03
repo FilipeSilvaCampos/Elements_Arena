@@ -3,7 +3,11 @@ guid: 665b8ae2f1fa2954ab2573b1d67f6d7a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - uiSprite: {fileID: 21300000, guid: 02800fb9cff14da47a04572790384d8b, type: 3}
+  - launchTransform: {instanceID: 0}
+  - wave: {instanceID: 0}
+  - deliveryPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

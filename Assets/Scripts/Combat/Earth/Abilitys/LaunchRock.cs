@@ -41,14 +41,13 @@ namespace ElementsArena.Combat
 		{
 			if (isLaunching) return;
 
-			if (!OnTarget())
-			{
-				MoveToTarget();
-				return;
-			};
+			MoveToTarget();
 
-			animator.SetTrigger(AnimationKeys.LaunchTrigger);
-			isLaunching = true;
+			if (OnTarget())
+			{
+				animator.SetTrigger(AnimationKeys.LaunchTrigger);
+				isLaunching = true;
+			}
 		}
 
 		protected override void OnCooldown()
@@ -59,8 +58,6 @@ namespace ElementsArena.Combat
 		//Animation Event
 		public void Launch()
 		{
-			Debug.Log(currentRock);
-
 			currentRock.GetComponent<Rock>().Launch(GetComponent<IDamageable>());
 			Instantiate(launchParticle, launchTransform.position, launchTransform.rotation);
 			UnlockCharacterMovement();
@@ -91,7 +88,7 @@ namespace ElementsArena.Combat
 		Vector3 GetTargetPosition()
 		{
 			Vector3 targetPosition = launchTransform.position;
-			targetPosition.y = GroundHeight() + 1.8f; //Height character    
+			targetPosition.y = GroundHeight() + 1.8f; //Height character
 
 			return targetPosition;
 		}

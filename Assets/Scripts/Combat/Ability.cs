@@ -1,5 +1,6 @@
 using ElementsArena.Control;
 using ElementsArena.Movement;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ElementsArena.Combat
@@ -18,6 +19,9 @@ namespace ElementsArena.Combat
 		[SerializeField] protected float activeTime = 1;
 		[SerializeField] protected float cooldownTime = 1.5f;
 		[SerializeField] private bool isPrimary = false;
+
+		[Header("HUD")]
+		public Sprite uiSprite = null;
 
 		public float CooldownTime { get { return cooldownTime; } }
 		float timeSinceLastStateChange;
@@ -59,10 +63,11 @@ namespace ElementsArena.Combat
 			{
 				case AbilityStates.ready:
 					currentState = AbilityStates.active;
+					if(isPrimary) abilityHolder.usingPrimary = true;
 					break;
 				case AbilityStates.active:
 					currentState = AbilityStates.cooldown;
-					abilityHolder.usingPrimary = false;
+					if(isPrimary) abilityHolder.usingPrimary = false;
 					break;
 				case AbilityStates.cooldown:
 					called = false;
@@ -92,7 +97,11 @@ namespace ElementsArena.Combat
 			characterMovement.BreakMovement();
 
 			if (onViewDirection)
-				transform.rotation = GetComponentInChildren<CameraController>().LookRotation;
+			{
+				Quaternion targetRotation = transform.rotation;
+				targetRotation.y = GetComponentInChildren<CameraController>().LookRotation.y;
+				transform.rotation = targetRotation;
+			}
 		}
 
 		protected void UnlockCharacterMovement()
@@ -107,5 +116,7 @@ namespace ElementsArena.Combat
 
 			return cooldownTime - timeSinceLastStateChange;
 		}
+
+		public AbilityStates GetCurrentState() => currentState;
 	}
 }

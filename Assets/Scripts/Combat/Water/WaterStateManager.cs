@@ -18,8 +18,8 @@ namespace ElementsArena.Combat
 
         void FindWaterOnNear()
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, waterSearchDistance, waterLayer);
             totalAmount = 0;
+            Collider[] hits = Physics.OverlapSphere(transform.position, waterSearchDistance, waterLayer);
 
             nearSources = new WaterSource[hits.Length];
             for(int i = 0; i < hits.Length; i++)

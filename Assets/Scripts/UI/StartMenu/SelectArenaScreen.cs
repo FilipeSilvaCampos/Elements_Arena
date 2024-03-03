@@ -10,6 +10,9 @@ public class SelectArenaScreen : Menu
 	[SerializeField] ArenaScriptableObject[] arenas;
 
 	[Header("Animation Details")]
+	[Tooltip("Indicators are to punch with the UIImage")]
+	[SerializeField] GameObject rightIndicator;
+	[SerializeField] GameObject leftIndicator;
 	[SerializeField] float punchDuration = .3f;
 	[SerializeField] int punchVibrato = 20;
 	[SerializeField] int punchElasticity = 10;
@@ -35,24 +38,32 @@ public class SelectArenaScreen : Menu
 
 	void ShowPreviousArena()
 	{
+		PunchAnim(leftIndicator);
+
 		if (selectedArena == 0) return;
 
 		selectedArena--;
-		uIImage.transform.DOPunchPosition(Vector3.down, punchDuration, punchVibrato, punchElasticity);
+		PunchAnim(uIImage.gameObject);
 		uIImage.sprite = arenas[selectedArena].previewImage;
 	}
 
 	void ShowNextArena()
 	{
+		PunchAnim(rightIndicator);
+
 		if (selectedArena >= arenas.Length - 1) return;
 
 		selectedArena++;
-		uIImage.transform.DOPunchPosition(Vector3.down, punchDuration, punchVibrato, punchElasticity);
+		PunchAnim(uIImage.gameObject);
 		uIImage.sprite = arenas[selectedArena].previewImage;
 	}
 
+	void PunchAnim(GameObject toPunch) => toPunch.transform.DOPunchPosition(Vector3.down, punchDuration, punchVibrato, punchElasticity);
+	
+
 	public override void Hide()
 	{
+		GetComponent<MenuManager>().gameManager.ResetGame();
 		menuObject.SetActive(false);
 		isShowed = false;
 	}

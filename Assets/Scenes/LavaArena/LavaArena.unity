@@ -2478,7 +2478,7 @@ GameObject:
   - component: {fileID: 2086537686}
   - component: {fileID: 2086537685}
   - component: {fileID: 2086537684}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LakeSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}

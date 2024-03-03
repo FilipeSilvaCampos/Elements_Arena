@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 7762593744304027046}
   - component: {fileID: 6947090322729992683}
   m_Layer: 5
-  m_Name: Icon State
+  m_Name: State_Icn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,6 +344,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 320056319075316750, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 717996436074478706, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -432,6 +436,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water HUD Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6908134642997821443, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4946806888747419074, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
@@ -453,20 +461,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6646791960244624934}
-  displayCooldowns: {fileID: 6047548557203760257}
+  abilityStateDisplay: {fileID: 7552618509048670773}
   stateImage: {fileID: 6947090322729992683}
   waterDisplay: {fileID: 2448337243130685337}
---- !u!114 &6047548557203760257 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2841422315534383197, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
-  m_PrefabInstance: {fileID: 8395826626767953116}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec152dbb59b17849974096a06e87514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6646791960244624934 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2935733188267901690, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
@@ -476,6 +473,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53eab8708bc184d4c9c6b714ea2b7b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7552618509048670773 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2041183212786939625, guid: d958bd576111efa4ea039aee1c14e36c, type: 3}
+  m_PrefabInstance: {fileID: 8395826626767953116}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0414719f7a019b948b5e0f796f6812fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &9040169355877425326 stripped
